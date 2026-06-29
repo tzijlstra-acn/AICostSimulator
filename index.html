@@ -687,13 +687,13 @@
     <div class="quiz-title" id="quizTitle2" style="margin-top:30px"><span class="stepn">2</span>Fine-tune the scenario</div>
 
     <div class="scen-block">
-      <div class="scen-h">Which NFR processes will it cover?<span class="dq-hint">each is one dashboard, pre-set — click to include</span></div>
+      <div class="scen-h">Which processes does it cover?<span class="dq-hint">each is one dashboard, pre-set — click to include</span></div>
       <div class="scen-chips" id="scenChips"></div>
       <div class="scen-note" id="scenNote"></div>
     </div>
 
     <div class="q">
-      <div class="q-head"><span class="q-num">2</span><div class="q-text" id="q2text">How many users will use the platform?</div></div>
+      <div class="q-head"><span class="q-num">2</span><div class="q-text" id="q2text">How many users use the platform?</div></div>
       <div class="q-body"><div class="slider-top"><span class="lbl">Seats</span><span class="slider-val num" id="usersV">150</span></div><input type="range" id="users" min="10" max="3000" step="10" value="150"></div>
     </div>
 
@@ -2454,7 +2454,7 @@ function applyProfile(resetSliders){
   state.ind=resolveProfile();const ind=state.ind;
   $("brandTitle").innerHTML=`${ind.brand} <span>AI Cost Estimator</span>`;
   $("quizEyebrow").textContent="Accenture · "+ind.industryLabel+" · "+REGIONS[state.region].label;
-  $("q2text").textContent=`How many ${ind.fn} users will use the platform?`;
+  $("q2text").textContent=`How many users use the platform?`;
   $("kUserLbl").textContent="Cost per user / month";
   if(resetSliders){
     $("users").value=ind.defaults.users;$("usersV").textContent=(+ind.defaults.users).toLocaleString("de-DE");
