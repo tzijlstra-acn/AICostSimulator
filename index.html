@@ -231,6 +231,43 @@
   .rdmk{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
   .rdmk-v{font-size:17px;font-weight:700;font-family:var(--display);color:var(--purple-d)}
   .rdmk-k{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+  /* ROI tab */
+  .roi-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+  @media(max-width:700px){.roi-kpis{grid-template-columns:repeat(2,1fr)}}
+  .roi-kpi{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+  .rk-v{font-size:18px;font-weight:700;font-family:var(--display);color:var(--text)}
+  .rk-v.rk-pos{color:var(--green)}
+  .rk-neg{color:var(--magenta)}
+  .rk-k{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+  .roi-tbl{font-size:12px;margin-top:8px}
+  .roi-th{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);border-bottom:1px solid var(--line)}
+  .roi-tr{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;border-bottom:1px solid var(--line-soft);font-family:var(--mono)}
+  .roi-tr:hover{background:var(--paper)}
+  .roi-be{background:rgba(19,192,138,.06);font-weight:600}
+  .roi-ben{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+  .rb-row{display:grid;grid-template-columns:1fr 2fr auto;gap:10px;align-items:center}
+  .rb-name{font-size:11px;color:var(--text)}
+  .rb-bar{background:var(--line-soft);border-radius:4px;height:8px;overflow:hidden}
+  .rb-bar span{display:block;height:100%;background:var(--purple);border-radius:4px}
+  .rb-val{font-size:11px;font-family:var(--mono);color:var(--muted);white-space:nowrap}
+  .roi-recs{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+  .rr-item{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .rr-t{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+  .rr-b{font-size:12px;color:var(--muted);line-height:1.5}
+  .rr-act{font-size:11px;font-family:var(--mono);color:var(--purple);margin-top:6px}
+  /* Methodology nav */
+  .meth-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .meth-na{font-size:11px;font-family:var(--mono);font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--muted);text-decoration:none;transition:.15s}
+  .meth-na:hover{border-color:var(--purple);color:var(--purple-d)}
+  .meth-providers{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .mprov{font-size:10px;font-family:var(--mono);font-weight:700;padding:3px 9px;border-radius:5px;letter-spacing:.03em}
+  .mprov-ant{background:#cc785520;color:#cc7855;border:1px solid #cc785540}
+  .mprov-oai{background:#10a37f20;color:#10a37f;border:1px solid #10a37f40}
+  .mprov-goo{background:#4285f420;color:#4285f4;border:1px solid #4285f440}
+  .mprov-mst{background:#ff700020;color:#e06000;border:1px solid #ff700040}
+  .mprov-met{background:#0064e120;color:#0064e1;border:1px solid #0064e140}
+  .mprov-alp{background:#A100FF20;color:var(--purple-d);border:1px solid #A100FF40}
+  .meth-loop-h{font-size:11px;font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
   .scale-tile,.mv-row,.scen-chip{transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease;}
   .scale-tile:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(122,20,212,.07);}
   @media(prefers-reduced-motion:reduce){.jstage,.jarrow,.jm-fill,.rf-row,.rf-meter,.scale-tile{transition:none!important;}}
@@ -922,9 +959,9 @@
 
     <div class="rtabs" id="rtabs">
       <button data-tab="breakdown" class="on">Annual Cost</button>
-      <button data-tab="connect">Cost Drivers</button>
+      <button data-tab="connect">ROI</button>
       <button data-tab="perf">Roadmap</button>
-      <button data-tab="inquiry">Per Request</button>
+      <button data-tab="inquiry">Technical Setup</button>
       <button data-tab="models">Methodology</button>
     </div>
 
@@ -971,11 +1008,6 @@
     </details>
 
     <details class="dd">
-      <summary>What's in the platform build <span class="ddh">basis &amp; components</span></summary>
-      <div class="dd-in"><div id="buildBasis"></div></div>
-    </details>
-
-    <details class="dd">
       <summary>How this estimate is produced <span class="ddh">the Tokenomics loop</span></summary>
       <div class="dd-in">
         <div class="loop" style="margin-top:16px">
@@ -990,20 +1022,6 @@
         <p class="footnote">Token optimization is one of six Tokenomics levers — three technical (optimization · model &amp; infrastructure · FinOps &amp; value) and three organizational (governance · talent · culture). This estimator sizes the technical levers; the full programme governs cost per business outcome, not cost per token.</p>
       </div>
     </details>
-    </div>
-
-    <div id="tabConnect" style="display:none">
-      <div class="card">
-        <div class="est-head"><h3>One request, start to finish — and where the cents land</h3><button type="button" class="rf-replay" id="reqReplay">▶ Replay</button></div>
-        <div class="est-sub">Watch a single question flow through the platform: the dashboard is built by one shared heavy lift, then each user reads it for cents.</div>
-        <div class="reqflow" id="reqFlow"></div>
-      </div>
-      <div class="card">
-        <div class="est-head"><h3>How AI drives cost down: the optimisation chain</h3><span class="ai-pill" id="wfPill">L3</span></div>
-        <div class="est-sub" id="wfSub"></div>
-        <div class="flow-wrap"><svg id="wfSvg" viewBox="0 0 760 372" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
-        <p class="footnote">Each step is a real lever in the question chain — same answer, progressively cheaper. The biggest is the last: one expensive heavy lift, <b>reused</b> across most questions instead of repeated.</p>
-      </div>
       <div class="card">
         <div class="est-head"><h3>What moves your number most</h3><span class="ai-pill">your setup</span></div>
         <div class="est-sub">From where you are now, the levers that change the annual total the most — <b style="color:var(--green)">green</b> lowers it, <b style="color:var(--purple-deep)">purple</b> raises it.</div>
@@ -1014,29 +1032,27 @@
         <div class="est-sub">Three things make your division's slice affordable: the costly heavy lift is <b>reused</b>, <b>users</b> share the platform, and other <b>functions</b> share the foundation.</div>
         <div class="scale-grid" id="scaleTiles"></div>
       </div>
+    </div>
+
+    <div id="tabConnect" style="display:none">
+      <div class="card roi-kpi-card">
+        <div class="est-head"><h3>Return on investment · 10-year view</h3><span class="ai-pill" id="roiPill">—</span></div>
+        <div class="est-sub" id="roiSub">Select scenarios and set your organisation size to see a data-driven ROI.</div>
+        <div class="roi-kpis" id="roiKpis"></div>
+      </div>
       <div class="card">
-        <button type="button" class="ev-toggle" id="drivesDeepBtn" onclick="const c=document.getElementById('drivesDeep');const open=c.style.display!=='none';c.style.display=open?'none':'block';this.querySelector('.dd-arrow').textContent=open?'▾':'▴'">
-          <span class="dd-arrow">▾</span>&nbsp;Deep-dive: how every number is built
-        </button>
-        <div id="drivesDeep" style="display:none;margin-top:14px">
-          <h4 style="font-size:13px;color:var(--purple);margin:0 0 10px">The full cost model — explained</h4>
-          <div style="font-size:12px;color:var(--muted);line-height:1.7;display:grid;gap:14px">
-            <div><b style="color:var(--text)">Fixed platform costs</b><br>
-            A one-off engineering lift to build the shared backbone: RAG pipeline, vector database, orchestration layer, and connectors to your source systems. This is amortised over the go-live timeline you set — longer runway = lower annual charge. Modelled via a Gaussian bell curve so spend peaks in the middle years of the build, not year one.</div>
-            <div><b style="color:var(--text)">Run costs</b><br>
-            Annual hosting, security, MLOps tooling, and infrastructure. Depends on your hosting choice: on-prem requires GPU cluster capex; cloud sovereign is OPEX but higher unit rate; standard cloud is cheapest. These are recurring and do not amortise.</div>
-            <div><b style="color:var(--text)">Licence costs</b><br>
-            Per-user-per-year seat charges for your AI platform layer (e.g. Copilot Studio, ServiceNow AI, or a custom licence). Scales linearly with the number of active users across all selected scenarios. Price adjusts with the annual licence growth rate you set.</div>
-            <div><b style="color:var(--text)">Usage costs (token spend)</b><br>
-            Pay-per-use inference charges: input tokens (context + retrieval) × input price, plus output tokens × output price. Driven by: requests per user per month × users × tokens per request. The token price trajectory you set (−40 % to +12 %/yr) compounds annually, making this the most uncertain line but also the one most likely to fall.</div>
-            <div><b style="color:var(--text)">Adoption ramp</b><br>
-            Users do not adopt on day one. The model applies 40 % utilisation in the go-live year, 75 % the following year, and 100 % from year 3 onward. This suppresses usage costs in early years and is why the cash-flow curve rises before it flattens.</div>
-            <div><b style="color:var(--text)">Division breadth share</b><br>
-            Fixed platform and run costs are shared across however many divisions you specify. Your slice = total ÷ number of divisions. Changing this number is the single biggest lever on your fixed-cost line.</div>
-            <div><b style="color:var(--text)">Scenario scaling</b><br>
-            Each scenario has a distinct user count and request volume. The model sums across all selected scenarios rather than applying a single percentage. Deselect low-volume scenarios to see the impact on usage costs immediately.</div>
-          </div>
-        </div>
+        <div class="est-head"><h3>Year-by-year · cumulative net value</h3><span class="ai-pill">ROI chart</span></div>
+        <div class="est-sub">Switch to <b>ROI view</b> on the chart above to see the J-curve. The table below shows the numbers behind it.</div>
+        <div id="roiTable"></div>
+      </div>
+      <div class="card">
+        <div class="est-head"><h3>What's driving the return</h3><span class="ai-pill">benefit breakdown</span></div>
+        <div class="est-sub" id="roiBenSub"></div>
+        <div id="roiBenBox"></div>
+      </div>
+      <div class="card">
+        <div class="est-head"><h3>Recommendations · what to change to improve ROI</h3><span class="ai-pill">levers</span></div>
+        <div id="roiRecs"></div>
       </div>
     </div>
 
@@ -1065,6 +1081,17 @@
 
     <div id="tabInquiry" style="display:none">
       <div class="card">
+        <div class="est-head"><h3>One request, start to finish — and where the cents land</h3><button type="button" class="rf-replay" id="reqReplay">▶ Replay</button></div>
+        <div class="est-sub">Watch a single question flow through the platform: the dashboard is built by one shared heavy lift, then each user reads it for cents.</div>
+        <div class="reqflow" id="reqFlow"></div>
+      </div>
+      <div class="card">
+        <div class="est-head"><h3>How AI drives cost down: the optimisation chain</h3><span class="ai-pill" id="wfPill">L3</span></div>
+        <div class="est-sub" id="wfSub"></div>
+        <div class="flow-wrap"><svg id="wfSvg" viewBox="0 0 760 372" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
+        <p class="footnote">Each step is a real lever in the question chain — same answer, progressively cheaper. The biggest is the last: one expensive heavy lift, <b>reused</b> across most questions instead of repeated.</p>
+      </div>
+      <div class="card">
         <div class="est-head"><h3>What one dashboard run costs</h3><button type="button" class="rf-replay" id="inqReplay">▶ Replay</button></div>
         <div class="inq-defs">
           <div class="idf"><span class="idf-k">Dashboard</span><span class="idf-v">One scenario, generated to ~85% coverage. Drives <b>setup</b> + the heavy lift.</span></div>
@@ -1081,16 +1108,69 @@
     </div>
 
     <div id="tabModels" style="display:none">
-      <div class="card">
-        <div class="est-head"><h3>Model prices · per million tokens</h3><span class="ai-pill">vendor-neutral</span></div>
-        <div class="est-sub">Published list prices (research-backed estimates, ~2026). The router picks the best value per task; <span class="mdl-dot routed"></span> = routed in your setup, <span class="mdl-dot self"></span> = self-hostable on-prem.</div>
+      <div class="meth-nav">
+        <a href="#meth-models" class="meth-na">Model pricing</a>
+        <a href="#meth-math" class="meth-na">Token math</a>
+        <a href="#meth-costs" class="meth-na">Cost model</a>
+        <a href="#meth-build" class="meth-na">Build anatomy</a>
+      </div>
+      <div class="card" id="meth-models">
+        <div class="est-head"><h3>Model prices · per million tokens</h3><span class="ai-pill">vendor-neutral · ~2026</span></div>
+        <div class="est-sub">Published list prices (research-backed estimates). The router picks the best value per task; <span class="mdl-dot routed"></span> = routed in your setup, <span class="mdl-dot self"></span> = self-hostable on-prem.</div>
+        <div class="meth-providers">
+          <span class="mprov mprov-ant">Anthropic</span>
+          <span class="mprov mprov-oai">OpenAI</span>
+          <span class="mprov mprov-goo">Google</span>
+          <span class="mprov mprov-mst">Mistral</span>
+          <span class="mprov mprov-met">Meta / Llama</span>
+          <span class="mprov mprov-alp">Aleph Alpha</span>
+        </div>
         <div class="mdl-table" id="modelsTable"></div>
         <p class="footnote" id="modelsNote"></p>
       </div>
-      <div class="card">
+      <div class="card" id="meth-math">
         <div class="est-head"><h3>How a question's cost is calculated</h3><div style="display:flex;gap:8px;align-items:center"><button type="button" id="mathBtn" class="summary-btn">⤓ Save math summary (PDF)</button><span class="ai-pill" id="mathPill">L3</span></div></div>
         <div class="est-sub">Every figure comes from this chain — shown with your current numbers, nothing hidden.</div>
         <div id="mathBox"></div>
+      </div>
+      <div class="card" id="meth-costs">
+        <div class="est-head"><h3>The full cost model · how every number is built</h3><span class="ai-pill">mechanics</span></div>
+        <div id="drivesDeep" style="margin-top:4px">
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;display:grid;gap:14px">
+            <div><b style="color:var(--text)">Fixed platform costs</b><br>
+            A one-off engineering lift to build the shared backbone: RAG pipeline, vector database, orchestration layer, and connectors to your source systems. This is amortised over the go-live timeline you set — longer runway = lower annual charge. Modelled via a Gaussian bell curve so spend peaks in the middle years of the build, not year one.</div>
+            <div><b style="color:var(--text)">Run costs</b><br>
+            Annual hosting, security, MLOps tooling, and infrastructure. Depends on your hosting choice: on-prem requires GPU cluster capex; cloud sovereign is OPEX but higher unit rate; standard cloud is cheapest. These are recurring and do not amortise.</div>
+            <div><b style="color:var(--text)">Licence costs</b><br>
+            Per-user-per-year seat charges for your AI platform layer. Scales linearly with the number of active users across all selected scenarios. Price adjusts with the annual licence growth rate you set.</div>
+            <div><b style="color:var(--text)">Usage costs (token spend)</b><br>
+            Pay-per-use inference charges: input tokens (context + retrieval) × input price, plus output tokens × output price. The token price trajectory you set compounds annually — the most uncertain but also most likely to fall.</div>
+            <div><b style="color:var(--text)">Adoption ramp</b><br>
+            Users do not adopt on day one. The model applies 40% utilisation in the go-live year, 75% the following year, and 100% from year 3 onward. This suppresses usage costs in early years.</div>
+            <div><b style="color:var(--text)">Division breadth share</b><br>
+            Fixed platform and run costs are shared across however many divisions you specify. Your slice = total ÷ number of divisions. The single biggest lever on your fixed-cost line.</div>
+            <div><b style="color:var(--text)">Scenario scaling</b><br>
+            Each scenario has a distinct FTE count and request volume — sized from realistic org-proportion estimates. The model sums across all selected scenarios.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" id="meth-build">
+        <div class="est-head"><h3>Platform build · cost anatomy</h3><span class="ai-pill">workstreams</span></div>
+        <div class="est-sub">The one-off build is split across six workstreams. Your division pays a share; the rest is spread across the enterprise.</div>
+        <div id="buildBasis"></div>
+        <div class="meth-loop" style="margin-top:20px">
+          <div class="meth-loop-h">Tokenomics · how cost governance works</div>
+          <div class="loop" style="margin-top:12px">
+            <div class="stage"><div class="st-tag">DECIDE</div><div class="st-name">Frontier IQ</div><div class="st-d">Right model &amp; placement on real cost — 656 models, 100+ providers.</div></div>
+            <div class="arrow">→</div>
+            <div class="stage"><div class="st-tag">ROUTE</div><div class="st-name">Model Switchboard</div><div class="st-d">Dynamic, vendor-neutral routing to the cheapest credible option per task.</div></div>
+            <div class="arrow">→</div>
+            <div class="stage"><div class="st-tag">RUN &amp; GOVERN</div><div class="st-name">AI Lifecycle Mgmt</div><div class="st-d">Runtime telemetry, attribution, budgets and continuous optimization.</div></div>
+            <div class="arrow">→</div>
+            <div class="stage"><div class="st-tag">ENABLE</div><div class="st-name">Token Quotient</div><div class="st-d">Cost-aware patterns and prompt know-how built into your teams.</div></div>
+          </div>
+          <p class="footnote" style="margin-top:10px">Token optimization is one of six Tokenomics levers — three technical (optimization · model &amp; infrastructure · FinOps &amp; value) and three organizational (governance · talent · culture).</p>
+        </div>
       </div>
     </div>
 
@@ -1956,7 +2036,7 @@ function recompute(){
   $("govLead").innerHTML=`At your target (L${L.n}) a task runs at <b>${grp()}${govTask.toFixed(3)}</b> — <b>${Math.round(savedVsUng*100)}%</b> below an ungoverned build${baseN<L.n?`, and <b>${Math.round(downFromToday*100)}%</b> cheaper than where you start today (L${baseN}, ${grp()}${taskToday.toFixed(3)})`:` — and you're already at your target today, so the gain is the governance gap itself`}.`;
   $("govDetail").innerHTML=`<b>Ungoverned</b> = the frontier model on every step, no caching, routing or budget caps. <b>Today (L${baseN})</b> is your starting point from &lsquo;where is your AI today&rsquo;; climbing to L${L.n} adds caching, leaner context and best-fit routing, which is what cuts the per-task cost. Accenture's own benchmark across five deployments: <b>68% average cost-out</b>, business flow unchanged. Move the &lsquo;today&rsquo; and target levels to see this shift.`;
 
-  drawFlow(sel,L);drawWaterfall(sel,L);renderRequestFlow(sel,L);renderMovers(sel,L);renderScale(sel,L);drawInquiry(sel,L);renderModels(sel,L);renderMath(sel,L);renderJourney(all,sel,L);drawRadar(all,sel,L);
+  drawFlow(sel,L);drawWaterfall(sel,L);renderRequestFlow(sel,L);renderMovers(sel,L);renderScale(sel,L);drawInquiry(sel,L);renderModels(sel,L);renderMath(sel,L);renderJourney(all,sel,L);drawRadar(all,sel,L);renderROI(all,sel,L);
   drawChart(all,sel);state.animate=false;
 }
 
@@ -2151,6 +2231,90 @@ function renderJourney(all,sel,L){
     <div class="rdmap-kpis"><div class="rdmk"><div class="rdmk-v">${eurK(sel.platform)}/yr</div><div class="rdmk-k">Annual cost</div></div><div class="rdmk"><div class="rdmk-v">${COVN[target]}%</div><div class="rdmk-k">Automated at L${target}</div></div><div class="rdmk"><div class="rdmk-v">${HUMANN[target]}%</div><div class="rdmk-k">Still needs you</div></div><div class="rdmk"><div class="rdmk-v">${LEVELS[target-1].save}</div><div class="rdmk-k">Cost-out estimate</div></div></div>
   </div>`;
   if($("jrnSub"))$("jrnSub").innerHTML=`Your path: <b>L${base} → L${target}</b> — go-live in ~${goliveM} months`;
+}
+function renderROI(all,sel,L){
+  if(!$("roiKpis"))return;
+  const sc=scenarioMults();
+  const GOLIVE_YR=getGoliveYr(),BUILD_SCHED=getBuildSched(),ADOPT_RAMP=getAdoptRamp(GOLIVE_YR);
+  const cfp=nfrCashFlowParts(sel);
+  const annualBenefit=totalAnnualBenefit(sel);
+  const noBenefitData=state.scenarios.length===0||!state.scenarios.some(id=>{const s=scenById(id);return s&&(s.effortDays||s.perYear);});
+
+  // Build ROI rows (same logic as chart)
+  const roiRows=[0,1,2,3,4,5,6,7,8,9,10].map(t=>{
+    if(t===0)return{benefit:0,cost:0,cumBenefit:0,cumCost:0,cum:0};
+    const ramp=ADOPT_RAMP[t];
+    const hcFactor=Math.pow(1+sc.hc,Math.max(0,t-GOLIVE_YR));
+    const benefit=t<GOLIVE_YR?0:annualBenefit*ramp*hcFactor;
+    const build=BUILD_SCHED[t]*cfp.oneOff;
+    const run=t>=GOLIVE_YR?cfp.run:0;
+    const tweaks=t>=GOLIVE_YR?cfp.tweaks:0;
+    const lic=t>=GOLIVE_YR?sel.perUser*ADOPT_RAMP[t]*Math.pow(sc.licM,Math.max(0,t-GOLIVE_YR)):0;
+    const usage=t>=GOLIVE_YR?sel.usage*ADOPT_RAMP[t]*Math.pow(sc.base,Math.max(0,t-GOLIVE_YR)):0;
+    const cost=build+run+tweaks+lic+usage;
+    return{benefit,cost,cum:0};
+  });
+  let cb=0,cc=0;
+  roiRows.forEach(r=>{cb+=r.benefit;cc+=r.cost;r.cum=cb-cc;r.cumBenefit=cb;r.cumCost=cc;});
+  let beYr=null;
+  for(let t=1;t<=10;t++){if(roiRows[t].cum>=0&&beYr===null)beYr=t;}
+
+  const totalBen=roiRows[10].cumBenefit;
+  const totalCost=roiRows[10].cumCost;
+  const netVal=totalBen-totalCost;
+  const roiPct=totalCost>0?Math.round((netVal/totalCost)*100):0;
+
+  // KPIs
+  if($("roiPill"))$("roiPill").textContent=beYr?`Break-even Yr ${beYr}`:"No break-even in 10yr";
+  if($("roiSub"))$("roiSub").innerHTML=noBenefitData
+    ?`<b>No scenarios selected</b> — showing an 18% productivity proxy as a placeholder. Select scenarios in step 1 for a data-driven ROI.`
+    :`Based on ${state.scenarios.length} scenario${state.scenarios.length===1?"":"s"} · ${sel.users.toLocaleString("de-DE")} users · ${getGoliveYr()} yr go-live.`;
+  const kd=[
+    {v:beYr?`Year ${beYr}`:"&gt; 10yr",k:"Break-even",ok:beYr&&beYr<=7},
+    {v:eurK(netVal),k:"10yr net value",ok:netVal>0},
+    {v:eurK(totalBen),k:"10yr total benefit",ok:true},
+    {v:eurK(totalCost),k:"10yr total cost",ok:true},
+    {v:(roiPct>0?"+":"")+roiPct+"%",k:"ROI (10yr)",ok:roiPct>0},
+  ];
+  $("roiKpis").innerHTML=kd.map(k=>`<div class="roi-kpi"><div class="rk-v${k.ok?" rk-pos":""}">${k.v}</div><div class="rk-k">${k.k}</div></div>`).join("");
+
+  // Year-by-year table
+  $("roiTable").innerHTML=`<div class="roi-tbl">
+    <div class="roi-th"><span>Year</span><span>Annual benefit</span><span>Annual cost</span><span>Cumulative net</span></div>`+
+    roiRows.slice(1).map((r,i)=>{
+      const t=i+1;const pos=r.cum>=0;
+      return `<div class="roi-tr${pos?" roi-pos":""}${t===beYr?" roi-be":""}"><span>Yr ${t}${t===beYr?" ←break-even":""}</span><span>${eurK(r.benefit)}</span><span>${eurK(r.cost)}</span><span class="${pos?"rk-pos":"rk-neg"}">${r.cum>=0?"+":""}${eurK(r.cum)}</span></div>`;
+    }).join("")+`</div>`;
+
+  // Benefit drivers
+  if($("roiBenSub"))$("roiBenSub").innerHTML=noBenefitData
+    ?`No scenario-specific benefit data. Add scenarios to see the breakdown.`
+    :`Annual benefit from ${state.scenarios.length} active scenario${state.scenarios.length===1?"":"s"} · staff rate ${eurK(num("staffRate")||500)}/day.`;
+  if($("roiBenBox")){
+    if(state.scenarios.length>0){
+      const benRows=state.scenarios.map(id=>{
+        const s=scenById(id);if(!s)return null;
+        const ben=scenarioBenefitYr(id);
+        const pct=annualBenefit>0?Math.round(ben/annualBenefit*100):0;
+        return{name:s.name,ben,pct};
+      }).filter(Boolean).sort((a,b)=>b.ben-a.ben);
+      $("roiBenBox").innerHTML=`<div class="roi-ben">`+benRows.map(r=>`<div class="rb-row"><div class="rb-name">${r.name}</div><div class="rb-bar"><span style="width:${r.pct}%"></span></div><div class="rb-val">${eurK(r.ben)}/yr · ${r.pct}%</div></div>`).join("")+`</div>`;
+    } else {
+      $("roiBenBox").innerHTML=`<p style="font-size:12px;color:var(--muted)">Select scenarios in step 1 to see benefit breakdown.</p>`;
+    }
+  }
+
+  // Recommendations
+  const recs=[];
+  if(noBenefitData)recs.push({title:"Add use cases to unlock the ROI case",body:"Without selected scenarios the benefit line is a flat 18% proxy. Pick the real processes — RCSA, control testing, TPRM — to get a number you can defend in a business case.",act:"Step 1 → Scenarios"});
+  if(beYr===null||beYr>7)recs.push({title:"Share the platform across more divisions",body:`You currently share costs across ${state.divisions} division${state.divisions===1?"":"s"}. Adding one more typically cuts the fixed cost by ${Math.round(100*(1-state.divisions/(state.divisions+1)))}%. The platform doesn't get more expensive — everyone just pays less.`,act:"Step 1 → Functions sharing this"});
+  if(GOLIVE_YR>3&&(beYr===null||beYr>5))recs.push({title:"Shorten the go-live timeline",body:`A ${GOLIVE_YR}-year build pushes benefit recognition into the future. Compressing to 2-3 years with a phased launch (first 2-3 scenarios) moves the break-even earlier without changing total build cost.`,act:"Advanced → Go-live / amortisation"});
+  if(state.hosting==="onprem"&&sel.fx.allocRun>sel.usage*2)recs.push({title:"Consider sovereign cloud to reduce fixed costs",body:"On-prem GPU infrastructure is your largest fixed cost. Sovereign cloud (EU-resident) cuts that by ~84% in exchange for a modest token premium — often the right trade unless data residency requires on-prem.",act:"Step 1 → Hosting"});
+  if(state.level<4)recs.push({title:"Target a higher maturity level",body:`At L${state.level}, each task costs ${grp()}${sel.taskCost.toFixed(3)}. Moving to L${state.level+1} reduces per-task cost by ~${Math.round((1-all[state.level].taskCost/sel.taskCost)*100)}% through better caching and model routing — compounding over 10 years.`,act:"Step 1 → Target AI level"});
+  if(state.scenarios.length>0&&beYr&&beYr<=5)recs.push({title:"ROI is already solid — stress-test the assumptions",body:`Break-even at Year ${beYr} is a strong result. Switch to the ROI chart view and check the sensitivity to staff rate and token price drift before presenting to the board.`,act:"Advanced settings → Staff rate, token price"});
+  if(recs.length===0)recs.push({title:"No structural changes needed",body:"Your setup is delivering a healthy ROI within a reasonable payback period. Focus now on execution: phased rollout, adoption management, and continuous cost governance.",act:""});
+
+  if($("roiRecs"))$("roiRecs").innerHTML=`<div class="roi-recs">`+recs.map(r=>`<div class="rr-item"><div class="rr-t">${r.title}</div><div class="rr-b">${r.body}</div>${r.act?`<div class="rr-act">→ ${r.act}</div>`:""}</div>`).join("")+`</div>`;
 }
 function playJourney(){
   const el=$("journey");if(!el)return;
