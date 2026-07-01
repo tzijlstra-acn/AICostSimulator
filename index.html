@@ -961,7 +961,7 @@
       <button data-tab="breakdown" class="on">Annual Cost</button>
       <button data-tab="connect">ROI</button>
       <button data-tab="perf">Roadmap</button>
-      <button data-tab="inquiry">Technical Setup</button>
+      <button data-tab="inquiry">Per Request</button>
       <button data-tab="models">Methodology</button>
     </div>
 
@@ -1910,18 +1910,16 @@ function nfrCashFlowParts(sel){
 function scenarioBenefitYr(id){
   const s=scenById(id);if(!s)return 0;
   const rate=num("staffRate")||500;
-  if(s.effortDays&&s.cyclesPerYear){
-    // Team-level process saving: effortDays per cycle × cycles/yr × aiSave × daily rate
-    return s.effortDays*s.cyclesPerYear*(s.aiSave||0.5)*rate;
-  }
-  // Request-volume saving: minutes per request by tier × requests/yr × aiSave × hourly rate
-  const minsPerReq={simple:12,medium:22,high:40}[s.tier]||20;
-  return scenReqPerMonth(id)*12*(s.aiSave||0.5)*minsPerReq/60*(rate/8);
+  const ftePct=SCEN_FTE_PCT[id]||0.10;
+  const fte=state.orgStaff*(ftePct/100);
+  const aiSave=s.aiSave||0.40;
+  return Math.round(fte*aiSave*rate*220);
 }
 function totalAnnualBenefit(sel){
   if(state.scenarios.length>0)return state.scenarios.reduce((s,id)=>s+scenarioBenefitYr(id),0);
-  // Fallback: 18% of platform cost as productivity proxy
-  return sel.platform*0.18;
+  // Fallback: org-size-scaled proxy — 0.15% of staff × 40% time saved × annual day rate
+  const rate=num("staffRate")||500;
+  return Math.round(state.orgStaff*0.0015*0.40*rate*220);
 }
 function scenarioMults(){const pd=num("priceDelta")/100,hc=num("hcGrowth")/100,intg=num("intGrowth")/100;
   const licM=1+hc;
@@ -2267,7 +2265,7 @@ function renderROI(all,sel,L){
   // KPIs
   if($("roiPill"))$("roiPill").textContent=beYr?`Break-even Yr ${beYr}`:"No break-even in 10yr";
   if($("roiSub"))$("roiSub").innerHTML=noBenefitData
-    ?`<b>No scenarios selected</b> — showing an 18% productivity proxy as a placeholder. Select scenarios in step 1 for a data-driven ROI.`
+    ?`<b>No scenarios selected</b> — showing an org-size estimate as placeholder. Select scenarios to get a function-level ROI breakdown.`
     :`Based on ${state.scenarios.length} scenario${state.scenarios.length===1?"":"s"} · ${sel.users.toLocaleString("de-DE")} users · ${getGoliveYr()} yr go-live.`;
   const kd=[
     {v:beYr?`Year ${beYr}`:"&gt; 10yr",k:"Break-even",ok:beYr&&beYr<=7},
@@ -2289,16 +2287,18 @@ function renderROI(all,sel,L){
   // Benefit drivers
   if($("roiBenSub"))$("roiBenSub").innerHTML=noBenefitData
     ?`No scenario-specific benefit data. Add scenarios to see the breakdown.`
-    :`Annual benefit from ${state.scenarios.length} active scenario${state.scenarios.length===1?"":"s"} · staff rate ${eurK(num("staffRate")||500)}/day.`;
+    :`FTE time savings across ${state.scenarios.length} scenario${state.scenarios.length===1?"":"s"} — estimated at ${Math.round(state.orgStaff*0.001)}–${Math.round(state.orgStaff*0.004)} FTEs per function · ${num("staffRate")||500} €/day · 220 working days.`;
   if($("roiBenBox")){
     if(state.scenarios.length>0){
       const benRows=state.scenarios.map(id=>{
         const s=scenById(id);if(!s)return null;
         const ben=scenarioBenefitYr(id);
         const pct=annualBenefit>0?Math.round(ben/annualBenefit*100):0;
-        return{name:s.name,ben,pct};
+        const fte=Math.round(state.orgStaff*((SCEN_FTE_PCT[id]||0.10)/100));
+        const aiSave=Math.round((s.aiSave||0.40)*100);
+        return{name:s.name,ben,pct,fte,aiSave};
       }).filter(Boolean).sort((a,b)=>b.ben-a.ben);
-      $("roiBenBox").innerHTML=`<div class="roi-ben">`+benRows.map(r=>`<div class="rb-row"><div class="rb-name">${r.name}</div><div class="rb-bar"><span style="width:${r.pct}%"></span></div><div class="rb-val">${eurK(r.ben)}/yr · ${r.pct}%</div></div>`).join("")+`</div>`;
+      $("roiBenBox").innerHTML=`<div class="roi-ben">`+benRows.map(r=>`<div class="rb-row"><div class="rb-name">${r.name}</div><div class="rb-bar"><span style="width:${r.pct}%"></span></div><div class="rb-val">${eurK(r.ben)}/yr · ${r.fte} FTEs · ${r.aiSave}% saved</div></div>`).join("")+`</div>`;
     } else {
       $("roiBenBox").innerHTML=`<p style="font-size:12px;color:var(--muted)">Select scenarios in step 1 to see benefit breakdown.</p>`;
     }
@@ -2306,7 +2306,7 @@ function renderROI(all,sel,L){
 
   // Recommendations
   const recs=[];
-  if(noBenefitData)recs.push({title:"Add use cases to unlock the ROI case",body:"Without selected scenarios the benefit line is a flat 18% proxy. Pick the real processes — RCSA, control testing, TPRM — to get a number you can defend in a business case.",act:"Step 1 → Scenarios"});
+  if(noBenefitData)recs.push({title:"Add scenarios to unlock the ROI case",body:"Without selected scenarios the benefit is an org-size placeholder. Pick the real processes — RCSA, control testing, TPRM — to get function-level FTE savings you can defend in a business case.",act:"Step 1 → Scenarios"});
   if(beYr===null||beYr>7)recs.push({title:"Share the platform across more divisions",body:`You currently share costs across ${state.divisions} division${state.divisions===1?"":"s"}. Adding one more typically cuts the fixed cost by ${Math.round(100*(1-state.divisions/(state.divisions+1)))}%. The platform doesn't get more expensive — everyone just pays less.`,act:"Step 1 → Functions sharing this"});
   if(GOLIVE_YR>3&&(beYr===null||beYr>5))recs.push({title:"Shorten the go-live timeline",body:`A ${GOLIVE_YR}-year build pushes benefit recognition into the future. Compressing to 2-3 years with a phased launch (first 2-3 scenarios) moves the break-even earlier without changing total build cost.`,act:"Advanced → Go-live / amortisation"});
   if(state.hosting==="onprem"&&sel.fx.allocRun>sel.usage*2)recs.push({title:"Consider sovereign cloud to reduce fixed costs",body:"On-prem GPU infrastructure is your largest fixed cost. Sovereign cloud (EU-resident) cuts that by ~84% in exchange for a modest token premium — often the right trade unless data residency requires on-prem.",act:"Step 1 → Hosting"});
