@@ -751,6 +751,18 @@
     <div class="pw-err" id="pwErr"></div>
   </div>
 </div>
+<script>
+(function(){
+  var gate=document.getElementById("pwGate"),inp=document.getElementById("pwInput"),btn=document.getElementById("pwBtn"),err=document.getElementById("pwErr");
+  if(sessionStorage.getItem("pw_ok")==="1"){gate.style.display="none";return;}
+  function attempt(){
+    if(inp.value==="Studio2026"){sessionStorage.setItem("pw_ok","1");gate.style.display="none";}
+    else{err.textContent="Incorrect password";inp.value="";inp.focus();}
+  }
+  btn.addEventListener("click",attempt);
+  inp.addEventListener("keydown",function(e){if(e.key==="Enter")attempt();if(err.textContent)err.textContent="";});
+})();
+</script>
 
 <div class="bar">
   <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>Accenture AI Cost Estimator</span></span></div>
@@ -3160,17 +3172,6 @@ function wire(){
 }
 wire();
 
-// Password gate
-(function(){
-  const gate=$("pwGate"),inp=$("pwInput"),btn=$("pwBtn"),err=$("pwErr");
-  if(sessionStorage.getItem("pw_ok")==="1"){gate.classList.add("hidden");return;}
-  function attempt(){
-    if(inp.value==="Studio2026"){sessionStorage.setItem("pw_ok","1");gate.classList.add("hidden");}
-    else{err.textContent="Incorrect password";inp.value="";inp.focus();}
-  }
-  btn.addEventListener("click",attempt);
-  inp.addEventListener("keydown",e=>{if(e.key==="Enter")attempt();if(err.textContent)err.textContent="";});
-})();
 
 // Token price preset buttons
 document.querySelectorAll(".price-preset").forEach(b=>{
