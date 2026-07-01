@@ -2981,14 +2981,15 @@ function snapLoad(){try{return JSON.parse(localStorage.getItem(SNAP_KEY)||"[]");
 function snapSave(snaps){localStorage.setItem(SNAP_KEY,JSON.stringify(snaps));}
 
 function snapApply(snap){
-  // Restore inputs
-  Object.entries(snap.inputs||{}).forEach(([id,v])=>{const el=$(id);if(el)el.value=v;});
-  // Restore state fields
+  // Restore state fields first so setIndustry resolves the right industry
   Object.entries(snap.state||{}).forEach(([k,v])=>{if(v!=null)state[k]=JSON.parse(JSON.stringify(v));});
+  // first=true → applyProfile(false) → does NOT reset sliders
+  setIndustry(state.industry&&state.industry.id||"bank",true);
+  // Restore inputs AFTER setIndustry so they are not overwritten by applyProfile
+  Object.entries(snap.inputs||{}).forEach(([id,v])=>{const el=$(id);if(el)el.value=v;});
   // Sync derived UI
   syncOrgSlider();syncPlatSlider();renderDeptChips();
   if($("divisionsNote"))$("divisionsNote").textContent=`Your division funds ${Math.round(100/Math.max(1,state.divisions))}% of platform build & run`;
-  setIndustry(state.industry&&state.industry.id||"bank",false);
   renderScenarioChips();applyScenarios();
   [...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x.dataset.view===state.view));
   state.animate=true;recompute();
