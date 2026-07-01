@@ -775,12 +775,12 @@
         <div class="adv-row"><label id="buildLabel">Platform build (<span id="buildCur">€</span>) <button type="button" id="buildReset" class="rsetb">estimate</button></label><input type="number" id="buildAbs" step="50000" value="1600000"></div>
         <div class="adv-row"><label>Integration / system (<span id="intgCur">€</span>) <span class="dq-hint">connector + data mapping per system</span></label><input type="number" id="intgRate" placeholder="35000" value="35000"></div>
         <div class="adv-row"><label>Use-case build · medium reference (<span id="ucCur">€</span>) <span class="dq-hint">to ~85% coverage; simple ×0.5, high ×1.65</span></label><input type="number" id="ucRate" placeholder="90000" value="90000"></div>
-        <div class="adv-row"><label>Build amortisation (yrs) <span class="dq-hint">spreads one-off build across its useful life</span></label><input type="number" id="amort" placeholder="3" value="3"></div>
+        <div class="adv-row"><label>Build amortisation (yrs) <span class="dq-hint">spreads one-off build cost — does not affect recurring run costs (hosting, ops)</span></label><input type="number" id="amort" min="1" max="10" step="1" placeholder="3" value="3"></div>
         <div class="adv-row"><label>Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
         <div class="adv-row"><label>Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
         <div class="adv-row"><label>Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
         <div class="adv-slider">
-          <div class="slider-top"><span class="lbl">Annual token-price change <button type="button" class="q-help-btn" id="priceSciBtnA" style="display:inline-flex;margin-left:4px;vertical-align:middle;font-size:10px;padding:1px 5px">?</button></span><span class="slider-val num" id="priceDeltaV" style="color:var(--blue);font-size:14px">-15%</span></div>
+          <div class="slider-top"><span class="lbl">Annual token-price change <span class="dq-hint">chart projection only — shapes 10-yr outlook, not current total</span> <button type="button" class="q-help-btn" id="priceSciBtnA" style="display:inline-flex;margin-left:4px;vertical-align:middle;font-size:10px;padding:1px 5px">?</button></span><span class="slider-val num" id="priceDeltaV" style="color:var(--blue);font-size:14px">-15%</span></div>
           <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
             <button type="button" class="price-preset" data-v="-40" style="font-size:10px;padding:3px 8px;border:1px solid var(--green);border-radius:5px;background:rgba(19,192,138,.08);color:var(--green);cursor:pointer;font-family:var(--mono)">Deflationary −40%</button>
             <button type="button" class="price-preset" data-v="-15" style="font-size:10px;padding:3px 8px;border:1px solid var(--blue);border-radius:5px;background:rgba(59,130,246,.08);color:var(--blue);cursor:pointer;font-family:var(--mono)">Base −15%</button>
@@ -793,8 +793,8 @@
             <b>Inflationary (+12%/yr):</b> Demand-supply shock scenario. Goldman Sachs (2024) and Bernstein estimate $1T+ in AI capex by 2027; IEA projects data-centre electricity demand could double by 2026. NVIDIA GPU lead times and hyperscaler ROI requirements (~25–30% on capex) could push prices up if GPU supply and grid power cannot keep pace with inference demand growth.
           </div>
         </div>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Headcount growth / yr <span class="dq-hint">small; grows licences + usage</span></span><span class="slider-val num" id="hcGrowthV" style="color:var(--blue);font-size:14px">+2%</span></div><input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2"></div>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Usage growth per user / yr <span class="dq-hint">adoption deepens; grows usage only</span></span><span class="slider-val num" id="intGrowthV" style="color:var(--magenta);font-size:14px">+6%</span></div><input type="range" class="risk" id="intGrowth" min="0" max="60" value="6"></div>
+        <div class="adv-slider"><div class="slider-top"><span class="lbl">Headcount growth / yr <span class="dq-hint">chart projection only — compounds licences + usage each year</span></span><span class="slider-val num" id="hcGrowthV" style="color:var(--blue);font-size:14px">+2%</span></div><input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2"></div>
+        <div class="adv-slider"><div class="slider-top"><span class="lbl">Usage growth per user / yr <span class="dq-hint">chart projection only — compounds usage each year</span></span><span class="slider-val num" id="intGrowthV" style="color:var(--magenta);font-size:14px">+6%</span></div><input type="range" class="risk" id="intGrowth" min="0" max="60" value="6"></div>
       </div>
       <div class="adv-sec">
         <h5>How users engage</h5>
@@ -1316,7 +1316,7 @@ const BUILDWORK=[
 ];
 const WD=20;
 const WDYEAR=WD*12;
-function getGoliveYr(){return Math.max(1,Math.min(8,num("amort")||3));}
+function getGoliveYr(){return Math.max(1,Math.min(10,num("amort")||3));}
 function getBuildSched(){
   const g=getGoliveYr();
   const weights=Array.from({length:g},(_,i)=>{const x=(i+0.5)/g*4-2;return Math.exp(-x*x/2);});
@@ -1468,7 +1468,7 @@ function breadthShare(){return Math.max(0.05,Math.min(1,1/Math.max(1,state.divis
 const PLATEXISTS={none:{label:"No — greenfield"},building:{label:"Building it now",min:0,max:80,step:5,def:30,lbl:"How far along is it?"},yes:{label:"Yes, in place",min:0,max:100,step:5,def:70,lbl:"How much can you reuse as-is?"}};
 function platFactor(){const k=state.platformExists;if(!k||k==="none")return 1.0;const b=PLATEXISTS[k];const v=state.platProgress==null?b.def:state.platProgress;if(k==="building")return 1.0-0.75*(v/100);return 0.40-0.32*(v/100);}
 function fixedYr(levelN){
-  const systems=num("systems"),ucs=state.detail?useCases.length:num("ucs"),amort=Math.max(1,num("amort")||3),users=num("users");
+  const systems=num("systems"),ucs=state.detail?useCases.length:num("ucs"),amort=getGoliveYr(),users=num("users");
   const intg=num("intgRate")||35000,ucr=num("ucRate")||90000;
   const upkeepR=(num("ucUpkeep")||8)/100;                 /* keep-running: re-tuning, policy refresh */
   const chgN=(num("ucChanges")||0), chgR=(num("ucChangeCost")||6)/100;  /* functionality changes/yr × cost each */
@@ -1555,7 +1555,7 @@ function compCol(cls,clabel,total,sublabel,lines,note){
 }
 function renderBuildBasis(sel,L){
   if(!$("buildBasis"))return;
-  const amort=Math.max(1,num("amort")||3),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs");
+  const amort=getGoliveYr(),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs");
   const f=sel.fx, pct=Math.round(f.share*100);
   const work=BUILDWORK.map(w=>`<div class="comp-line"><span>${w[0]}</span><span class="v">${eurK(f.build*w[1])}</span></div>`).join("");
   $("buildBasis").innerHTML=`
@@ -1748,7 +1748,7 @@ function closeSummary(){$("summaryOverlay").style.display="none";document.body.s
    • usage-per-user growth (intg) — can be larger as people get more value — lifts usage ONLY.
    Token-price drift (pd) moves the usage cost. licM compounds licences with headcount alone. */
 function nfrCashFlowParts(sel){
-  const amort=Math.max(1,num("amort")||3);
+  const amort=getGoliveYr();
   const oneOff=(sel.fx.allocBuild+sel.fx.nfrDashBuild)*amort; // total one-off investment
   const tweaks=sel.fx.nfrDashMaint;                            // dashboard upkeep + changes (recurring)
   const run=sel.fx.allocRun+sel.fx.nfrGov;                    // platform run + governance (recurring)
@@ -1817,7 +1817,7 @@ function recompute(){
   }
   animateValue($("hCum"),cum,eurK);
 
-  const amort=Math.max(1,num("amort")||3),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs"),users=sel.users;
+  const amort=getGoliveYr(),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs"),users=sel.users;
   const shPct=Math.round(sel.fx.share*100);
   const cFixed=[
     [`Platform build · your ${shPct}% share (amortised)`,sel.fx.allocBuild],
@@ -1875,7 +1875,7 @@ function drawFlow(sel,L){
   const svg=$("flowSvg");if(!svg)return;
   const W=760,H=430,padT=40,padB=34;
   const total=sel.platform||1, colH=H-padT-padB, scale=colH/total, px=v=>Math.max(v*scale,2);
-  const amort=Math.max(1,num("amort")||3),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs"),users=sel.users;
+  const amort=getGoliveYr(),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs"),users=sel.users;
   const fxShared=sel.fx.allocatedShared, fxDash=sel.fx.nfrBuildAnnual, fxGov=sel.fx.nfrGov;
   const perU=sel.perUser, usage=sel.usage;
   const Lx0=14,Lx1=150,Mx0=320,Mx1=452,Tx0=600,Tx1=746;
@@ -2198,12 +2198,12 @@ function buildMathSummary(){
 
     ${h("Fixed — shared platform (your share)")}
     ${r("Shared build (one-off)",eurK(f.sharedOneOff),"platform "+eurK(f.build)+" + integration "+eurK(f.integration)+", × platform factor "+f.bf.toFixed(2))}
-    ${r("Amortised over",num("amort")+" yr","→ "+eurK(f.sharedOneOff/Math.max(1,num("amort")))+"/yr before share")}
+    ${r("Amortised over",getGoliveYr()+" yr","→ "+eurK(f.sharedOneOff/getGoliveYr())+"/yr before share")}
     ${r("Shared run / yr",eurK(f.sharedRun),"base + per-system + hosting infra "+eurK(f.hostInfra))}
     ${r("× Your share",Math.round(f.share*100)+"%","allocated build "+eurK(f.allocBuild)+" + run "+eurK(f.allocRun))}
 
     ${h("Fixed — division-specific")}
-    ${r("Dashboards build",eurK(f.nfrDashBuild),eurK(f.uccfg)+" ÷ "+num("amort")+" yr amortised")}
+    ${r("Dashboards build",eurK(f.nfrDashBuild),eurK(f.uccfg)+" ÷ "+getGoliveYr()+" yr amortised")}
     ${r("Dashboards upkeep",eurK(f.nfrDashUpkeep),Math.round(f.upkeepR*100)+"% of build / yr")}
     ${r("Dashboards changes",eurK(f.nfrDashChanges),f.chgN+" change(s) × "+Math.round(f.chgR*100)+"% / yr")}
     ${r("Governance",eurK(f.nfrGov),f.govFTE.toFixed(1)+" FTE × "+eurK(f.govCostFTE))}
@@ -2237,7 +2237,7 @@ function computeMovers(sel,L){
   if(addable.length){state.depts=d0.concat(addable[0].id);syncFunctions();out.push(["Add "+addable[0].label+" to the platform",at()-cur]);state.depts=d0;syncFunctions();}
   const u0=num("users"),uel=$("users");if(uel){uel.value=u0*2;out.push(["Double the user base to "+(u0*2).toLocaleString("de-DE"),at()-cur]);uel.value=u0;}
   const w0=$("warmShare")?$("warmShare").value:"85";if(+w0<95&&$("warmShare")){$("warmShare").value=95;out.push(["Lift dashboard coverage to 95%",at()-cur]);$("warmShare").value=w0;}
-  const ucr=num("ucRate")||90000,amort=Math.max(1,num("amort")||3);
+  const ucr=num("ucRate")||90000,amort=getGoliveYr();
   out.push(["Add one more dashboard",ucr*(1/amort+sel.fx.evolveR)]);
   return {cur,out};
 }
