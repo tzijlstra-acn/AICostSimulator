@@ -2958,6 +2958,16 @@ function defaultScenUsers(id){
   const pct=SCEN_FTE_PCT[id]||0.15;
   return Math.max(1,Math.round(state.orgStaff*(pct/100)));
 }
+function defaultPlatformUsers(){
+  if(!state.scenarios.length)return null;
+  // Sum FTEs across selected scenarios × 0.75 dedup (people span multiple functions)
+  return Math.max(10,Math.round(state.scenarios.reduce((t,id)=>t+defaultScenUsers(id),0)*0.75));
+}
+function syncUsersFromScenarios(){
+  const def=defaultPlatformUsers();if(def===null)return;
+  const usl=$("users");if(!usl)return;
+  usl.value=def;if($("usersV"))$("usersV").textContent=def.toLocaleString("de-DE");
+}
 function scenUsers(id){return state.scenarioUsers[id]!=null?state.scenarioUsers[id]:defaultScenUsers(id);}
 function renderScenarioChips(){
   const el=$("scenChips");if(!el)return;
@@ -2987,15 +2997,20 @@ function updateScenarioNote(){
   if(n){
     const f=fixedYr(state.level);
     const totalReq=state.scenarios.reduce((s,id)=>s+scenReqPerMonth(id),0);
-    note.innerHTML=`<b>${n} dashboard${n===1?"":"s"}</b> · <b>${totalReq.toLocaleString("de-DE")}</b> requests/month across all scenarios · day-0 build ≈ <b>${eurK(f.uccfg)}</b> (≈ ${eurK(f.nfrDashBuild)}/yr amortised). Set the requests/month per scenario to match your actual volume. Clear all to size manually with the sliders instead.`;
-  } else note.innerHTML=`No scenarios selected — sizing manually with the sliders below. Pick scenarios to pre-fill realistic process dashboards.`;
+    const defU=defaultPlatformUsers()||num("users");
+    note.innerHTML=`<b>${n} dashboard${n===1?"":"s"}</b> · <b>${defU.toLocaleString("de-DE")}</b> licensed users (FTE estimate) · <b>${totalReq.toLocaleString("de-DE")}</b> req/month · build ≈ <b>${eurK(f.uccfg)}</b>.`;
+    if($("q2text"))$("q2text").textContent="Platform users (auto from selected functions — override below)";
+  } else {
+    note.innerHTML=`No scenarios selected — sizing manually with the sliders below.`;
+    if($("q2text"))$("q2text").textContent="How many users use the platform?";
+  }
   const ms=$("manualScope");if(ms)ms.classList.toggle("scope-off",n>0);
 }
 function toggleScenario(id){
   const i=state.scenarios.indexOf(id);
   if(i>=0){state.scenarios.splice(i,1);delete state.scenarioRequests[id];delete state.scenarioUsers[id];}
   else state.scenarios.push(id);
-  applyScenarios();renderScenarioChips();state.animate=true;recompute();
+  applyScenarios();renderScenarioChips();syncUsersFromScenarios();state.animate=true;recompute();
 }
 function applyProfile(resetSliders){
   state.ind=resolveProfile();const ind=state.ind;
