@@ -1426,7 +1426,7 @@ const HOSTING={
  sovereign:{label:"EU-sovereign",     sub:"EU-resident cloud", infra:180000,  tokenMult:1.10, note:"EU data residency on sovereign cloud. A modest fixed commitment and a small token premium; EU model options preferred."},
  onprem:   {label:"On-prem / private",sub:"your own GPUs",      infra:1100000, tokenMult:0.30, note:"Self-hosted on your GPU cluster — a large fixed infrastructure + MLOps cost, but low marginal cost per token. Open / self-hostable models only. The usual answer for tier-1 banks and patient data."},
 };
-function hostingDefault(group,region){let h=(group==="bank"||group==="health")?"onprem":(group==="insurance")?"sovereign":"cloud";if(region==="CH"&&h==="cloud")h="sovereign";return h;}
+function hostingDefault(group,region){let h=(group==="health")?"onprem":(group==="bank"||group==="insurance")?"sovereign":"cloud";if(region==="CH"&&h==="cloud")h="sovereign";return h;}
 const HOST_SELF=["llama","mistral_l","aleph"];
 function hostCandidates(){return state.hosting==="onprem"?realModels().filter(m=>HOST_SELF.includes(m.id)):realModels();}
 function hostMult(){return (HOSTING[state.hosting]||HOSTING.cloud).tokenMult;}
