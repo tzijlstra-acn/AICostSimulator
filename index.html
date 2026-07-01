@@ -116,6 +116,23 @@
   .pw-btn:hover{background:var(--purple-d);}
   .pw-err{color:#f472b6;font-size:12px;margin-top:10px;min-height:18px;}
 
+  #snapshotPanel{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);}
+  .snap-row{display:flex;gap:6px;align-items:center;margin-bottom:8px;}
+  .snap-save-btn{flex:1;padding:7px 10px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--mono);}
+  .snap-save-btn:hover{filter:brightness(1.1);}
+  .snap-list{display:flex;flex-direction:column;gap:5px;margin-top:8px;}
+  .snap-item{display:flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer;transition:border-color .15s;}
+  .snap-item:hover{border-color:var(--purple);}
+  .snap-item.active{border-color:var(--purple);background:rgba(161,0,255,.07);}
+  .snap-item-info{flex:1;min-width:0;}
+  .snap-item-name{font-size:11px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .snap-item-meta{font-size:10px;color:var(--muted);margin-top:1px;}
+  .snap-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 4px;line-height:1;}
+  .snap-del:hover{color:var(--magenta);}
+  .snap-compare{font-size:10px;font-weight:700;margin-left:auto;}
+  .snap-compare.up{color:var(--magenta);}
+  .snap-compare.down{color:var(--green);}
+
   /* ===== Viability collapse ===== */
   .ev-toggle{display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:11px;color:var(--muted);padding:6px 0 0;font-family:var(--body);}
   .ev-toggle:hover{color:var(--purple);}
@@ -771,11 +788,12 @@
         <h5>Calibration</h5>
         <div class="adv-row"><label>Model override</label><select id="model"></select></div>
         <div class="adv-row"><label id="fxLabel">EUR / USD rate</label><input type="number" id="eurusd" step="0.001" value="1.137"></div>
-        <div class="adv-row"><label id="perUserLabel">Per-user cost €/user/yr</label><input type="number" id="perUser" placeholder="430" value="430"></div>
+        <div class="adv-row"><label id="perUserLabel">Per-user cost €/user/yr <span class="dq-hint">seat licence + IAM + storage + support; mid-range market benchmark = €430</span></label><input type="number" id="perUser" placeholder="430" value="430"></div>
         <div class="adv-row"><label id="buildLabel">Platform build (<span id="buildCur">€</span>) <button type="button" id="buildReset" class="rsetb">estimate</button></label><input type="number" id="buildAbs" step="50000" value="1600000"></div>
         <div class="adv-row"><label>Integration / system (<span id="intgCur">€</span>) <span class="dq-hint">connector + data mapping per system</span></label><input type="number" id="intgRate" placeholder="35000" value="35000"></div>
         <div class="adv-row"><label>Use-case build · medium reference (<span id="ucCur">€</span>) <span class="dq-hint">to ~85% coverage; simple ×0.5, high ×1.65</span></label><input type="number" id="ucRate" placeholder="90000" value="90000"></div>
         <div class="adv-row"><label>Build amortisation (yrs) <span class="dq-hint">spreads one-off build cost — does not affect recurring run costs (hosting, ops)</span></label><input type="number" id="amort" min="1" max="10" step="1" placeholder="3" value="3"></div>
+        <div class="adv-row"><label>Staff rate (€/day) <span class="dq-hint">assumed analyst day rate — used only for ROI benefit estimate</span></label><input type="number" id="staffRate" placeholder="500" value="500"></div>
         <div class="adv-row"><label>Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
         <div class="adv-row"><label>Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
         <div class="adv-row"><label>Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
@@ -807,6 +825,13 @@
         <div class="dq-hint" style="margin-bottom:8px">From L4, the platform writes back and re-assesses on its own when files or risk change — fresh analysis on the changed data (the framework stays cached). This is machine-triggered volume on top of human questions. 100% = the built-in rate for the level; raise it for a very live environment.</div>
         <div class="adv-slider"><div class="slider-top"><span class="lbl">Re-assessment intensity (L4–L5)</span><span class="slider-val num" id="liveMonV" style="font-size:14px">100%</span></div><input type="range" id="liveMon" min="0" max="300" step="10" value="100"></div>
       </div>
+      <div id="snapshotPanel">
+        <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-family:var(--mono);margin-bottom:8px;font-weight:600">Saved scenarios</div>
+        <div class="snap-row">
+          <button class="snap-save-btn" id="snapSaveBtn">+ Save current settings</button>
+        </div>
+        <div class="snap-list" id="snapList"></div>
+      </div>
     </details>
   </div>
 
@@ -822,7 +847,7 @@
         </div>
         <div class="hero-aside">
           <div class="hero-cum"><span class="hc-k">10-year cumulative · base</span><span class="hc-v num" id="hCum">—</span></div>
-          <div class="toggle" id="chartToggle"><button data-view="outlook" class="on">Cash flow</button><button data-view="amortized">Amortized</button><button data-view="level">By level</button></div>
+          <div class="toggle" id="chartToggle"><button data-view="outlook" class="on">Cash flow</button><button data-view="amortized">Amortized</button><button data-view="level">By level</button><button data-view="roi">ROI</button></div>
           <button type="button" id="summaryBtn" class="summary-btn">⤓ Save summary (PDF)</button>
         </div>
       </div>
@@ -1754,6 +1779,22 @@ function nfrCashFlowParts(sel){
   const run=sel.fx.allocRun+sel.fx.nfrGov;                    // platform run + governance (recurring)
   return {oneOff,run,tweaks};
 }
+function scenarioBenefitYr(id){
+  const s=scenById(id);if(!s)return 0;
+  const rate=num("staffRate")||500;
+  if(s.effortDays&&s.cyclesPerYear){
+    // Team-level process saving: effortDays per cycle × cycles/yr × aiSave × daily rate
+    return s.effortDays*s.cyclesPerYear*(s.aiSave||0.5)*rate;
+  }
+  // Request-volume saving: minutes per request by tier × requests/yr × aiSave × hourly rate
+  const minsPerReq={simple:12,medium:22,high:40}[s.tier]||20;
+  return scenReqPerMonth(id)*12*(s.aiSave||0.5)*minsPerReq/60*(rate/8);
+}
+function totalAnnualBenefit(sel){
+  if(state.scenarios.length>0)return state.scenarios.reduce((s,id)=>s+scenarioBenefitYr(id),0);
+  // Fallback: 18% of platform cost as productivity proxy
+  return sel.platform*0.18;
+}
 function scenarioMults(){const pd=num("priceDelta")/100,hc=num("hcGrowth")/100,intg=num("intGrowth")/100;
   const licM=1+hc;
   const base=(1+hc)*(1+intg)*(1+pd);
@@ -1845,7 +1886,7 @@ function recompute(){
   $("estSub").textContent=`Total ${eurK(sel.platform)}/yr. The three layers behave differently — each column shows what's inside and what makes it move.`;
   $("comp").innerHTML=
     compCol("fixed","Fixed · platform + dashboards",sel.fx.total,platMsg,cFixed,"&lsquo;Platform build&rsquo; is what drops when a platform already exists — see the basis below.")+
-    compCol("user","Licences · per user",sel.perUser,`${eur(rate)} per seat / yr × ${users.toLocaleString("de-DE")} seats. Scales with headcount, not how much they use it.`,cUser,"Editable as a single rate in Advanced; the split shown is indicative.")+
+    compCol("user","Licences · per user",sel.perUser,`${eur(rate)} per seat / yr × ${users.toLocaleString("de-DE")} seats. Scales with headcount, not how much they use it.`,cUser,"Seat licensing (€180): access to the AI platform interface and agent orchestration layer — comparable to Microsoft Copilot M365 (€28/mo) or a custom enterprise AI portal. IAM (€60): identity federation, RBAC and audit-trail storage per user, required for SOC 2 / regulated environments. Storage &amp; memory (€90): per-user vector store for personal context, session memory and retrieval history. Support &amp; enablement (€100): change management, onboarding, help-desk and model-governance training. Market benchmark: enterprise AI copilots typically run €300–€600/seat/yr; this estimate is mid-range at €430. Adjust the single rate in Advanced settings.")+
     compCol("usage","Usage · pay-per-use",sel.usage,(()=>{const re=reassessUsageYr(L);return re>0?`${(ub.tokens/1e6).toFixed(0)}M tokens/yr. ${eurK(sel.usage-re)} from questions people ask + <b>${eurK(re)}</b> from the platform re-assessing on its own when data changes (L${L.n}). The only price- and FX-exposed layer.`:`${(ub.tokens/1e6).toFixed(0)}M tokens / yr. Scales with actual use — the only price- and FX-exposed layer.`;})(),cUsage,"Caching, model routing and batch already applied; retries included.");
   $("estFoot").textContent="Estimate, not a quote — replace with firm figures during scoping. Higher maturity levels cost more to build but run each task more cheaply.";
   renderBuildBasis(sel,L);
@@ -2437,6 +2478,38 @@ function drawChart(all,sel){
     hint="Amortized view: build cost is spread over the amortization period; each year shows an equal annual charge.";
     const leg=$("chartLegend");if(leg)leg.innerHTML=`<div class="it"><span class="ln" style="border-color:var(--purple-br)"></span>Annual cost · amortized fixed</div>`;
 
+  } else if(state.view==="roi"){
+    const yrs=[0,1,2,3,4,5,6,7,8,9,10];xs=yrs;
+    cfp=nfrCashFlowParts(sel);
+    const annualBenefit=totalAnnualBenefit(sel);
+    const roiRows=yrs.map(t=>{
+      if(t===0)return{benefit:0,cost:0,cumBenefit:0,cumCost:0,cum:0};
+      const ramp=ADOPT_RAMP[t];
+      const hcFactor=Math.pow(1+sc.hc,Math.max(0,t-GOLIVE_YR));
+      const benefit=t<GOLIVE_YR?0:annualBenefit*ramp*hcFactor;
+      const build=BUILD_SCHED[t]*cfp.oneOff;
+      const run=t>=GOLIVE_YR?cfp.run:0;
+      const tweaks=t>=GOLIVE_YR?cfp.tweaks:0;
+      const usage=t>=GOLIVE_YR?sel.usage*ADOPT_RAMP[t]*Math.pow(sc.base,Math.max(0,t-GOLIVE_YR)):0;
+      const lic=t>=GOLIVE_YR?sel.perUser*ADOPT_RAMP[t]*Math.pow(sc.licM,Math.max(0,t-GOLIVE_YR)):0;
+      const cost=build+run+tweaks+lic+usage;
+      return{benefit,cost,cum:0};// cum filled below
+    });
+    let cb=0,cc=0;
+    roiRows.forEach(r=>{cb+=r.benefit;cc+=r.cost;r.cum=cb-cc;r.cumBenefit=cb;r.cumCost=cc;});
+    base=roiRows.map(r=>r.cum);
+    xlabels=yrs.map(t=>t===0?"Now":"Yr "+t);
+    let beYr=null;
+    for(let t=1;t<=10;t++){if(roiRows[t].cum>=0&&beYr===null)beYr=t;}
+    const noBenefitData=state.scenarios.length===0||!state.scenarios.some(id=>{const s=scenById(id);return s&&(s.effortDays||s.perYear);});
+    hint=beYr!=null?`Break-even at Year ${beYr}. After that, cumulative value grows positive.`:"Investment exceeds estimated savings over 10 years — consider reducing build scope or adding high-value scenarios.";
+    if(noBenefitData)hint="No scenarios selected — showing 18% productivity proxy. Select scenarios for a data-driven ROI.";
+    const leg2=$("chartLegend");if(leg2)leg2.innerHTML=
+      `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(19,192,138,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Cumulative net value</div>`+
+      (beYr?`<div class="it" style="color:var(--green)">Break-even Yr ${beYr}</div>`:`<div class="it" style="color:var(--magenta)">No break-even in 10 yrs</div>`);
+    // Store ROI data for chart rendering
+    cfp._roiRows=roiRows;cfp._beYr=beYr;
+
   } else {
     xs=[1,2,3,4,5];
     base=all.map(a=>a.fx.total+a.perUser*sc.licM+a.usage*sc.base);
@@ -2451,7 +2524,9 @@ function drawChart(all,sel){
   }
   $("chartHint").textContent=hint;
   const allV=[...(best||[]),...base,...(worst||[])];
-  const maxV=Math.max(...allV)*1.12||1,minV=0;
+  const rawMax=Math.max(...allV);const rawMin=Math.min(...base);
+  const maxV=(rawMax>0?rawMax*1.12:Math.abs(rawMin)*0.3)||1;
+  const minV=state.view==="roi"?(rawMin<0?rawMin*1.15:0):0;
   const n=xs.length;
   const X=i=>padL+(i/(n-1))*innerW;
   const Y=v=>padT+(1-(v-minV)/(maxV-minV||1))*innerH;
@@ -2514,6 +2589,47 @@ function drawChart(all,sel){
       note:i===0?"Starting point.":`Year ${i}: build is amortized evenly — no front-loaded spike. Licences and usage grow slowly year-on-year.`
     }));
     mainContent=areaLine(base,X,Y,n);
+
+  } else if(state.view==="roi"){
+    const roiRows=cfp._roiRows||[];const beYr=cfp._beYr;
+    CHARTPTS=base.map((v,i)=>{
+      const r=roiRows[i]||{};
+      return{px:X(i),py:Y(v),title:i===0?"Pre-investment":"Year "+i,total:v,
+        rows:i===0?[["No investment yet",0]]:[
+          ["Annual benefit (time savings)",r.benefit||0],
+          ["Annual cost",r.cost||0],
+          ["Cumulative benefit",r.cumBenefit||0],
+          ["Cumulative cost",r.cumCost||0],
+        ],
+        range:null,
+        note:i===0?"Decision point — no spend committed."
+          :v<0?`Year ${i}: still in the red by ${eurK(Math.abs(v))}. Costs are front-loaded; benefits ramp with adoption.`
+          :`Year ${i}: cumulative net positive by ${eurK(v)} — investment has paid back.`
+      };
+    });
+    // Split area: green above zero, purple below
+    const zeroY=Y(0).toFixed(1);
+    const pts=base.map((v,i)=>X(i).toFixed(1)+","+Y(v).toFixed(1)).join(" ");
+    const botLine=`${X(n-1).toFixed(1)},${zeroY} ${X(0).toFixed(1)},${zeroY}`;
+    const topLine=`${X(0).toFixed(1)},${zeroY} ${X(n-1).toFixed(1)},${zeroY}`;
+    const linePath=base.map((v,i)=>(i===0?"M":"L")+X(i).toFixed(1)+","+Y(v).toFixed(1)).join(" ");
+    const dots=base.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3.2" fill="${v>=0?"#13c08a":"#f472b6"}" stroke="#1a0d2e" stroke-width="2"/>`).join("");
+    const hits=base.map((v,i)=>`<circle class="ch-hit" data-i="${i}" cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="20" fill="transparent"/>`).join("");
+    // Zero axis
+    const zAxis=`<line x1="${padL}" y1="${zeroY}" x2="${W-padR}" y2="${zeroY}" stroke="rgba(19,192,138,0.45)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+    const zLabel=`<text x="${padL-10}" y="${(+zeroY+3.5).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(19,192,138,0.7)">0</text>`;
+    // Break-even marker
+    let beMarker="";
+    if(beYr!=null&&beYr<=10){
+      const beX=X(beYr).toFixed(1);
+      beMarker=`<line x1="${beX}" y1="${padT}" x2="${beX}" y2="${padT+innerH}" stroke="#13c08a" stroke-width="1.5" stroke-dasharray="4 3"/>`+
+        `<text x="${beX}" y="${padT-8}" text-anchor="middle" font-family="Inter" font-size="9" fill="#13c08a" font-weight="700">Break-even</text>`;
+    }
+    mainContent=zAxis+zLabel+
+      `<polygon points="${pts} ${botLine}" fill="rgba(255,45,142,0.15)"/>`+
+      `<polygon points="${pts} ${topLine}" fill="rgba(19,192,138,0.18)"/>`+
+      `<path d="${linePath}" fill="none" stroke="#c061ff" stroke-width="2.5" stroke-linecap="round" filter="url(#glow)"/>`+
+      beMarker+dots+`<circle id="chHL" r="6" fill="#c061ff" stroke="#1a0d2e" stroke-width="2.5" opacity="0"/>`+hits;
 
   } else {
     /* by-level line chart with best/worst */
@@ -2776,7 +2892,7 @@ function wire(){
   sl("intGrowth","intGrowthV",v=>"+"+v+"%");
   sl("warmShare","warmShareV",v=>v+"%");
   if($("liveMon"))sl("liveMon","liveMonV",v=>v+"%");
-  ["model","eurusd","perUser","intgRate","ucRate","amort","ucUpkeep","ucChanges","ucChangeCost","nFollow"].forEach(id=>$(id)&&$(id).addEventListener("input",recompute));
+  ["model","eurusd","perUser","intgRate","ucRate","amort","ucUpkeep","ucChanges","ucChangeCost","nFollow","staffRate"].forEach(id=>$(id)&&$(id).addEventListener("input",recompute));
   $("summaryBtn").addEventListener("click",openSummary);
   if($("mathBtn"))$("mathBtn").addEventListener("click",openMath);
   if($("mathClose"))$("mathClose").addEventListener("click",closeMath);
@@ -2806,6 +2922,7 @@ function wire(){
   $("region").value=state.region;
   selSeg("segLevel","lv",3);selSeg("segTier","tier","medium");
   renderScenarioChips();applyScenarios();
+  renderSnapList();
   renderUC();setIndustry("bank",true);
 }
 wire();
@@ -2844,6 +2961,74 @@ document.querySelectorAll(".price-preset").forEach(b=>{
     btn.textContent=open?"?":"×";
   });
 })();
+
+// Snapshot save/restore
+const SNAP_KEY="ai_snapshots_v2";
+const SNAP_INPUTS=["users","systems","ucs","intensity","amort","perUser","eurusd","intgRate","ucRate","ucUpkeep","ucChanges","ucChangeCost","nFollow","priceDelta","hcGrowth","intGrowth","warmShare","staffRate","buildAbs"];
+const SNAP_STATE=["level","tier","hosting","orgSize","orgStaff","divisions","platformExists","platProgress","region","scenarios","scenarioRequests","scenarioUsers","depts"];
+
+function snapGetInputs(){
+  const o={};
+  SNAP_INPUTS.forEach(id=>{const el=$(id);if(el)o[id]=el.value;});
+  return o;
+}
+function snapGetState(){
+  const o={};
+  SNAP_STATE.forEach(k=>{o[k]=JSON.parse(JSON.stringify(state[k]!=null?state[k]:null));});
+  return o;
+}
+function snapLoad(){try{return JSON.parse(localStorage.getItem(SNAP_KEY)||"[]");}catch{return[];}}
+function snapSave(snaps){localStorage.setItem(SNAP_KEY,JSON.stringify(snaps));}
+
+function snapApply(snap){
+  // Restore state fields first so setIndustry resolves the right industry
+  Object.entries(snap.state||{}).forEach(([k,v])=>{if(v!=null)state[k]=JSON.parse(JSON.stringify(v));});
+  // first=true → applyProfile(false) → does NOT reset sliders
+  setIndustry(state.industry&&state.industry.id||"bank",true);
+  // Restore inputs AFTER setIndustry so they are not overwritten by applyProfile
+  Object.entries(snap.inputs||{}).forEach(([id,v])=>{const el=$(id);if(el)el.value=v;});
+  // Sync derived UI
+  syncOrgSlider();syncPlatSlider();renderDeptChips();
+  if($("divisionsNote"))$("divisionsNote").textContent=`Your division funds ${Math.round(100/Math.max(1,state.divisions))}% of platform build & run`;
+  renderScenarioChips();applyScenarios();
+  [...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x.dataset.view===state.view));
+  state.animate=true;recompute();
+}
+
+function renderSnapList(){
+  const el=$("snapList");if(!el)return;
+  const snaps=snapLoad();
+  // get current platform total for comparison
+  const all=[1,2,3,4,5].map(levelTotals),cur=all[state.level-1].platform;
+  if(!snaps.length){el.innerHTML=`<div style="font-size:11px;color:var(--muted);padding:4px 0">No saved scenarios yet.</div>`;return;}
+  el.innerHTML=snaps.map((s,i)=>{
+    const diff=s.platform&&cur?(s.platform-cur)/cur:null;
+    const cmp=diff!=null?`<span class="snap-compare ${diff>0?'up':'down'}">${diff>0?'+':''}${Math.round(diff*100)}%</span>`:"";
+    return `<div class="snap-item" data-snap-i="${i}">
+      <div class="snap-item-info"><div class="snap-item-name">${s.name}</div><div class="snap-item-meta">${eurK(s.platform||0)}/yr · L${s.state&&s.state.level||'?'} · ${new Date(s.ts).toLocaleDateString("de-DE")}</div></div>
+      ${cmp}<button class="snap-del" data-snap-del="${i}" title="Delete">×</button>
+    </div>`;
+  }).join("");
+}
+
+$("snapSaveBtn")&&$("snapSaveBtn").addEventListener("click",()=>{
+  const name=prompt("Name this scenario (e.g. 'Conservative — 3yr amort')","Scenario "+new Date().toLocaleDateString("de-DE"));
+  if(!name)return;
+  const all=[1,2,3,4,5].map(levelTotals);
+  const snaps=snapLoad();
+  snaps.push({name,ts:Date.now(),platform:all[state.level-1].platform,inputs:snapGetInputs(),state:snapGetState()});
+  snapSave(snaps);renderSnapList();
+});
+
+$("snapList")&&$("snapList").addEventListener("click",e=>{
+  const del=e.target.closest("[data-snap-del]");
+  if(del){const snaps=snapLoad();snaps.splice(+del.dataset.snapDel,1);snapSave(snaps);renderSnapList();return;}
+  const item=e.target.closest("[data-snap-i]");
+  if(item){
+    const snaps=snapLoad();const snap=snaps[+item.dataset.snapI];
+    if(snap){snapApply(snap);renderSnapList();}
+  }
+});
 </script>
 </body>
 </html>
