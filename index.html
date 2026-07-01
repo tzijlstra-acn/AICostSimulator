@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Cost Estimator — Accenture</title>
+<title>Accenture AI Cost Estimator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
@@ -79,10 +79,11 @@
   .scen-chip:hover{border-color:var(--purple);}
   .scen-chip.on{background:var(--purple-tint);border-color:var(--purple);}
   .sc-info{flex:0 0 auto;align-self:flex-start;width:26px;border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:8px;cursor:pointer;font-size:12px;transition:.15s;}
-  .scen-req{display:flex;align-items:center;gap:6px;padding:4px 0 4px 8px;}
-  .sr-lbl{font-size:11px;color:var(--muted);white-space:nowrap;}
-  .sr-inp{width:72px;padding:3px 6px;border:1px solid rgba(255,255,255,0.15);border-radius:5px;background:rgba(255,255,255,0.06);color:var(--fg);font-size:12px;font-family:var(--mono);text-align:right;}
-  .sr-inp:focus{outline:none;border-color:var(--purple-br);}
+  .scen-req{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px;background:rgba(255,255,255,0.04);border-radius:8px;margin-top:4px;width:100%;box-sizing:border-box;}
+  .sr-field{display:flex;flex-direction:column;gap:4px;}
+  .sr-lbl{font-size:10px;color:var(--muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono);}
+  .sr-inp{width:100%;padding:6px 8px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(255,255,255,0.07);color:var(--fg);font-size:13px;font-family:var(--mono);text-align:right;box-sizing:border-box;transition:border-color .15s;}
+  .sr-inp:focus{outline:none;border-color:var(--purple-br);background:rgba(161,0,255,.08);}
   .sc-effort{display:inline-block;padding:1px 6px;border-radius:4px;background:rgba(19,192,138,0.15);color:#13c08a;font-size:10px;font-weight:600;margin-right:2px;}
   .scr-value{background:rgba(19,192,138,0.06);border-left:2px solid #13c08a !important;}
   .sc-info:hover{border-color:var(--purple);color:var(--purple-deep);background:#faf6ff;}
@@ -663,7 +664,7 @@
 
 <div id="pwGate">
   <div class="pw-box">
-    <div class="pw-logo">AI Cost Estimator</div>
+    <div class="pw-logo">Accenture AI Cost Estimator</div>
     <div class="pw-sub">Accenture · internal estimation aid</div>
     <input class="pw-input" type="password" id="pwInput" placeholder="Enter password" autocomplete="off">
     <button class="pw-btn" id="pwBtn">Enter</button>
@@ -672,7 +673,7 @@
 </div>
 
 <div class="bar">
-  <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>AI Cost Estimator</span></span></div>
+  <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>Accenture AI Cost Estimator</span></span></div>
   <div class="industries" id="industries"></div>
 </div>
 
@@ -870,11 +871,11 @@
     </div>
 
     <div class="rtabs" id="rtabs">
-      <button data-tab="breakdown" class="on">The cost</button>
-      <button data-tab="connect">What drives it</button>
-      <button data-tab="perf">18-month gains</button>
-      <button data-tab="inquiry">One question</button>
-      <button data-tab="models">Models &amp; math</button>
+      <button data-tab="breakdown" class="on">Annual Cost</button>
+      <button data-tab="connect">Cost Drivers</button>
+      <button data-tab="perf">Roadmap</button>
+      <button data-tab="inquiry">Per Request</button>
+      <button data-tab="models">Methodology</button>
     </div>
 
     <div id="tabBreakdown">
@@ -948,7 +949,7 @@
         <div class="reqflow" id="reqFlow"></div>
       </div>
       <div class="card">
-        <div class="est-head"><h3>Why a question is cheap: the savings chain</h3><span class="ai-pill" id="wfPill">L3</span></div>
+        <div class="est-head"><h3>How AI drives cost down: the optimisation chain</h3><span class="ai-pill" id="wfPill">L3</span></div>
         <div class="est-sub" id="wfSub"></div>
         <div class="flow-wrap"><svg id="wfSvg" viewBox="0 0 760 372" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
         <p class="footnote">Each step is a real lever in the question chain — same answer, progressively cheaper. The biggest is the last: one expensive heavy lift, <b>reused</b> across most questions instead of repeated.</p>
@@ -1056,7 +1057,7 @@
 
     <div class="card ev-card" id="evCard">
       <div class="ev-head">
-        <div class="ev-head-l"><div class="ev-eyebrow">Economic viability · the verdict</div><div class="ev-verdict" id="evVerdict">—</div></div>
+        <div class="ev-head-l"><div class="ev-eyebrow">Investment viability · verdict</div><div class="ev-verdict" id="evVerdict">—</div></div>
         <div class="ev-score-wrap"><div class="ev-grade" id="evGrade">—</div><div class="ev-score num" id="evScore"></div></div>
       </div>
       <div class="ev-bar"><span id="evBar"></span></div>
@@ -1468,7 +1469,19 @@ const ORGSIZE={
  large:{label:"20,000+ staff",min:20000,max:100000,step:1000,def:40000,platMin:1.2,platMax:2.0},
 };
 function orgFactor(){const b=ORGSIZE[state.orgSize];if(!b)return 1;const s=Math.min(b.max,Math.max(b.min,state.orgStaff||b.def));const t=(b.max-b.min)>0?(s-b.min)/(b.max-b.min):0;return b.platMin+t*(b.platMax-b.platMin);}
-function syncOrgSlider(){const b=ORGSIZE[state.orgSize],sl=$("orgStaff");if(!sl||!b)return;let s=state.orgStaff;if(s==null||s<b.min||s>b.max)s=b.def;state.orgStaff=s;sl.min=b.min;sl.max=b.max;sl.step=b.step;sl.value=s;if($("orgStaffV"))$("orgStaffV").textContent=Math.round(s).toLocaleString("de-DE");}
+function syncOrgSlider(){
+  const b=ORGSIZE[state.orgSize],sl=$("orgStaff");if(!sl||!b)return;
+  let s=state.orgStaff;if(s==null||s<b.min||s>b.max)s=b.def;state.orgStaff=s;
+  sl.min=b.min;sl.max=b.max;sl.step=b.step;sl.value=s;
+  if($("orgStaffV"))$("orgStaffV").textContent=Math.round(s).toLocaleString("de-DE");
+  // Users slider max = org staff count (can't have more users than staff)
+  const usl=$("users");
+  if(usl){
+    const step=Math.max(10,Math.round(state.orgStaff/300)*10);
+    usl.max=state.orgStaff;usl.step=step;
+    if(+usl.value>state.orgStaff){usl.value=state.orgStaff;if($("usersV"))$("usersV").textContent=state.orgStaff.toLocaleString("de-DE");}
+  }
+}
 function syncFunctions(){state.functions=1+(state.depts||[]).filter(d=>d!=="nfr").length;}
 function renderDeptChips(){
   const el=$("deptChips");if(!el)return;
@@ -2748,7 +2761,7 @@ function renderScenarioChips(){
       :"";
     return `<div class="scen-item${on?' on':''}">
       <div class="scen-chip${on?' on':''}" data-scen="${s.id}" role="button" tabindex="0"><span class="sc-name"><b>${s.name}</b>${on?'<span class="sc-tick">✓</span>':''}</span><span class="sc-meta">${effortMo?`<span class="sc-effort">~${effortMo} FTE-mo/yr</span>`:''}${on?'':'<span class="sc-tier t-'+s.tier+'">'+s.tier+' build</span>'}<span class="sc-dep">${dep?dep.label:''}</span></span></div>
-      ${on?`<div class="scen-req"><label class="sr-lbl">Users</label><input type="number" class="sr-inp" data-scen-usr="${s.id}" min="1" step="5" value="${scenUsers(s.id)}" style="width:56px"><label class="sr-lbl" style="margin-left:8px">Req / month</label><input type="number" class="sr-inp" data-scen-req="${s.id}" min="1" step="10" value="${scenReqPerMonth(s.id)}"></div>`:''}
+      ${on?`<div class="scen-req"><div class="sr-field"><label class="sr-lbl">Users</label><input type="number" class="sr-inp" data-scen-usr="${s.id}" min="1" step="5" value="${scenUsers(s.id)}"></div><div class="sr-field"><label class="sr-lbl">Req / month</label><input type="number" class="sr-inp" data-scen-req="${s.id}" min="1" step="10" value="${scenReqPerMonth(s.id)}"></div></div>`:''}
       <button type="button" class="sc-info" data-info="${s.id}" title="What this dashboard does &amp; why it costs what it does">ⓘ</button>
       <div class="sc-reveal" id="screv-${s.id}">
         <div class="scr-row"><span class="scr-k">What the dashboard shows</span><span class="scr-v">${s.dash}</span></div>
@@ -2911,7 +2924,7 @@ function wire(){
     row.addEventListener("click",e=>{const b=e.target.closest(".box");if(!b)return;state[key]=b.dataset.v;[...row.children].forEach(x=>x.classList.toggle("on",x===b));if(key==="orgSize")syncOrgSlider();if(key==="platformExists")syncPlatSlider();state.animate=true;recompute();});
   });
   if($("deptChips"))$("deptChips").addEventListener("click",e=>{const b=e.target.closest("[data-dept]");if(!b||b.disabled)return;toggleDept(b.dataset.dept);});
-  $("orgStaff").addEventListener("input",e=>{state.orgStaff=parseFloat(e.target.value)||ORGSIZE[state.orgSize].def;$("orgStaffV").textContent=Math.round(state.orgStaff).toLocaleString("de-DE");state.animate=true;recompute();});
+  $("orgStaff").addEventListener("input",e=>{state.orgStaff=parseFloat(e.target.value)||ORGSIZE[state.orgSize].def;$("orgStaffV").textContent=Math.round(state.orgStaff).toLocaleString("de-DE");syncOrgSlider();state.animate=true;recompute();});
   $("platProg").addEventListener("input",e=>{state.platProgress=parseInt(e.target.value);$("platProgV").textContent=state.platProgress+"%";state.animate=true;recompute();});
   syncOrgSlider();renderDeptChips();syncPlatSlider();
   $("buildAbs").addEventListener("input",e=>{buildOverride[state.level]=parseFloat(e.target.value)||0;recompute();});
