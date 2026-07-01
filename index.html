@@ -194,6 +194,43 @@
   .jm-track{position:relative;height:9px;background:#f0ebf7;border-radius:5px;}
   .jm-fill{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:linear-gradient(90deg,#5fd3a3,#1f9d6b);transition:width 1.1s cubic-bezier(.4,0,.2,1);}
   .jm-tick{position:absolute;top:-2px;width:2px;height:13px;background:var(--faint);z-index:2;border-radius:1px;}
+  /* Maturity roadmap visual */
+  .rdmap{display:flex;flex-direction:column;gap:20px;margin-top:4px}
+  .rdmap-track{overflow-x:auto;padding:4px 0 8px}
+  .rdl-row{display:flex;align-items:flex-start;gap:0;min-width:480px}
+  .rdl{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:0 2px;position:relative;padding-top:20px}
+  .rdl-sep{flex:1;height:2px;background:var(--line);align-self:flex-start;margin-top:33px;min-width:10px}
+  .rdl-sep.rdl-sep-on{background:var(--purple)}
+  .rdl-badge{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:9px;font-family:var(--mono);font-weight:700;letter-spacing:.07em;padding:1px 6px;border-radius:4px;white-space:nowrap}
+  .rdl-now-b{background:rgba(19,192,138,.12);color:var(--green)}
+  .rdl-tgt-b{background:var(--purple-tint);color:var(--purple-d)}
+  .rdl-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--paper);position:relative;z-index:1}
+  .rdl-now .rdl-dot{width:22px;height:22px;border-color:var(--green);background:var(--green);box-shadow:0 0 0 4px rgba(19,192,138,.15)}
+  .rdl-tgt .rdl-dot{width:22px;height:22px;border-color:var(--purple);background:var(--purple);box-shadow:0 0 0 4px rgba(161,0,255,.12)}
+  .rdl-mid .rdl-dot{border-color:var(--purple);background:var(--purple-tint)}
+  .rdl-past .rdl-dot{border-color:var(--green);background:var(--green)}
+  .rdl-fut{opacity:.42}
+  .rdl-lv{font-size:10px;font-family:var(--mono);font-weight:700;color:var(--muted);margin-top:5px}
+  .rdl-nm{font-size:11px;font-weight:600;color:var(--text)}
+  .rdl-now .rdl-lv,.rdl-now .rdl-nm{color:var(--green)}
+  .rdl-tgt .rdl-lv,.rdl-tgt .rdl-nm{color:var(--purple-d)}
+  .rdl-cp{font-size:10px;color:var(--muted);line-height:1.3;max-width:120px;margin-top:1px}
+  .rdl-pc{font-size:10px;font-family:var(--mono);margin-top:3px}
+  .rdl-auto{color:var(--green)}
+  .rdl-rev{color:var(--purple)}
+  .rdmap-ms{padding-left:12px;border-left:2px solid var(--line);margin-left:4px}
+  .rdmap-ms-h{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:10px}
+  .rmt-item{display:flex;gap:14px;padding:4px 0}
+  .rmt-mo{font-size:10px;font-family:var(--mono);color:var(--faint);min-width:44px;padding-top:2px;white-space:nowrap}
+  .rmt-rest{display:flex;flex-direction:column;gap:1px}
+  .rmt-t{font-size:12px;font-weight:600;color:var(--text)}
+  .rmt-d{font-size:11px;color:var(--muted);line-height:1.45}
+  .rmt-gap{height:10px;border-left:1px dashed var(--line-soft);margin-left:-12px;padding-left:11px}
+  .rdmap-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:560px){.rdmap-kpis{grid-template-columns:repeat(2,1fr)}}
+  .rdmk{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+  .rdmk-v{font-size:17px;font-weight:700;font-family:var(--display);color:var(--purple-d)}
+  .rdmk-k{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
   .scale-tile,.mv-row,.scen-chip{transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease;}
   .scale-tile:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(122,20,212,.07);}
   @media(prefers-reduced-motion:reduce){.jstage,.jarrow,.jm-fill,.rf-row,.rf-meter,.scale-tile{transition:none!important;}}
@@ -870,6 +907,19 @@
       <div class="hint-click" id="chartHint"></div>
     </div>
 
+    <div class="card ev-card" id="evCard">
+      <div class="ev-head">
+        <div class="ev-head-l"><div class="ev-eyebrow">Investment viability · verdict</div><div class="ev-verdict" id="evVerdict">—</div></div>
+        <div class="ev-score-wrap"><div class="ev-grade" id="evGrade">—</div><div class="ev-score num" id="evScore"></div></div>
+      </div>
+      <div class="ev-bar"><span id="evBar"></span></div>
+      <button type="button" class="ev-toggle" id="evToggle" onclick="const c=document.getElementById('evCols');const open=c.style.display!=='none';c.style.display=open?'none':'grid';this.textContent=open?'▾ Show detail':'▴ Hide detail'">▾ Show detail</button>
+      <div class="ev-cols" id="evCols" style="display:none">
+        <div class="ev-col pro"><div class="ev-col-h">Why this makes sense</div><ul id="evPros"></ul></div>
+        <div class="ev-col con"><div class="ev-col-h">What weighs against it</div><ul id="evCons"></ul></div>
+      </div>
+    </div>
+
     <div class="rtabs" id="rtabs">
       <button data-tab="breakdown" class="on">Annual Cost</button>
       <button data-tab="connect">Cost Drivers</button>
@@ -965,17 +1015,6 @@
         <div class="scale-grid" id="scaleTiles"></div>
       </div>
       <div class="card">
-        <div class="est-head"><h3>Where the money goes</h3><span class="ai-pill">live</span></div>
-        <div class="est-sub">Each answer feeds one of three layers — Fixed, Licences and Usage — which sum to your annual total.</div>
-        <div class="flow-wrap"><svg id="flowSvg" viewBox="0 0 760 430" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
-        <p class="footnote" id="flowNote" style="margin-top:2px"></p>
-        <div class="flow-legend">
-          <div class="it"><span class="sw" style="background:#6e5aa6"></span>Fixed · platform + dashboards</div>
-          <div class="it"><span class="sw" style="background:#9b4ff0"></span>Licences · per user</div>
-          <div class="it"><span class="sw" style="background:#e07bff"></span>Usage · pay-per-use</div>
-        </div>
-      </div>
-      <div class="card">
         <button type="button" class="ev-toggle" id="drivesDeepBtn" onclick="const c=document.getElementById('drivesDeep');const open=c.style.display!=='none';c.style.display=open?'none':'block';this.querySelector('.dd-arrow').textContent=open?'▾':'▴'">
           <span class="dd-arrow">▾</span>&nbsp;Deep-dive: how every number is built
         </button>
@@ -1003,7 +1042,7 @@
 
     <div id="tabPerf" style="display:none">
       <div class="card">
-        <div class="est-head"><h3>Your climb · today → 18 months</h3><button type="button" class="rf-replay" id="jrnReplay">▶ Replay</button></div>
+        <div class="est-head"><h3>Maturity roadmap · where you stand</h3></div>
         <div class="est-sub" id="jrnSub"></div>
         <div class="journey" id="journey"></div>
       </div>
@@ -1055,18 +1094,6 @@
       </div>
     </div>
 
-    <div class="card ev-card" id="evCard">
-      <div class="ev-head">
-        <div class="ev-head-l"><div class="ev-eyebrow">Investment viability · verdict</div><div class="ev-verdict" id="evVerdict">—</div></div>
-        <div class="ev-score-wrap"><div class="ev-grade" id="evGrade">—</div><div class="ev-score num" id="evScore"></div></div>
-      </div>
-      <div class="ev-bar"><span id="evBar"></span></div>
-      <button type="button" class="ev-toggle" id="evToggle" onclick="const c=document.getElementById('evCols');const open=c.style.display!=='none';c.style.display=open?'none':'grid';this.textContent=open?'▾ Show detail':'▴ Hide detail'">▾ Show detail</button>
-      <div class="ev-cols" id="evCols" style="display:none">
-        <div class="ev-col pro"><div class="ev-col-h">Why this makes sense</div><ul id="evPros"></ul></div>
-        <div class="ev-col con"><div class="ev-col-h">What weighs against it</div><ul id="evCons"></ul></div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1199,6 +1226,13 @@ const SCENARIOS=[
    dash:"IBS map with dependency chains, impact tolerance thresholds, scenario test results and remediation plans — refreshed after each exercise or significant operational change.",
    why:"Medium generation. Maps dependencies and reasons across service chains and impact scenarios; moderately complex per service line."},
 ];
+/* Estimated FTE as % of orgStaff typically working in each function at a regulated bank.
+   Used to seed realistic default user counts per scenario, scaled to org size. */
+const SCEN_FTE_PCT={
+  rcsa:0.30, control:0.35, tprm:0.15, issue:0.20, regch:0.15, policy:0.30,
+  kri:0.12, fincrime:0.40, audit:0.25, cyber:0.18, contract:0.12, dpia:0.08,
+  icaap:0.05, corep:0.10, mrm:0.06, credit:0.30, esg:0.07, opres:0.12,
+};
 const DEPTS=[
  {id:"nfr",        label:"Risk & Compliance", core:true, scen:["rcsa","control","issue","kri","opres"]},
  {id:"compliance", label:"Compliance",                    scen:["regch","policy","fincrime"]},
@@ -1426,7 +1460,8 @@ function coldTaskEUR(tier,L){return taskParts(tier,L).coldE;}
 function reassessMult(L){const base={1:0,2:0,3:0.15,4:0.6,5:1.3}[L.n]||0;const scale=$("liveMon")?num("liveMon")/100:1;return base*scale;}
 function defaultReqPerMonth(id){
   const s=scenById(id);if(!s)return 100;
-  return Math.max(10,Math.round(num("users")*(s.adopt/100)*(s.perYear/12)));
+  const fte=defaultScenUsers(id);
+  return Math.max(1,Math.round(fte*(s.perYear/12)));
 }
 function scenReqPerMonth(id){
   return state.scenarioRequests[id]!=null?state.scenarioRequests[id]:defaultReqPerMonth(id);
@@ -2082,33 +2117,40 @@ let rfTimers=[];
 function renderJourney(all,sel,L){
   const el=$("journey");if(!el)return;
   const base=Math.min(L.n,Math.max(1,+state.baseLevel||1)),target=L.n;
-  const plat=state.platProgress;
-  const platLbl=plat==="yes"?"Platform already in place":plat==="building"?"Platform part-built":"Greenfield — none yet";
-  const struct=(plat==="yes"||base>=3)?"You bring a structured foundation to build on":"Limited structure today — more gets built from scratch";
-  const nUC=(state.scenarios&&state.scenarios.length)?state.scenarios.length:state.ucs;
-  const inputs=[["Users to serve",sel.users.toLocaleString("de-DE")],["Source systems",state.systems],["Starting point","L"+base+" "+LEVELS[base-1].name.split(" ")[0]],["Foundation",platLbl]];
-  const impl=[["Dashboards built",nUC],["Capability climb","L"+base+" → L"+target],["Your platform share",Math.round(sel.fx.share*100)+"%"],["Oversight added",sel.fx.govFTE.toFixed(1)+" FTE"]];
-  const gains=[{k:"Work automated",from:COVN[base],to:COVN[target],g:v=>v,fmt:v=>Math.round(v)+"%"},{k:"Human review needed",from:HUMANN[base],to:HUMANN[target],g:v=>100-v,fmt:v=>Math.round(v)+"%"}];
-  const liveOn=reassessMult(L)>0;
-  const cost=sel.platform, build=sel.fx.oneOff, runYr=sel.fx.allocRun+sel.fx.runGovOps+sel.usage;
-  const chip=a=>`<div class="js-chip"><span class="js-cv">${a[1]}</span><span class="js-ck">${a[0]}</span></div>`;
-  const g2=v=>Math.max(2,Math.min(100,v));
-  const gainRows=gains.map(m=>{const fg=g2(m.g(m.from)),tg=g2(m.g(m.to));return `<div class="jm-row"><div class="jm-top"><span class="jm-lbl">${m.k}</span><span class="jm-delta"><span class="jm-from">${m.fmt(m.from)}</span> → <b>${m.fmt(m.to)}</b></span></div><div class="jm-track"><span class="jm-fill" data-from="${fg.toFixed(1)}" data-to="${tg.toFixed(1)}" style="width:${fg}%"></span><span class="jm-tick" style="left:${fg}%"></span></div></div>`;}).join("");
-  const extraGain=liveOn?`<div class="js-gn">＋ Watches the data and re-assesses on its own</div>`:`<div class="js-gn">＋ Answers on demand, with a full audit trail</div>`;
-  el.innerHTML=`
-  <div class="jflow">
-    <div class="jstage" data-s="0"><div class="js-h">① What you start with</div><div class="js-sub">your inputs, as-is</div><div class="js-chips">${inputs.map(chip).join("")}</div><div class="js-note">${struct}</div></div>
-    <div class="jarrow" data-s="0">→</div>
-    <div class="jstage" data-s="1"><div class="js-h">② What gets built on top</div><div class="js-sub">added as a result</div><div class="js-chips">${impl.map(chip).join("")}</div><div class="js-note">Shared platform — your division funds about 1/${state.functions} of it</div></div>
-    <div class="jarrow" data-s="1">→</div>
-    <div class="jstage" data-s="2"><div class="js-h">③ Gains vs cost</div><div class="js-sub">what you get, for what you pay</div>
-      <div class="jgc">
-        <div class="jgc-gain"><div class="jgc-cap">The gains · today → 18 months</div>${gainRows}${extraGain}</div>
-        <div class="jgc-cost"><div class="jgc-cap">The cost · per year</div><div class="jgc-big">${eurK(cost)}</div><div class="jgc-line">Build, one-off · ${eurK(build)}</div><div class="jgc-line">Run + usage · ${eurK(runYr)}/yr</div></div>
-      </div>
-    </div>
+  const goliveYr=getGoliveYr();
+  const goliveM=Math.round(goliveYr*12);
+  const nUC=(state.scenarios&&state.scenarios.length)?state.scenarios.length:(state.ucs||3);
+  const runYr=sel.fx.allocRun+sel.fx.runGovOps+sel.usage;
+  const build=sel.fx.oneOff;
+
+  // Level track: nodes + separators
+  const levelItems=LEVELS.map((lv,i)=>{
+    const n=lv.n;
+    const isNow=n===base,isTgt=n===target&&n!==base,isBetween=n>base&&n<target,isPast=n<base,isFuture=n>target;
+    const cls='rdl'+(isNow?' rdl-now':isTgt?' rdl-tgt':isBetween?' rdl-mid':isPast?' rdl-past':' rdl-fut');
+    const badge=isNow?`<div class="rdl-badge rdl-now-b">NOW</div>`:(!isNow&&n===target)?`<div class="rdl-badge rdl-tgt-b">TARGET</div>`:'';
+    const sepActive=(n-1)>=base&&n<=target;
+    const sep=i>0?`<div class="rdl-sep${sepActive?' rdl-sep-on':''}"></div>`:'';
+    return `${sep}<div class="${cls}">${badge}<div class="rdl-dot"></div><div class="rdl-lv">L${n}</div><div class="rdl-nm">${lv.name}</div><div class="rdl-cp">${LADDER[i].cap}</div><div class="rdl-pc"><b class="rdl-auto">${COVN[n]}%</b>&thinsp;auto&nbsp;·&nbsp;<b class="rdl-rev">${HUMANN[n]}%</b>&thinsp;review</div></div>`;
+  }).join('');
+
+  // Milestone timeline
+  const platNote=state.platProgress==='yes'?'Platform already live':state.platProgress==='building'?'Build already underway':'Greenfield — build starts now';
+  const midM=Math.round(goliveM/2);
+  const ms=[
+    {lbl:'Today',        title:`L${base} — ${LEVELS[base-1].name}`,       body:`${COVN[base]}% work automated today. ${platNote}.`},
+    ...(goliveM>4?[{lbl:`M+${midM}`, title:'Platform foundations',         body:`Core infrastructure, RAG pipeline, security controls in place. ${nUC} use-case${nUC!==1?'s':''} in build.`}]:[]),
+    {lbl:`M+${goliveM}`, title:`Go-live — L${target} capability`,          body:`Platform live. ${COVN[target]}% automation. 40% user adoption at launch.`},
+    {lbl:`M+${goliveM+12}`, title:'Full adoption',                         body:`100% utilisation reached. Run cost ${eurK(runYr)}/yr. Build ${eurK(build)} amortised over ${goliveYr}yr.`},
+  ];
+  const msHtml=ms.map((m,i)=>`${i>0?'<div class="rmt-gap"></div>':''}<div class="rmt-item"><div class="rmt-mo">${m.lbl}</div><div class="rmt-rest"><div class="rmt-t">${m.title}</div><div class="rmt-d">${m.body}</div></div></div>`).join('');
+
+  el.innerHTML=`<div class="rdmap">
+    <div class="rdmap-track"><div class="rdl-row">${levelItems}</div></div>
+    <div class="rdmap-ms"><div class="rdmap-ms-h">Delivery milestones</div><div class="rdmap-ms-items">${msHtml}</div></div>
+    <div class="rdmap-kpis"><div class="rdmk"><div class="rdmk-v">${eurK(sel.platform)}/yr</div><div class="rdmk-k">Annual cost</div></div><div class="rdmk"><div class="rdmk-v">${COVN[target]}%</div><div class="rdmk-k">Automated at L${target}</div></div><div class="rdmk"><div class="rdmk-v">${HUMANN[target]}%</div><div class="rdmk-k">Still needs you</div></div><div class="rdmk"><div class="rdmk-v">${LEVELS[target-1].save}</div><div class="rdmk-k">Cost-out estimate</div></div></div>
   </div>`;
-  if($("jrnSub"))$("jrnSub").innerHTML=base<target?`Your inputs today become a built capability — then weigh the gains against the cost. <b>L${base} → L${target}</b> over 18 months.`:`You're already at <b>L${target}</b>. The build still adds dashboards, platform share and oversight on top of what you have — gains vs cost at the end.`;
+  if($("jrnSub"))$("jrnSub").innerHTML=`Your path: <b>L${base} → L${target}</b> — go-live in ~${goliveM} months`;
 }
 function playJourney(){
   const el=$("journey");if(!el)return;
@@ -2747,7 +2789,11 @@ function applyScenarios(){
   $("tierQ").style.opacity=state.detail?0.4:1;
   renderUC();
 }
-function defaultScenUsers(id){const s=scenById(id);if(!s)return 10;return Math.max(5,Math.round(num("users")*(s.adopt/100)));}
+function defaultScenUsers(id){
+  const s=scenById(id);if(!s)return 10;
+  const pct=SCEN_FTE_PCT[id]||0.15;
+  return Math.max(1,Math.round(state.orgStaff*(pct/100)));
+}
 function scenUsers(id){return state.scenarioUsers[id]!=null?state.scenarioUsers[id]:defaultScenUsers(id);}
 function renderScenarioChips(){
   const el=$("scenChips");if(!el)return;
@@ -2761,13 +2807,13 @@ function renderScenarioChips(){
       :"";
     return `<div class="scen-item${on?' on':''}">
       <div class="scen-chip${on?' on':''}" data-scen="${s.id}" role="button" tabindex="0"><span class="sc-name"><b>${s.name}</b>${on?'<span class="sc-tick">✓</span>':''}</span><span class="sc-meta">${effortMo?`<span class="sc-effort">~${effortMo} FTE-mo/yr</span>`:''}${on?'':'<span class="sc-tier t-'+s.tier+'">'+s.tier+' build</span>'}<span class="sc-dep">${dep?dep.label:''}</span></span></div>
-      ${on?`<div class="scen-req"><div class="sr-field"><label class="sr-lbl">Users</label><input type="number" class="sr-inp" data-scen-usr="${s.id}" min="1" step="5" value="${scenUsers(s.id)}"></div><div class="sr-field"><label class="sr-lbl">Req / month</label><input type="number" class="sr-inp" data-scen-req="${s.id}" min="1" step="10" value="${scenReqPerMonth(s.id)}"></div></div>`:''}
+      ${on?`<div class="scen-req"><div class="sr-field"><label class="sr-lbl">FTE in team</label><input type="number" class="sr-inp" data-scen-usr="${s.id}" min="1" step="1" value="${scenUsers(s.id)}"></div><div class="sr-field"><label class="sr-lbl">Req / month</label><input type="number" class="sr-inp" data-scen-req="${s.id}" min="1" step="10" value="${scenReqPerMonth(s.id)}"></div></div>`:''}
       <button type="button" class="sc-info" data-info="${s.id}" title="What this dashboard does &amp; why it costs what it does">ⓘ</button>
       <div class="sc-reveal" id="screv-${s.id}">
         <div class="scr-row"><span class="scr-k">What the dashboard shows</span><span class="scr-v">${s.dash}</span></div>
         <div class="scr-row"><span class="scr-k">Compute &amp; coverage</span><span class="scr-v">${s.why} Built to ~85% coverage.</span></div>
         ${valueLine}
-        <div class="scr-row"><span class="scr-k">Volume</span><span class="scr-v">Default ${scenReqPerMonth(s.id).toLocaleString("de-DE")} req/month for ${scenUsers(s.id)} users — adjust above.</span></div>
+        <div class="scr-row"><span class="scr-k">Volume</span><span class="scr-v">Est. ${scenUsers(s.id)} FTE in this function at your org size · ${scenReqPerMonth(s.id).toLocaleString("de-DE")} req/month — adjust above.</span></div>
       </div>
     </div>`;}).join("");
 }
