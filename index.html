@@ -3143,7 +3143,7 @@ function wire(){
   if($("mathClose"))$("mathClose").addEventListener("click",closeMath);
   if($("mathPrint"))$("mathPrint").addEventListener("click",()=>window.print());
   if($("mathOverlay"))$("mathOverlay").addEventListener("click",e=>{if(e.target.id==="mathOverlay")closeMath();});
-  $("baseHelpBtn").addEventListener("click",()=>{const p=$("baseHelp"),on=p.classList.toggle("show");$("baseHelpBtn").classList.toggle("on",on);});
+  if($("baseHelpBtn"))$("baseHelpBtn").addEventListener("click",()=>{const p=$("baseHelp"),on=p&&p.classList.toggle("show");$("baseHelpBtn").classList.toggle("on",on);});
   $("hostHelpBtn").addEventListener("click",()=>{const p=$("hostHelp"),on=p.classList.toggle("show");$("hostHelpBtn").classList.toggle("on",on);});  $("summaryClose").addEventListener("click",closeSummary);
   $("summaryPrint").addEventListener("click",()=>window.print());
   $("summaryOverlay").addEventListener("click",e=>{if(e.target.id==="summaryOverlay")closeSummary();});
