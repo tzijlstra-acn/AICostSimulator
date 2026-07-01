@@ -67,8 +67,8 @@
   .scen-chips{display:flex;flex-wrap:wrap;gap:8px;}
   .scen-item{flex:1 1 46%;min-width:0;display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;}
   .scen-chip{flex:1;border:1px solid var(--line);background:#fff;color:var(--text);font:inherit;text-align:left;padding:8px 11px;border-radius:10px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:5px;min-width:0;}
-  .scen-chip b{font-size:12px;line-height:1.2;}
-  .sc-name{display:flex;align-items:center;gap:6px;justify-content:space-between;}
+  .scen-chip b{font-size:12px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;}
+  .sc-name{display:flex;align-items:center;gap:6px;justify-content:space-between;overflow:hidden;}
   .sc-tick{color:var(--purple);font-weight:800;}
   .sc-meta{display:flex;align-items:center;gap:7px;}
   .sc-tier{font-size:9px;text-transform:uppercase;letter-spacing:.03em;font-weight:700;border-radius:5px;padding:1px 6px;}
@@ -102,7 +102,24 @@
   .dept-chip.on .dc-n{color:var(--purple-d);}
   .dq-note{margin-top:9px;font-size:11px;color:var(--muted);line-height:1.5;}
   .scen-note{margin-top:10px;font-size:11.5px;color:var(--muted);line-height:1.5;}
-  .scope-off{opacity:.38;pointer-events:none;filter:saturate(.4);}
+  .scope-off{display:none;}
+
+  /* ===== Password gate ===== */
+  #pwGate{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;}
+  #pwGate.hidden{display:none;}
+  .pw-box{background:#1a1030;border:1px solid #3a2060;border-radius:18px;padding:44px 48px;width:340px;text-align:center;}
+  .pw-logo{font-family:var(--display);font-weight:800;font-size:20px;color:#efe9f7;margin-bottom:6px;letter-spacing:-.03em;}
+  .pw-sub{font-size:12px;color:#8070a8;margin-bottom:32px;}
+  .pw-input{width:100%;padding:12px 16px;border:1px solid #3a2060;border-radius:10px;background:#130a22;color:#efe9f7;font-size:15px;font-family:var(--mono);text-align:center;letter-spacing:.12em;outline:none;transition:.2s;}
+  .pw-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(161,0,255,.18);}
+  .pw-btn{margin-top:14px;width:100%;padding:12px;background:var(--purple);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;}
+  .pw-btn:hover{background:var(--purple-d);}
+  .pw-err{color:#f472b6;font-size:12px;margin-top:10px;min-height:18px;}
+
+  /* ===== Viability collapse ===== */
+  .ev-toggle{display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:11px;color:var(--muted);padding:6px 0 0;font-family:var(--body);}
+  .ev-toggle:hover{color:var(--purple);}
+  #evCols{margin-top:12px;}
   .scale-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px;}
   .scale-tile{border:1px solid var(--line);border-radius:13px;padding:15px 16px;background:linear-gradient(180deg,#fbf9fe,#fff);}
   .scale-tile .st-tag{font-size:10px;font-weight:700;color:var(--purple-d);text-transform:uppercase;letter-spacing:.05em;}
@@ -524,6 +541,8 @@
   .disc{margin:6px 0 4px;}
   .dq{margin-bottom:16px;}
   .dq-l{font-weight:600;font-size:13px;color:var(--ink2);margin-bottom:8px;line-height:1.3;}
+  .dq-l>.dq-hint{display:none;}
+  .dq:hover .dq-l>.dq-hint{display:block;}
   .dq-hint{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:400;margin-top:3px;}
   .boxrow{display:flex;gap:7px;flex-wrap:wrap;}
   .box{flex:1;min-width:78px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 9px;font-family:var(--body);font-size:11.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s;line-height:1.25;text-align:center;}
@@ -624,6 +643,16 @@
 </style>
 </head>
 <body>
+
+<div id="pwGate">
+  <div class="pw-box">
+    <div class="pw-logo">AI Cost Estimator</div>
+    <div class="pw-sub">Accenture · internal estimation aid</div>
+    <input class="pw-input" type="password" id="pwInput" placeholder="Enter password" autocomplete="off">
+    <button class="pw-btn" id="pwBtn">Enter</button>
+    <div class="pw-err" id="pwErr"></div>
+  </div>
+</div>
 
 <div class="bar">
   <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>AI Cost Estimator</span></span></div>
@@ -750,7 +779,20 @@
         <div class="adv-row"><label>Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
         <div class="adv-row"><label>Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
         <div class="adv-row"><label>Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Annual token-price change <span class="dq-hint">≈ −15%/yr: decaying decline, tempered for sticky sovereign/self-host</span></span><span class="slider-val num" id="priceDeltaV" style="color:var(--blue);font-size:14px">-15%</span></div><input type="range" class="risk" id="priceDelta" min="-50" max="20" value="-15"></div>
+        <div class="adv-slider">
+          <div class="slider-top"><span class="lbl">Annual token-price change <button type="button" class="q-help-btn" id="priceSciBtnA" style="display:inline-flex;margin-left:4px;vertical-align:middle;font-size:10px;padding:1px 5px">?</button></span><span class="slider-val num" id="priceDeltaV" style="color:var(--blue);font-size:14px">-15%</span></div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
+            <button type="button" class="price-preset" data-v="-40" style="font-size:10px;padding:3px 8px;border:1px solid var(--green);border-radius:5px;background:rgba(19,192,138,.08);color:var(--green);cursor:pointer;font-family:var(--mono)">Deflationary −40%</button>
+            <button type="button" class="price-preset" data-v="-15" style="font-size:10px;padding:3px 8px;border:1px solid var(--blue);border-radius:5px;background:rgba(59,130,246,.08);color:var(--blue);cursor:pointer;font-family:var(--mono)">Base −15%</button>
+            <button type="button" class="price-preset" data-v="12" style="font-size:10px;padding:3px 8px;border:1px solid var(--magenta);border-radius:5px;background:rgba(255,45,142,.08);color:var(--magenta);cursor:pointer;font-family:var(--mono)">Inflationary +12%</button>
+          </div>
+          <input type="range" class="risk" id="priceDelta" min="-50" max="20" value="-15">
+          <div class="q-help" id="priceSciHelp" style="margin-top:8px;font-size:11px">
+            <b>Deflationary (−40%/yr):</b> Historical pace — GPT-4 Turbo fell ~97% over 18 months (CSET 2024). Driven by hardware efficiency (TSMC 3nm→2nm, ~2× perf/watt), inference optimisation (Flash Attention 3, speculative decoding, MoE routing), and fierce provider competition. Applicable if open-source commoditises frontier capability.<br><br>
+            <b>Base (−15%/yr):</b> Decelerating decline as easy gains diminish. Accounts for sovereign/on-prem setups where token cost is largely fixed compute cost, and regulatory lock-in that limits switching to cheaper providers.<br><br>
+            <b>Inflationary (+12%/yr):</b> Demand-supply shock scenario. Goldman Sachs (2024) and Bernstein estimate $1T+ in AI capex by 2027; IEA projects data-centre electricity demand could double by 2026. NVIDIA GPU lead times and hyperscaler ROI requirements (~25–30% on capex) could push prices up if GPU supply and grid power cannot keep pace with inference demand growth.
+          </div>
+        </div>
         <div class="adv-slider"><div class="slider-top"><span class="lbl">Headcount growth / yr <span class="dq-hint">small; grows licences + usage</span></span><span class="slider-val num" id="hcGrowthV" style="color:var(--blue);font-size:14px">+2%</span></div><input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2"></div>
         <div class="adv-slider"><div class="slider-top"><span class="lbl">Usage growth per user / yr <span class="dq-hint">adoption deepens; grows usage only</span></span><span class="slider-val num" id="intGrowthV" style="color:var(--magenta);font-size:14px">+6%</span></div><input type="range" class="risk" id="intGrowth" min="0" max="60" value="6"></div>
       </div>
@@ -907,6 +949,30 @@
           <div class="it"><span class="sw" style="background:#e07bff"></span>Usage · pay-per-use</div>
         </div>
       </div>
+      <div class="card">
+        <button type="button" class="ev-toggle" id="drivesDeepBtn" onclick="const c=document.getElementById('drivesDeep');const open=c.style.display!=='none';c.style.display=open?'none':'block';this.querySelector('.dd-arrow').textContent=open?'▾':'▴'">
+          <span class="dd-arrow">▾</span>&nbsp;Deep-dive: how every number is built
+        </button>
+        <div id="drivesDeep" style="display:none;margin-top:14px">
+          <h4 style="font-size:13px;color:var(--purple);margin:0 0 10px">The full cost model — explained</h4>
+          <div style="font-size:12px;color:var(--muted);line-height:1.7;display:grid;gap:14px">
+            <div><b style="color:var(--text)">Fixed platform costs</b><br>
+            A one-off engineering lift to build the shared backbone: RAG pipeline, vector database, orchestration layer, and connectors to your source systems. This is amortised over the go-live timeline you set — longer runway = lower annual charge. Modelled via a Gaussian bell curve so spend peaks in the middle years of the build, not year one.</div>
+            <div><b style="color:var(--text)">Run costs</b><br>
+            Annual hosting, security, MLOps tooling, and infrastructure. Depends on your hosting choice: on-prem requires GPU cluster capex; cloud sovereign is OPEX but higher unit rate; standard cloud is cheapest. These are recurring and do not amortise.</div>
+            <div><b style="color:var(--text)">Licence costs</b><br>
+            Per-user-per-year seat charges for your AI platform layer (e.g. Copilot Studio, ServiceNow AI, or a custom licence). Scales linearly with the number of active users across all selected scenarios. Price adjusts with the annual licence growth rate you set.</div>
+            <div><b style="color:var(--text)">Usage costs (token spend)</b><br>
+            Pay-per-use inference charges: input tokens (context + retrieval) × input price, plus output tokens × output price. Driven by: requests per user per month × users × tokens per request. The token price trajectory you set (−40 % to +12 %/yr) compounds annually, making this the most uncertain line but also the one most likely to fall.</div>
+            <div><b style="color:var(--text)">Adoption ramp</b><br>
+            Users do not adopt on day one. The model applies 40 % utilisation in the go-live year, 75 % the following year, and 100 % from year 3 onward. This suppresses usage costs in early years and is why the cash-flow curve rises before it flattens.</div>
+            <div><b style="color:var(--text)">Division breadth share</b><br>
+            Fixed platform and run costs are shared across however many divisions you specify. Your slice = total ÷ number of divisions. Changing this number is the single biggest lever on your fixed-cost line.</div>
+            <div><b style="color:var(--text)">Scenario scaling</b><br>
+            Each scenario has a distinct user count and request volume. The model sums across all selected scenarios rather than applying a single percentage. Deselect low-volume scenarios to see the impact on usage costs immediately.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="tabPerf" style="display:none">
@@ -969,7 +1035,8 @@
         <div class="ev-score-wrap"><div class="ev-grade" id="evGrade">—</div><div class="ev-score num" id="evScore"></div></div>
       </div>
       <div class="ev-bar"><span id="evBar"></span></div>
-      <div class="ev-cols" id="evCols">
+      <button type="button" class="ev-toggle" id="evToggle" onclick="const c=document.getElementById('evCols');const open=c.style.display!=='none';c.style.display=open?'none':'grid';this.textContent=open?'▾ Show detail':'▴ Hide detail'">▾ Show detail</button>
+      <div class="ev-cols" id="evCols" style="display:none">
         <div class="ev-col pro"><div class="ev-col-h">Why this makes sense</div><ul id="evPros"></ul></div>
         <div class="ev-col con"><div class="ev-col-h">What weighs against it</div><ul id="evCons"></ul></div>
       </div>
@@ -1156,84 +1223,6 @@ const INDUSTRIES=[
     defaults:{users:90,systems:20,ucs:8,intensity:0.6},usersEx:"~90 risk, compliance & ops staff",
     systemsEx:"event bus / streaming, core ledger, real-time TM, KYC/onboarding, fraud engine, policy library, partner APIs, data warehouse",
     ucEx:"real-time alert triage, control auto-testing, policy Q&A, incident RCA",
-    useCases:NFR_UC},
-  ]},
- {id:"insurance",label:"Insurance",icon:"shield",group:"insurance",
-  base:{fn:"Operational & Conduct Risk",brand:"Operational Risk",deck:"your maturity model",assess:"ORSA",unit:"controls"},
-  subs:[
-   {id:"life",label:"Life insurer",client:"a life insurer",
-    diff:"Long-tail liabilities put <b>actuarial, ALM and model risk</b> at the centre. Conduct risk concentrates on advice and suitability at the point of sale, and Solvency II — the Swiss Solvency Test in CH — governs how capital and risk are evidenced.",
-    defaults:{users:160,systems:13,ucs:6,intensity:0.6},usersEx:"~160 risk & control staff",
-    systemsEx:"policy admin, actuarial/ALM models, advice & suitability records, complaints, fraud, regulatory feeds, product governance",
-    ucEx:"product & suitability Q&A, model-control testing, ORSA drafting, complaints triage",
-    useCases:NFR_UC},
-   {id:"pc",label:"P&C / non-life insurer",client:"a P&C insurer",
-    diff:"High claim volume makes <b>claims-handling controls and fraud detection</b> the main workload, with pricing, reserving and cat-risk close behind. Throughput on claims and alerts is the lever that moves cost.",
-    defaults:{users:200,systems:14,ucs:6,intensity:0.6},usersEx:"~200 claims, risk & control staff",
-    systemsEx:"policy admin, claims system, fraud engine, pricing/reserving models, complaints, regulatory feeds, underwriting guidelines",
-    ucEx:"underwriting & claims policy Q&A, claims-control testing, fraud triage, ORSA drafting",
-    useCases:NFR_UC},
-   {id:"healthins",label:"Health insurer",client:"a health insurer",
-    diff:"Benefits are tightly regulated and claims carry <b>sensitive medical data</b>, so privacy controls sit beside conduct. In Germany the statutory/private (GKV/PKV) split shapes the rulebook; in Switzerland it's the LAMal basic vs LCA supplementary split.",
-    defaults:{users:170,systems:13,ucs:6,intensity:0.6},usersEx:"~170 risk, compliance & claims staff",
-    systemsEx:"claims/benefits system, member data, medical-coding rules, complaints, fraud, privacy register, regulatory feeds",
-    ucEx:"benefits & coding Q&A, claims-control testing, privacy checks, complaints triage",
-    useCases:NFR_UC},
-   {id:"reins",label:"Reinsurer",client:"a reinsurer",
-    diff:"Few but very large treaties make <b>model risk, accumulation and valuation</b> the dominant exposures, not transaction volume. Switzerland hosts much of the global market, so SST and group-level governance set the bar.",
-    defaults:{users:110,systems:12,ucs:5,intensity:0.6},usersEx:"~110 risk, actuarial & control staff",
-    systemsEx:"treaty system, cat & accumulation models, valuation, retrocession, policy library, regulatory feeds",
-    ucEx:"treaty & policy Q&A, model-control testing, accumulation review, risk assessment drafting",
-    useCases:NFR_UC},
-  ]},
- {id:"health",label:"Healthcare",icon:"health",group:"health",
-  base:{fn:"Quality, Risk & Patient Safety",brand:"Clinical Risk",deck:"your maturity model",assess:"risk assessment / RCA",unit:"safety checks"},
-  subs:[
-   {id:"hospital",label:"Hospital group",client:"a hospital group",
-    diff:"Patient safety and clinical incident management dominate: <b>adverse-event triage, RCA and accreditation evidence</b> across many wards and specialties. The constraint is turning a high volume of incidents into structured learning.",
-    defaults:{users:120,systems:11,ucs:5,intensity:0.6},usersEx:"~120 quality & safety staff",
-    systemsEx:"EHR, incident reporting (e.g. Datix), clinical guideline library, audit findings, quality registries, regulatory standards",
-    ucEx:"guideline Q&A, adverse-event triage, RCA drafting, accreditation support",
-    useCases:NFR_UC},
-   {id:"clinic",label:"Outpatient / clinic network",client:"a clinic network",
-    diff:"Care is spread across many small sites, so the challenge is <b>standardising controls and guidelines consistently</b> — not depth at one location. Uniform policy application and throughput matter most.",
-    defaults:{users:90,systems:10,ucs:5,intensity:0.6},usersEx:"~90 quality & operations staff",
-    systemsEx:"practice management, EHR, guideline library, incident reporting, audit findings, regulatory standards",
-    ucEx:"guideline Q&A, incident triage, standardisation checks, audit support",
-    useCases:NFR_UC},
-   {id:"medtech",label:"MedTech / pharma",client:"a MedTech manufacturer",fn:"Quality & Regulatory Risk",brand:"Quality Risk",assess:"CAPA / risk assessment",unit:"quality checks",
-    diff:"GxP and device regulation make <b>quality management and CAPA</b> the core: validated processes, audit trails and submission evidence. MDR governs the EU; in Switzerland Swissmedic and the MedDO apply with separate conformity routes.",
-    defaults:{users:130,systems:12,ucs:6,intensity:0.6},usersEx:"~130 quality & regulatory staff",
-    systemsEx:"QMS, CAPA/complaints, document control, design history files, audit findings, regulatory submission system, supplier register",
-    ucEx:"SOP & regulation Q&A, CAPA drafting, complaint triage, submission evidence checks",
-    useCases:NFR_UC},
-  ]},
- {id:"telecom",label:"Telecom",icon:"telecom",group:"telecom",
-  base:{fn:"Operational, Cyber & Compliance Risk",brand:"Operational Risk",deck:"your maturity model",assess:"risk assessment",unit:"controls"},
-  subs:[
-   {id:"integrated",label:"Integrated operator",client:"an integrated operator",
-    diff:"Mobile and fixed networks under one roof: the risk surface spans <b>network resilience, cyber (critical-infrastructure / NIS2), fraud and telecoms-specific regulation</b>. Breadth of controls across many systems is the defining challenge.",
-    defaults:{users:220,systems:18,ucs:7,intensity:0.6},usersEx:"~220 risk, compliance & resilience staff",
-    systemsEx:"OSS/BSS, network management / NOC, SIEM / security, fraud & revenue assurance, billing, CRM, regulatory & licence register, incident management",
-    ucEx:"regulation & licence Q&A, network-incident triage, fraud / revenue-assurance review, control testing",
-    useCases:NFR_UC},
-   {id:"mno",label:"Mobile network operator",client:"a mobile operator",
-    diff:"Real-time network and high transaction volume push the workload toward <b>fraud / revenue assurance and network-incident triage</b>. SIM, roaming and interconnect fraud are constant, so alert throughput matters most.",
-    defaults:{users:180,systems:16,ucs:6,intensity:0.6},usersEx:"~180 risk, fraud & network-ops staff",
-    systemsEx:"network management / NOC, fraud & revenue assurance, SIEM / security, OSS/BSS, billing, roaming/interconnect, regulatory register",
-    ucEx:"network & service policy Q&A, incident triage, fraud / revenue-assurance triage, risk assessment",
-    useCases:NFR_UC},
-   {id:"fixed",label:"Fixed-line & broadband",client:"a broadband operator",
-    diff:"Service availability and consumer-protection obligations (provisioning, billing, outages) dominate. The constraint is keeping a <b>large, distributed access network's controls consistent and audit-ready</b>.",
-    defaults:{users:160,systems:15,ucs:6,intensity:0.6},usersEx:"~160 risk, compliance & ops staff",
-    systemsEx:"OSS/BSS, network management / NOC, billing, CRM / complaints, SIEM / security, field operations, regulatory register",
-    ucEx:"service & consumer policy Q&A, outage & incident triage, billing & complaints checks, control testing",
-    useCases:NFR_UC},
-   {id:"cable",label:"Cable / converged media",client:"a cable operator",
-    diff:"Telecoms plus media and content adds <b>content licensing, broadcast compliance and privacy on viewing data</b> to the usual network and consumer obligations. The rulebook is broader than pure connectivity.",
-    defaults:{users:140,systems:14,ucs:6,intensity:0.6},usersEx:"~140 risk, compliance & privacy staff",
-    systemsEx:"OSS/BSS, network management, content & rights management, billing, CRM, SIEM / security, privacy register, regulatory register",
-    ucEx:"regulation & content-licensing Q&A, network incident triage, privacy checks, risk assessment",
     useCases:NFR_UC},
   ]},
 ];
@@ -2820,6 +2809,41 @@ function wire(){
   renderUC();setIndustry("bank",true);
 }
 wire();
+
+// Password gate
+(function(){
+  const gate=$("pwGate"),inp=$("pwInput"),btn=$("pwBtn"),err=$("pwErr");
+  if(sessionStorage.getItem("pw_ok")==="1"){gate.classList.add("hidden");return;}
+  function attempt(){
+    if(inp.value==="Studio2026"){sessionStorage.setItem("pw_ok","1");gate.classList.add("hidden");}
+    else{err.textContent="Incorrect password";inp.value="";inp.focus();}
+  }
+  btn.addEventListener("click",attempt);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")attempt();if(err.textContent)err.textContent="";});
+})();
+
+// Token price preset buttons
+document.querySelectorAll(".price-preset").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const v=parseInt(b.dataset.v);
+    const sl=$("priceDelta"),vl=$("priceDeltaV");
+    sl.value=v;
+    vl.textContent=(v>0?"+":"")+v+"%";
+    vl.style.color=v<=0?"var(--blue)":"var(--magenta)";
+    recompute();
+  });
+});
+
+// Price science ? button toggle
+(function(){
+  const btn=$("priceSciBtnA"),help=$("priceSciHelp");
+  if(!btn||!help)return;
+  btn.addEventListener("click",()=>{
+    const open=help.style.display!=="none";
+    help.style.display=open?"none":"block";
+    btn.textContent=open?"?":"×";
+  });
+})();
 </script>
 </body>
 </html>
