@@ -996,14 +996,6 @@
     </div>
 
     <div id="tabBreakdown">
-    <div class="proof">
-      <div class="proof-lbl">Proven on Accenture's own estate · Tokenomics</div>
-      <div class="proof-stats">
-        <div class="ps"><div class="pv">68%</div><div class="pk">average cost-out across five deployments — business flow unchanged</div></div>
-        <div class="ps"><div class="pv">~1/6</div><div class="pk">the cost we run our own AI platform at vs. frontier pricing</div></div>
-        <div class="ps"><div class="pv">$0.14 <span>vs $0.47</span></div><div class="pk">cost / business transaction, governed vs ungoverned</div></div>
-      </div>
-    </div>
 
     <div class="kpis">
       <div class="kpi-tile"><div class="kpi-ic" id="ic1"></div><div class="k" id="kUserLbl">Cost per user / month</div><div class="v num" id="kUser">—</div><div class="d" id="kUserNote"></div></div>
@@ -1514,7 +1506,7 @@ function getBuildSched(){
 }
 function getAdoptRamp(g){return Array.from({length:11},(_,t)=>t===0||t<g?0:t===g?0.40:t===g+1?0.75:1.0);}
 const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let state={level:3,tier:"medium",view:"outlook",detail:false,animate:true,industry:INDUSTRIES[0],sub:INDUSTRIES[0].subs[0],region:"DE",orgSize:"mid",orgStaff:12000,platformExists:"building",platProgress:30,depts:["compliance","procurement"],functions:3,baseLevel:"1",scenarios:["rcsa","control","tprm"],hosting:"onprem",ind:null,scenarioRequests:{},scenarioUsers:{},divisions:3};
+let state={level:3,tier:"medium",view:"outlook",detail:false,animate:true,industry:INDUSTRIES[0],sub:INDUSTRIES[0].subs[0],region:"DE",orgSize:"mid",orgStaff:12000,platformExists:"building",platProgress:30,depts:["compliance","procurement"],functions:3,baseLevel:"1",scenarios:["rcsa","control","tprm"],hosting:"sovereign",ind:null,scenarioRequests:{},scenarioUsers:{},divisions:3};
 let CURK=CUR.EUR;
 state.ind=resolveProfile();
 let useCases=JSON.parse(JSON.stringify(state.sub.useCases));
@@ -1770,7 +1762,7 @@ function renderBuildBasis(sel,L){
    </div>
    <div class="bb-total"><span>Your fixed cost · what you pay</span><b>${eurK(f.total)}/yr</b></div>
    <div class="bb-total sub"><span>If you funded the whole platform alone</span><b>${eurK(f.standalone)}/yr</b></div>
-   <p class="bb-note">Basis: Accenture delivery-benchmark rates, an estimate not a quote. Platform foundation ${eurK(f.build)} (scaled by org size)${f.bf<1?`, scaled to ${Math.round(f.bf*100)}% for the platform already in place`:""}; per system <b>${eur(f.intg)}</b>. Each dashboard's day-0 build reaches ~85% coverage of one process — <b>${eur(f.ucr)}</b> for a medium workflow, ~½ for a simple one, ~1.65× for a complex agentic one. After launch you fund keep-running upkeep plus a set number of functionality changes per dashboard each year; a major new capability is a fresh dashboard, not a change. Your share (${pct}%) is set by how broadly the platform is used. Tune all rates in Advanced.</p>`;
+   <p class="bb-note">Indicative estimate — tune all rates in Advanced. Platform foundation ${eurK(f.build)} (scaled by org size)${f.bf<1?`, scaled to ${Math.round(f.bf*100)}% for the platform already in place`:""}; per system <b>${eur(f.intg)}</b>. Each dashboard's day-0 build reaches ~85% coverage of one process — <b>${eur(f.ucr)}</b> for a medium workflow, ~½ for a simple one, ~1.65× for a complex agentic one. After launch you fund keep-running upkeep plus a set number of functionality changes per dashboard each year; a major new capability is a fresh dashboard, not a change. Your share (${pct}%) is set by how broadly the platform is used. Tune all rates in Advanced.</p>`;
 }
 const clmp=(v,a,b)=>Math.min(b,Math.max(a,v));
 function computeViability(sel,L){
@@ -2079,7 +2071,7 @@ function recompute(){
   const downFromToday=taskToday>0?Math.max(0,1-govTask/taskToday):0;
   $("govSave").textContent="−"+Math.round(savedVsUng*100)+"%";
   $("govLead").innerHTML=`At your target (L${L.n}) a task runs at <b>${grp()}${govTask.toFixed(3)}</b> — <b>${Math.round(savedVsUng*100)}%</b> below an ungoverned build${baseN<L.n?`, and <b>${Math.round(downFromToday*100)}%</b> cheaper than where you start today (L${baseN}, ${grp()}${taskToday.toFixed(3)})`:` — and you're already at your target today, so the gain is the governance gap itself`}.`;
-  $("govDetail").innerHTML=`<b>Ungoverned</b> = the frontier model on every step, no caching, routing or budget caps. <b>Today (L${baseN})</b> is your starting point from &lsquo;where is your AI today&rsquo;; climbing to L${L.n} adds caching, leaner context and best-fit routing, which is what cuts the per-task cost. Accenture's own benchmark across five deployments: <b>68% average cost-out</b>, business flow unchanged. Move the &lsquo;today&rsquo; and target levels to see this shift.`;
+  $("govDetail").innerHTML=`<b>Ungoverned</b> = the frontier model on every step, no caching, routing or budget caps. <b>Today (L${baseN})</b> is your starting point from &lsquo;where is your AI today&rsquo;; climbing to L${L.n} adds caching, leaner context and best-fit routing, which is what cuts the per-task cost. Move the &lsquo;today&rsquo; and target levels to see this shift.`;
 
   drawFlow(sel,L);drawWaterfall(sel,L);renderRequestFlow(sel,L);renderMovers(sel,L);renderScale(sel,L);drawInquiry(sel,L);renderModels(sel,L);renderMath(sel,L);renderJourney(all,sel,L);drawRadar(all,sel,L);renderROI(all,sel,L);renderBenefits(all,sel,L);
   drawChart(all,sel);state.animate=false;
@@ -2345,7 +2337,7 @@ function renderBenefits(all,sel,L){
     $("benAssump").innerHTML=`
       <div class="ba-row"><div class="ba-k">Method</div><div class="ba-v">FTE-based time savings — FTEs in each function × % of hours AI frees × staff rate × 220 working days. This values time freed, not necessarily headcount reduction.</div></div>
       <div class="ba-row"><div class="ba-k">Staff rate</div><div class="ba-v">€${rate.toLocaleString("de-DE")}/day (all-in incl. overheads). Change in Advanced settings → Staff rate.</div></div>
-      <div class="ba-row"><div class="ba-k">Time saved</div><div class="ba-v">20–40% of daily routine effort depending on the scenario. Documentation-heavy tasks (TPRM, contract review, policy) sit at the higher end; judgment-intensive processes (credit underwriting, model validation, capital adequacy) sit at the lower end. Based on Accenture deployment benchmarks.</div></div>
+      <div class="ba-row"><div class="ba-k">Time saved</div><div class="ba-v">20–40% of daily routine effort depending on the scenario. Documentation-heavy tasks (TPRM, contract review, policy) sit at the higher end; judgment-intensive processes (credit underwriting, model validation, capital adequacy) sit at the lower end.</div></div>
       <div class="ba-row"><div class="ba-k">Not counted</div><div class="ba-v">Quality uplift, faster regulatory response, error reduction, avoided fines. These are real but harder to quantify — treat this as a conservative floor.</div></div>
       <div class="ba-row"><div class="ba-k">Adoption</div><div class="ba-v">Benefits ramp from 40% at go-live → 75% in year 2 → 100% from year 3. Adjust go-live timeline in Advanced settings.</div></div>`;
   }
