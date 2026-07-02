@@ -1298,58 +1298,58 @@ const NFR_UC=[
    perYear = inquiries per ADOPTING user per year; tier sets day-0 build effort (simple ×0.5, medium ×1, high ×1.65).
    The client clicks what's in scope; more dashboards = more setup cost. All values are reasoned placeholders. */
 const SCENARIOS=[
- {id:"rcsa",   name:"RCSA self-assessment",            dept:"nfr", tier:"high",   perYear:36,  adopt:55, desc:"Annual cycle + quarterly updates: draft, challenge, evidence",
+ {id:"rcsa",   name:"RCSA self-assessment",            dept:"nfr", tier:"high",   perYear:36,  adopt:55, aiSave:0.25, desc:"Annual cycle + quarterly updates: draft, challenge, evidence",
    dash:"One dashboard per business unit: inherent-vs-residual heatmap, control-effectiveness scoring, draft assessments with evidence links and challenge notes — regenerated each cycle from the latest loss, control and process data.",
    why:"Heavy generation. The model reasons across processes → risks → controls → evidence for every unit, so each refresh is a long multi-step pass. Sized 'high'."},
- {id:"control",name:"Control testing & monitoring",    dept:"nfr", tier:"medium", perYear:132, adopt:55, desc:"Risk-based testing through the year; evidence review",
+ {id:"control",name:"Control testing & monitoring",    dept:"nfr", tier:"medium", perYear:132, adopt:55, aiSave:0.30, desc:"Risk-based testing through the year; evidence review",
    dash:"Test population with sampling rationale, evidence assessment, pass/fail with exceptions flagged and remediation owners — refreshed as new evidence lands.",
    why:"Medium generation. Structured testing logic over a defined control set — heavier than a lookup, lighter than full RCSA reasoning."},
- {id:"tprm",   name:"Third-party / vendor risk (TPRM)", dept:"procurement", tier:"medium", perYear:91,  adopt:45, desc:"Onboarding + periodic reassessment of the vendor book",
+ {id:"tprm",   name:"Third-party / vendor risk (TPRM)", dept:"procurement", tier:"medium", perYear:91,  adopt:45, aiSave:0.35, desc:"Onboarding + periodic reassessment of the vendor book",
    dash:"Vendor risk tiering, questionnaire analysis, concentration and fourth-party exposure, with reassessment flags — rebuilt as the vendor book and external signals change.",
    why:"Medium generation. Per-vendor reasoning over questionnaires and external data; volume comes from the size of the book."},
- {id:"issue",  name:"Issue & incident management",       dept:"nfr", tier:"medium", perYear:80,  adopt:50, desc:"Triage, root-cause and action tracking on risk events",
+ {id:"issue",  name:"Issue & incident management",       dept:"nfr", tier:"medium", perYear:80,  adopt:50, aiSave:0.20, desc:"Triage, root-cause and action tracking on risk events",
    dash:"Open issues by severity, root-cause clustering, overdue actions and thematic links to controls — updated as events and actions move.",
    why:"Medium generation. Triage and clustering across event text; moderate reasoning per refresh."},
- {id:"regch",  name:"Regulatory change & horizon scan",  dept:"compliance", tier:"simple", perYear:120, adopt:40, desc:"Scan, interpret and map new rules to controls",
+ {id:"regch",  name:"Regulatory change & horizon scan",  dept:"compliance", tier:"simple", perYear:120, adopt:40, aiSave:0.35, desc:"Scan, interpret and map new rules to controls",
    dash:"New and upcoming rules, an applicability read, and a first-pass mapping to affected policies and controls — refreshed as feeds publish.",
    why:"Lighter generation per item, but high item volume. Mostly retrieve-classify-map rather than deep multi-step reasoning. Sized 'simple'."},
- {id:"policy", name:"Policy & standards Q&A",             dept:"compliance", tier:"simple", perYear:200, adopt:70, desc:"Everyday lookups across policy and standards",
+ {id:"policy", name:"Policy & standards Q&A",             dept:"compliance", tier:"simple", perYear:200, adopt:70, aiSave:0.30, desc:"Everyday lookups across policy and standards",
    dash:"A curated answer surface over the policy corpus: most-asked topics pre-answered with citations — the rest handled in chat.",
    why:"Lightest generation. The dashboard pre-answers the common topics; depth comes from chat follow-ups, not the build."},
- {id:"kri",    name:"KRI / KCI monitoring",              dept:"nfr", tier:"medium", perYear:60,  adopt:35, desc:"Track indicators, flag breaches, draft commentary",
+ {id:"kri",    name:"KRI / KCI monitoring",              dept:"nfr", tier:"medium", perYear:60,  adopt:35, aiSave:0.25, desc:"Track indicators, flag breaches, draft commentary",
    dash:"Indicator trends with thresholds, breach flags and drafted commentary explaining moves — refreshed on each data cut.",
    why:"Medium generation. Trend reading plus drafted narrative per indicator set."},
- {id:"fincrime",name:"Financial crime / AML monitoring", dept:"compliance", tier:"medium", perYear:150, adopt:50, desc:"Alert triage and narrative on suspicious activity",
+ {id:"fincrime",name:"Financial crime / AML monitoring", dept:"compliance", tier:"medium", perYear:150, adopt:50, aiSave:0.25, desc:"Alert triage and narrative on suspicious activity",
    dash:"Alert queues with risk-scored prioritisation, network/typology context and drafted investigation narratives — refreshed as alerts arrive.",
    why:"Medium generation. Per-alert reasoning over transaction and party data; volume driven by alert flow."},
- {id:"audit",  name:"Internal audit planning & testing", dept:"audit", tier:"high", perYear:40, adopt:45, desc:"Risk-based audit universe, planning and fieldwork support",
+ {id:"audit",  name:"Internal audit planning & testing", dept:"audit", tier:"high", perYear:40, adopt:45, aiSave:0.30, desc:"Risk-based audit universe, planning and fieldwork support",
    dash:"Risk-ranked audit universe, drafted scoping and test plans, and evidence assessment during fieldwork — rebuilt each planning cycle.",
    why:"Heavy generation. Reasoning across the audit universe and prior findings to scope and plan. Sized 'high'."},
- {id:"cyber",  name:"Cyber & IT risk register",          dept:"infosec", tier:"medium", perYear:90, adopt:40, desc:"IT/cyber risk register, control mapping and exposure",
+ {id:"cyber",  name:"Cyber & IT risk register",          dept:"infosec", tier:"medium", perYear:90, adopt:40, aiSave:0.25, desc:"IT/cyber risk register, control mapping and exposure",
    dash:"Cyber risk register with control mapping, exposure by asset and open findings linked to remediation — refreshed from security telemetry and findings.",
    why:"Medium generation. Maps findings and telemetry to risks and controls; moderate reasoning per refresh."},
- {id:"contract",name:"Contract & spend risk",            dept:"procurement", tier:"simple", perYear:110, adopt:35, desc:"Contract clause and spend-concentration risk",
+ {id:"contract",name:"Contract & spend risk",            dept:"procurement", tier:"simple", perYear:110, adopt:35, aiSave:0.40, desc:"Contract clause and spend-concentration risk",
    dash:"Clause-risk flags, renewal and spend-concentration views with exception lists — refreshed as contracts and spend data update.",
    why:"Lighter generation. Mostly clause extraction and aggregation; sized 'simple'."},
- {id:"dpia",   name:"Data privacy / DPIA",               dept:"privacy", tier:"medium", perYear:70, adopt:40, desc:"Processing inventory and DPIA support",
+ {id:"dpia",   name:"Data privacy / DPIA",               dept:"privacy", tier:"medium", perYear:70, adopt:40, aiSave:0.25, desc:"Processing inventory and DPIA support",
    dash:"Processing-activity inventory, risk-scored DPIAs and a mitigation tracker — refreshed as processing changes.",
    why:"Medium generation. Per-activity privacy reasoning and DPIA drafting."},
- {id:"icaap",  name:"ICAAP / ILAAP",                      dept:"capital", tier:"high",   perYear:8,   adopt:50, effortDays:20, cyclesPerYear:4, aiSave:0.55, desc:"Quarterly internal capital & liquidity adequacy assessment",
+ {id:"icaap",  name:"ICAAP / ILAAP",                      dept:"capital", tier:"high",   perYear:8,   adopt:50, effortDays:20, cyclesPerYear:4, aiSave:0.25, desc:"Quarterly internal capital & liquidity adequacy assessment",
    dash:"Stress scenario outcomes with capital impact, liquidity buffers, key assumptions and management narrative — refreshed each ICAAP cycle from the latest balance sheet, model outputs and macro scenarios.",
    why:"Heavy generation. The model synthesises across capital models, macro scenarios and regulatory requirements to draft scenario narratives and challenge papers. Multiple reasoning chains per submission. Sized 'high'."},
- {id:"corep",  name:"Prudential reporting (COREP/FINREP)",  dept:"capital", tier:"medium", perYear:52,  adopt:45, effortDays:15, cyclesPerYear:12, aiSave:0.50, desc:"Monthly & quarterly prudential submissions to regulators",
+ {id:"corep",  name:"Prudential reporting (COREP/FINREP)",  dept:"capital", tier:"medium", perYear:52,  adopt:45, effortDays:15, cyclesPerYear:12, aiSave:0.20, desc:"Monthly & quarterly prudential submissions to regulators",
    dash:"Data quality checks with exception flags, template cross-validations, draft narrative explanations for movements and a pre-submission checklist — regenerated on each reporting cut.",
    why:"Medium generation. Structured validation and narrative drafting across regulatory templates; the reasoning is moderately complex per line item."},
- {id:"mrm",    name:"Model risk management",               dept:"modelrisk",tier:"high",   perYear:24,  adopt:40, effortDays:40, cyclesPerYear:4, aiSave:0.50, desc:"Model validation, performance monitoring and annual review",
+ {id:"mrm",    name:"Model risk management",               dept:"modelrisk",tier:"high",   perYear:24,  adopt:40, effortDays:40, cyclesPerYear:4, aiSave:0.20, desc:"Model validation, performance monitoring and annual review",
    dash:"Model inventory with validation status, performance metrics and drift flags, open findings and a drafted validation summary — updated as new model runs and data arrive.",
    why:"Heavy generation. Each model validation requires reasoning across methodology, data, performance tests and regulatory standards to draft findings. Sized 'high'."},
- {id:"credit", name:"Credit risk assessment",              dept:"credit",   tier:"high",   perYear:96,  adopt:40, effortDays:5,  cyclesPerYear:200, aiSave:0.60, desc:"Credit approval memoranda and periodic portfolio reviews",
+ {id:"credit", name:"Credit risk assessment",              dept:"credit",   tier:"high",   perYear:96,  adopt:40, effortDays:5,  cyclesPerYear:200, aiSave:0.30, desc:"Credit approval memoranda and periodic portfolio reviews",
    dash:"Counterparty risk summary with financial analysis, sector context, covenant tracking and draft credit memo — rebuilt as new financials, ratings and covenants land.",
    why:"Heavy generation per deal. Each memo requires reasoning across financial statements, sector risk and credit policy. Volume is high — hundreds of deals per year. Sized 'high'."},
- {id:"esg",    name:"ESG / climate risk",                  dept:"esg",      tier:"high",   perYear:12,  adopt:35, effortDays:30, cyclesPerYear:4, aiSave:0.55, desc:"Climate scenario analysis, transition & physical risk, ESG disclosures",
+ {id:"esg",    name:"ESG / climate risk",                  dept:"esg",      tier:"high",   perYear:12,  adopt:35, effortDays:30, cyclesPerYear:4, aiSave:0.25, desc:"Climate scenario analysis, transition & physical risk, ESG disclosures",
    dash:"Portfolio exposure by sector and region, transition risk scores, physical risk heat maps and drafted disclosure sections — refreshed as scenario parameters and portfolio data update.",
    why:"Heavy generation. Reasoning across macro climate scenarios, sector-level exposure and regulatory disclosure requirements. High complexity per cycle. Sized 'high'."},
- {id:"opres",  name:"Operational resilience",              dept:"nfr",      tier:"medium", perYear:12,  adopt:40, effortDays:25, cyclesPerYear:4, aiSave:0.55, desc:"Business continuity, important business services mapping, impact tolerance testing",
+ {id:"opres",  name:"Operational resilience",              dept:"nfr",      tier:"medium", perYear:12,  adopt:40, effortDays:25, cyclesPerYear:4, aiSave:0.25, desc:"Business continuity, important business services mapping, impact tolerance testing",
    dash:"IBS map with dependency chains, impact tolerance thresholds, scenario test results and remediation plans — refreshed after each exercise or significant operational change.",
    why:"Medium generation. Maps dependencies and reasons across service chains and impact scenarios; moderately complex per service line."},
 ];
@@ -2345,7 +2345,7 @@ function renderBenefits(all,sel,L){
     $("benAssump").innerHTML=`
       <div class="ba-row"><div class="ba-k">Method</div><div class="ba-v">FTE-based time savings — FTEs in each function × % of hours AI frees × staff rate × 220 working days. This values time freed, not necessarily headcount reduction.</div></div>
       <div class="ba-row"><div class="ba-k">Staff rate</div><div class="ba-v">€${rate.toLocaleString("de-DE")}/day (all-in incl. overheads). Change in Advanced settings → Staff rate.</div></div>
-      <div class="ba-row"><div class="ba-k">Time saved</div><div class="ba-v">30–60% depending on scenario (40% default). Based on Accenture deployment benchmarks across GRC and credit risk functions.</div></div>
+      <div class="ba-row"><div class="ba-k">Time saved</div><div class="ba-v">20–40% of daily routine effort depending on the scenario. Documentation-heavy tasks (TPRM, contract review, policy) sit at the higher end; judgment-intensive processes (credit underwriting, model validation, capital adequacy) sit at the lower end. Based on Accenture deployment benchmarks.</div></div>
       <div class="ba-row"><div class="ba-k">Not counted</div><div class="ba-v">Quality uplift, faster regulatory response, error reduction, avoided fines. These are real but harder to quantify — treat this as a conservative floor.</div></div>
       <div class="ba-row"><div class="ba-k">Adoption</div><div class="ba-v">Benefits ramp from 40% at go-live → 75% in year 2 → 100% from year 3. Adjust go-live timeline in Advanced settings.</div></div>`;
   }
@@ -3146,6 +3146,7 @@ function applyProfile(resetSliders){
     useCases=(state.scenarios&&state.scenarios.length)?scenarioUC():JSON.parse(JSON.stringify(state.sub.useCases));renderUC();
   }
   renderProfileNote();buildHelpContent(ind);buildHelp();
+  if(state.scenarios&&state.scenarios.length>0) syncUsersFromScenarios();
   state.animate=true;recompute();
 }
 function setIndustry(id,first){
