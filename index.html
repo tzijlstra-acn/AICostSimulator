@@ -253,6 +253,35 @@
   .roi-recs{display:flex;flex-direction:column;gap:12px;margin-top:4px}
   .rr-item{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
   .rr-t{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+  /* Annual Benefits tab */
+  .ben-hero{font-size:28px;font-weight:800;font-family:var(--mono);color:var(--purple)}
+  .ben-table{margin-top:4px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .ben-th,.ben-tr,.ben-total-row{display:grid;grid-template-columns:2fr .6fr .6fr 1fr .8fr;gap:8px;align-items:center;padding:9px 14px;font-size:11.5px}
+  .ben-th{background:var(--paper-2,#f7f5fc);font-weight:700;color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase}
+  .ben-tr{border-top:1px solid var(--line-soft)}
+  .ben-tr:hover{background:rgba(108,59,228,.03)}
+  .ben-total-row{border-top:2px solid var(--line);font-weight:700;background:rgba(108,59,228,.04)}
+  .ben-name{color:var(--text);font-size:12px}
+  .ben-fte,.ben-save{font-family:var(--mono);color:var(--muted);font-size:11px}
+  .ben-val{font-family:var(--mono);color:var(--purple-d);font-weight:600;font-size:12px}
+  .ben-pct-cell{display:flex;align-items:center;gap:6px}
+  .ben-bbar{flex:1;height:6px;background:var(--line-soft);border-radius:3px;overflow:hidden}
+  .ben-bbar span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));border-radius:3px}
+  .ben-pct-lbl{font-size:10px;font-family:var(--mono);color:var(--muted);min-width:26px;text-align:right}
+  .ben-ramp{display:flex;flex-direction:column;gap:5px}
+  .br-row{display:grid;grid-template-columns:100px 1fr 80px 70px;gap:10px;align-items:center;font-size:11.5px}
+  .br-pre .br-val,.br-pre .br-pct{color:var(--line)}
+  .br-yr{font-family:var(--mono);color:var(--muted);font-size:11px;white-space:nowrap}
+  .br-bar{height:8px;background:var(--line-soft);border-radius:4px;overflow:hidden}
+  .br-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--green,#2dc675),var(--blue));border-radius:4px;transition:width .6s ease}
+  .br-pre .br-bar span{background:var(--line)}
+  .br-val{font-family:var(--mono);font-size:11px;color:var(--text);text-align:right}
+  .br-pct{font-size:10px;color:var(--muted);font-family:var(--mono)}
+  .ben-gl{font-size:10px;font-weight:700;color:var(--green,#2dc675);margin-left:4px}
+  .ba-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:12px}
+  .ba-row:last-child{border-bottom:none}
+  .ba-k{font-weight:700;color:var(--muted);font-size:11px;padding-top:1px}
+  .ba-v{color:var(--text);line-height:1.55}
   .rr-b{font-size:12px;color:var(--muted);line-height:1.5}
   .rr-act{font-size:11px;font-family:var(--mono);color:var(--purple);margin-top:6px}
   /* Methodology nav */
@@ -959,6 +988,7 @@
 
     <div class="rtabs" id="rtabs">
       <button data-tab="breakdown" class="on">Annual Cost</button>
+      <button data-tab="benefits">Annual Benefits</button>
       <button data-tab="connect">ROI</button>
       <button data-tab="perf">Roadmap</button>
       <button data-tab="inquiry">Per Request</button>
@@ -1031,6 +1061,23 @@
         <div class="est-head"><h3>Where the economies of scale come from</h3><span class="ai-pill">build once · share everywhere</span></div>
         <div class="est-sub">Three things make your division's slice affordable: the costly heavy lift is <b>reused</b>, <b>users</b> share the platform, and other <b>functions</b> share the foundation.</div>
         <div class="scale-grid" id="scaleTiles"></div>
+      </div>
+    </div>
+
+    <div id="tabBenefits" style="display:none">
+      <div class="card">
+        <div class="est-head"><h3>Annual benefit at full adoption</h3><span class="ben-hero" id="benTotal">—</span></div>
+        <div class="est-sub" id="benSub"></div>
+        <div id="benScenRows" style="margin-top:16px"></div>
+      </div>
+      <div class="card">
+        <div class="est-head"><h3>Benefit build-up year by year</h3></div>
+        <div class="est-sub">Benefit accrues as teams adopt the platform — from go-live to full maturity.</div>
+        <div id="benRamp" style="margin-top:14px"></div>
+      </div>
+      <div class="card">
+        <div class="est-head"><h3>What's behind the numbers</h3></div>
+        <div id="benAssump" style="margin-top:4px"></div>
       </div>
     </div>
 
@@ -2034,7 +2081,7 @@ function recompute(){
   $("govLead").innerHTML=`At your target (L${L.n}) a task runs at <b>${grp()}${govTask.toFixed(3)}</b> — <b>${Math.round(savedVsUng*100)}%</b> below an ungoverned build${baseN<L.n?`, and <b>${Math.round(downFromToday*100)}%</b> cheaper than where you start today (L${baseN}, ${grp()}${taskToday.toFixed(3)})`:` — and you're already at your target today, so the gain is the governance gap itself`}.`;
   $("govDetail").innerHTML=`<b>Ungoverned</b> = the frontier model on every step, no caching, routing or budget caps. <b>Today (L${baseN})</b> is your starting point from &lsquo;where is your AI today&rsquo;; climbing to L${L.n} adds caching, leaner context and best-fit routing, which is what cuts the per-task cost. Accenture's own benchmark across five deployments: <b>68% average cost-out</b>, business flow unchanged. Move the &lsquo;today&rsquo; and target levels to see this shift.`;
 
-  drawFlow(sel,L);drawWaterfall(sel,L);renderRequestFlow(sel,L);renderMovers(sel,L);renderScale(sel,L);drawInquiry(sel,L);renderModels(sel,L);renderMath(sel,L);renderJourney(all,sel,L);drawRadar(all,sel,L);renderROI(all,sel,L);
+  drawFlow(sel,L);drawWaterfall(sel,L);renderRequestFlow(sel,L);renderMovers(sel,L);renderScale(sel,L);drawInquiry(sel,L);renderModels(sel,L);renderMath(sel,L);renderJourney(all,sel,L);drawRadar(all,sel,L);renderROI(all,sel,L);renderBenefits(all,sel,L);
   drawChart(all,sel);state.animate=false;
 }
 
@@ -2229,6 +2276,79 @@ function renderJourney(all,sel,L){
     <div class="rdmap-kpis"><div class="rdmk"><div class="rdmk-v">${eurK(sel.platform)}/yr</div><div class="rdmk-k">Annual cost</div></div><div class="rdmk"><div class="rdmk-v">${COVN[target]}%</div><div class="rdmk-k">Automated at L${target}</div></div><div class="rdmk"><div class="rdmk-v">${HUMANN[target]}%</div><div class="rdmk-k">Still needs you</div></div><div class="rdmk"><div class="rdmk-v">${LEVELS[target-1].save}</div><div class="rdmk-k">Cost-out estimate</div></div></div>
   </div>`;
   if($("jrnSub"))$("jrnSub").innerHTML=`Your path: <b>L${base} → L${target}</b> — go-live in ~${goliveM} months`;
+}
+function renderBenefits(all,sel,L){
+  if(!$("benTotal"))return;
+  const rate=num("staffRate")||500;
+  const annualBenefit=totalAnnualBenefit(sel);
+  const GOLIVE_YR=getGoliveYr();
+  const ADOPT_RAMP=getAdoptRamp(GOLIVE_YR);
+  const sc=scenarioMults();
+  const hasScen=state.scenarios.length>0;
+
+  $("benTotal").textContent=eurK(annualBenefit)+"/yr";
+
+  if(hasScen){
+    const totalFTEs=state.scenarios.reduce((t,id)=>t+Math.round(state.orgStaff*((SCEN_FTE_PCT[id]||0.10)/100)),0);
+    $("benSub").innerHTML=`<b>${state.scenarios.length} scenario${state.scenarios.length===1?"":"s"}</b> · <b>${totalFTEs} FTEs</b> estimated in these functions · <b>€${rate.toLocaleString("de-DE")}/day</b> staff rate · 220 working days/yr`;
+  } else {
+    $("benSub").innerHTML=`Org-size estimate — select scenarios in step 1 for a function-level breakdown.`;
+  }
+
+  if($("benScenRows")){
+    if(hasScen){
+      const rows=state.scenarios.map(id=>{
+        const s=scenById(id);if(!s)return null;
+        const fte=Math.round(state.orgStaff*((SCEN_FTE_PCT[id]||0.10)/100));
+        const aiSave=Math.round((s.aiSave||0.40)*100);
+        const ben=scenarioBenefitYr(id);
+        const pct=annualBenefit>0?Math.round(ben/annualBenefit*100):0;
+        return{name:s.name,fte,aiSave,ben,pct};
+      }).filter(Boolean).sort((a,b)=>b.ben-a.ben);
+      const totalFTEs=rows.reduce((t,r)=>t+r.fte,0);
+      $("benScenRows").innerHTML=`<div class="ben-table">
+        <div class="ben-th"><span>Scenario</span><span>FTEs</span><span>Saved</span><span>Annual value</span><span>Share</span></div>`+
+        rows.map(r=>`<div class="ben-tr">
+          <span class="ben-name">${r.name}</span>
+          <span class="ben-fte">${r.fte}</span>
+          <span class="ben-save">${r.aiSave}%</span>
+          <span class="ben-val">${eurK(r.ben)}</span>
+          <span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${r.pct}%"></span></span><span class="ben-pct-lbl">${r.pct}%</span></span>
+        </div>`).join("")+
+        `<div class="ben-total-row"><span>Total</span><span>${totalFTEs} FTEs</span><span>—</span><span>${eurK(annualBenefit)}</span><span>100%</span></div></div>`;
+    } else {
+      $("benScenRows").innerHTML=`<p style="font-size:12px;color:var(--muted)">Select scenarios to see the function-level breakdown.</p>`;
+    }
+  }
+
+  if($("benRamp")){
+    const maxBen=annualBenefit;
+    let html=`<div class="ben-ramp">`;
+    for(let t=1;t<=10;t++){
+      const ramp=ADOPT_RAMP[t];
+      const hcFactor=Math.pow(1+sc.hc,Math.max(0,t-GOLIVE_YR));
+      const ben=t<GOLIVE_YR?0:annualBenefit*ramp*hcFactor;
+      const w=maxBen>0?Math.round(ben/maxBen*100):0;
+      const active=t>=GOLIVE_YR;
+      const gl=t===GOLIVE_YR?`<span class="ben-gl">go-live</span>`:"";
+      html+=`<div class="br-row${active?"":" br-pre"}">
+        <span class="br-yr">Year ${t}${gl}</span>
+        <span class="br-bar"><span style="width:${w}%"></span></span>
+        <span class="br-val">${active?eurK(ben):"—"}</span>
+        <span class="br-pct">${active?Math.round(ramp*100)+"% adoption":"build phase"}</span>
+      </div>`;
+    }
+    $("benRamp").innerHTML=html+`</div>`;
+  }
+
+  if($("benAssump")){
+    $("benAssump").innerHTML=`
+      <div class="ba-row"><div class="ba-k">Method</div><div class="ba-v">FTE-based time savings — FTEs in each function × % of hours AI frees × staff rate × 220 working days. This values time freed, not necessarily headcount reduction.</div></div>
+      <div class="ba-row"><div class="ba-k">Staff rate</div><div class="ba-v">€${rate.toLocaleString("de-DE")}/day (all-in incl. overheads). Change in Advanced settings → Staff rate.</div></div>
+      <div class="ba-row"><div class="ba-k">Time saved</div><div class="ba-v">30–60% depending on scenario (40% default). Based on Accenture deployment benchmarks across GRC and credit risk functions.</div></div>
+      <div class="ba-row"><div class="ba-k">Not counted</div><div class="ba-v">Quality uplift, faster regulatory response, error reduction, avoided fines. These are real but harder to quantify — treat this as a conservative floor.</div></div>
+      <div class="ba-row"><div class="ba-k">Adoption</div><div class="ba-v">Benefits ramp from 40% at go-live → 75% in year 2 → 100% from year 3. Adjust go-live timeline in Advanced settings.</div></div>`;
+  }
 }
 function renderROI(all,sel,L){
   if(!$("roiKpis"))return;
@@ -3082,7 +3202,7 @@ function wire(){
   $("region").addEventListener("change",e=>setRegion(e.target.value));
   $("segTier").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.tier=b.dataset.tier;selSeg("segTier","tier",state.tier);recompute();});
   $("chartToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.view=b.dataset.view;[...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x===b));state.animate=true;recompute();});
-  $("rtabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.tab;[...$("rtabs").children].forEach(x=>x.classList.toggle("on",x===b));const map={breakdown:"tabBreakdown",connect:"tabConnect",perf:"tabPerf",inquiry:"tabInquiry",models:"tabModels"};Object.keys(map).forEach(k=>$(map[k]).style.display=k===t?"":"none");state.animate=true;recompute();if(t==="connect")setTimeout(playRequestFlow,80);if(t==="perf")setTimeout(playJourney,80);if(t==="inquiry")setTimeout(playInquiry,80);});
+  $("rtabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.tab;[...$("rtabs").children].forEach(x=>x.classList.toggle("on",x===b));const map={breakdown:"tabBreakdown",benefits:"tabBenefits",connect:"tabConnect",perf:"tabPerf",inquiry:"tabInquiry",models:"tabModels"};Object.keys(map).forEach(k=>$(map[k]).style.display=k===t?"":"none");state.animate=true;recompute();if(t==="connect")setTimeout(playRequestFlow,80);if(t==="perf")setTimeout(playJourney,80);if(t==="inquiry")setTimeout(playInquiry,80);});
   if($("reqReplay"))$("reqReplay").addEventListener("click",playRequestFlow);
   if($("inqReplay"))$("inqReplay").addEventListener("click",playInquiry);
   if($("jrnReplay"))$("jrnReplay").addEventListener("click",playJourney);
