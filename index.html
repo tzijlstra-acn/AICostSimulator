@@ -360,6 +360,11 @@
   @media(max-width:640px){.math-grid{grid-template-columns:1fr;}.mdl-row{grid-template-columns:1.6fr .6fr .6fr .9fr;}.mdl-row .mdl-b{display:none;}}
 
   .slider-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+  .users-field{display:flex;flex-direction:column;gap:6px;}
+  .users-inp{width:160px;padding:9px 14px;font-size:20px;font-weight:700;font-family:var(--mono);color:var(--purple-d);background:var(--bg-card);border:2px solid var(--border);border-radius:8px;letter-spacing:-.01em;-moz-appearance:textfield;appearance:textfield;}
+  .users-inp:focus{border-color:var(--purple);outline:none;box-shadow:0 0 0 3px rgba(161,0,255,.12);}
+  .users-inp::-webkit-inner-spin-button,.users-inp::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+  .users-hint{font-size:11px;color:var(--muted);font-style:italic;}
   .slider-top .lbl{font-size:11px;color:var(--muted);}
   .slider-val{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--purple-d);letter-spacing:-.01em;}
   input[type=range]{width:100%;height:6px;border-radius:6px;cursor:pointer;accent-color:var(--purple);-webkit-appearance:none;appearance:none;background:linear-gradient(90deg,var(--purple),var(--purple-br));}
@@ -854,8 +859,13 @@
     </div>
 
     <div class="q">
-      <div class="q-head"><span class="q-num">2</span><div class="q-text" id="q2text">How many users use the platform?</div></div>
-      <div class="q-body"><div class="slider-top"><span class="lbl">Seats</span><span class="slider-val num" id="usersV">150</span></div><input type="range" id="users" min="10" max="3000" step="10" value="150"></div>
+      <div class="q-head"><span class="q-num">2</span><div class="q-text" id="q2text">Platform users</div></div>
+      <div class="q-body">
+        <div class="users-field">
+          <input type="number" id="users" min="1" step="1" value="150" class="users-inp">
+          <span class="users-hint" id="usersHint">Auto-set from selected functions — override by typing</span>
+        </div>
+      </div>
     </div>
 
     <div id="manualScope">
@@ -3078,7 +3088,8 @@ function defaultPlatformUsers(){
 function syncUsersFromScenarios(){
   const def=defaultPlatformUsers();if(def===null)return;
   const usl=$("users");if(!usl)return;
-  usl.value=def;if($("usersV"))$("usersV").textContent=def.toLocaleString("de-DE");
+  usl.value=def;
+  if($("usersHint"))$("usersHint").textContent=`Auto-set from ${state.scenarios.length} selected scenario${state.scenarios.length===1?"":"s"} — override by typing`;
 }
 function scenUsers(id){return state.scenarioUsers[id]!=null?state.scenarioUsers[id]:defaultScenUsers(id);}
 function renderScenarioChips(){
@@ -3114,7 +3125,7 @@ function updateScenarioNote(){
     if($("q2text"))$("q2text").textContent="Platform users (auto from selected functions — override below)";
   } else {
     note.innerHTML=`No scenarios selected — sizing manually with the sliders below.`;
-    if($("q2text"))$("q2text").textContent="How many users use the platform?";
+    if($("q2text"))$("q2text").textContent="Platform users";
   }
   const ms=$("manualScope");if(ms)ms.classList.toggle("scope-off",n>0);
 }
@@ -3128,10 +3139,10 @@ function applyProfile(resetSliders){
   state.ind=resolveProfile();const ind=state.ind;
   $("brandTitle").innerHTML=`${ind.brand} <span>AI Cost Estimator</span>`;
   $("quizEyebrow").textContent="Accenture · "+ind.industryLabel+" · "+REGIONS[state.region].label;
-  $("q2text").textContent=`How many users use the platform?`;
+  $("q2text").textContent=`Platform users`;
   $("kUserLbl").textContent="Cost per user / month";
   if(resetSliders){
-    $("users").value=ind.defaults.users;$("usersV").textContent=(+ind.defaults.users).toLocaleString("de-DE");
+    $("users").value=ind.defaults.users;
     $("systems").value=ind.defaults.systems;$("systemsV").textContent=ind.defaults.systems;
     $("ucs").value=ind.defaults.ucs;$("ucsV").textContent=ind.defaults.ucs;
     $("intensity").value=ind.defaults.intensity;$("intensityV").textContent=ind.defaults.intensity.toFixed(1);
@@ -3236,7 +3247,8 @@ function wire(){
   $("ucList").addEventListener("click",e=>{if(e.target.dataset.del!==undefined){useCases.splice(+e.target.dataset.del,1);renderUC();recompute();return;}const tb=e.target.closest("button[data-tier]");if(tb){const s=tb.closest(".seg");useCases[+s.dataset.segi].tier=tb.dataset.tier;s.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===tb));recompute();}});
 
   const sl=(id,vid,fmt)=>$(id).addEventListener("input",()=>{$(vid).textContent=fmt($(id).value);recompute();});
-  sl("users","usersV",v=>(+v).toLocaleString("de-DE"));sl("intensity","intensityV",v=>parseFloat(v).toFixed(1));sl("ucs","ucsV",v=>v);
+  $("users").addEventListener("input",()=>{if($("usersHint"))$("usersHint").textContent="Custom value — re-select a scenario to auto-set";recompute();});
+  sl("intensity","intensityV",v=>parseFloat(v).toFixed(1));sl("ucs","ucsV",v=>v);
   sl("systems","systemsV",v=>v);
   sl("priceDelta","priceDeltaV",v=>{const n=parseInt(v);$("priceDeltaV").style.color=n<=0?"var(--blue)":"var(--magenta)";return (n>0?"+":"")+n+"%";});
   sl("hcGrowth","hcGrowthV",v=>"+"+v+"%");
