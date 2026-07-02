@@ -1263,7 +1263,6 @@ const IC={
  task:'<path d="M9 11l3 3 8-8M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
  clock:'<path d="M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
  chart:'<path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
- train:'<path d="M5 6h14a1 1 0 011 1v8a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1zM5 10h14M8 8h3v3H8zm5 0h3v3h-3zM7 16l-1 3m12-3 1 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
 };
 function svg(p){return '<svg viewBox="0 0 24 24">'+p+'</svg>';}
 
@@ -1283,7 +1282,6 @@ const REG={
  insurance:{DE:"BaFin · EIOPA · Solvency II",AT:"FMA · EIOPA · Solvency II",CH:"FINMA · Swiss Solvency Test"},
  health:{DE:"G-BA · MDR · GDPR-health",AT:"BASG · MDR · GDPR-health",CH:"Swissmedic · MedDO · nFADP"},
  telecom:{DE:"Bundesnetzagentur · NIS2 · GDPR",AT:"RTR / TKK · NIS2 · GDPR",CH:"BAKOM / ComCom · nFADP"},
- transport:{DE:"EBA · BSI KRITIS · NIS2 · AEG",AT:"BMK Verkehr · NIS2 · Eisenbahngesetz",CH:"BAV · NIS2 · DSG"},
 };
 
 /* ===== industries → sub-types =====
@@ -1416,30 +1414,6 @@ const INDUSTRIES=[
     ucEx:"real-time alert triage, control auto-testing, policy Q&A, incident RCA",
     useCases:NFR_UC},
   ]},
- {id:"db",label:"Deutsche Bahn",icon:"train",group:"transport",
-  scenarios:["opres","issue","kri","cyber","audit","contract"],
-  base:{fn:"your division",brand:"AI",deck:"your risk architecture deck",assess:"safety & ops review",unit:"controls",
-        orgSize:"large",orgStaff:80000,divisions:5},
-  subs:[
-   {id:"db_ops",label:"Rail operations",client:"Deutsche Bahn rail operations",brand:"Ops Risk",assess:"safety & punctuality review",
-    diff:"Day-to-day passenger services run on strict punctuality and safety targets. AI handles the throughput problem — <b>hundreds of incidents, delays and safety events per day</b> need triage, classification and narrative within minutes, not hours.",
-    defaults:{users:420,systems:13,ucs:6,intensity:0.6},usersEx:"~420 ops control, safety & risk FTEs",
-    systemsEx:"operations control system, incident database, timetable platform, safety management system, GRC tool, asset register, ISMS, regulatory feeds",
-    ucEx:"incident triage & narrative, safety KRI commentary, delay root-cause analysis, schedule risk assessment",
-    useCases:NFR_UC},
-   {id:"db_infra",label:"Network & infrastructure",client:"DB InfraGO",brand:"Asset Risk",assess:"asset safety review",
-    diff:"Responsible for 33,000 km of track, 5,700 stations and their underlying safety case. The <b>maintenance backlog and inspection data volume</b> are impossible to manually prioritise at speed — AI accelerates risk scoring and regulatory submission drafting.",
-    defaults:{users:300,systems:12,ucs:5,intensity:0.5},usersEx:"~300 asset risk, maintenance & compliance FTEs",
-    systemsEx:"asset management system, inspection & maintenance DB, SAP PM, condition monitoring, GRC tool, ISMS, regulatory feeds",
-    ucEx:"asset risk scoring, maintenance plan review, inspection narrative, regulatory submission drafts",
-    useCases:NFR_UC},
-   {id:"db_corp",label:"Group compliance",client:"DB Group",brand:"Group Risk",assess:"cross-divisional compliance review",
-    diff:"Five divisions and ~40 subsidiaries across Europe mean a <b>wide regulatory surface</b>: EBA safety rules, NIS2 critical infrastructure, GDPR, procurement law and labour regulation all at once. Consistency and coverage across the group is where AI earns its keep.",
-    defaults:{users:180,systems:15,ucs:7,intensity:0.6},usersEx:"~180 group compliance, audit & risk FTEs",
-    systemsEx:"GRC platform, policy library, audit management, contract management, ISMS, GDPR register, regulatory change feeds, SAP",
-    ucEx:"regulatory change mapping, policy Q&A, internal audit planning, contract risk screening",
-    useCases:NFR_UC},
-  ]},
 ];
 /* merge industry base + chosen sub + region regulator into the flat profile the app uses */
 function resolveProfile(){
@@ -1501,7 +1475,7 @@ const HOSTING={
  sovereign:{label:"EU-sovereign",     sub:"EU-resident cloud", infra:180000,  tokenMult:1.10, note:"EU data residency on sovereign cloud. A modest fixed commitment and a small token premium; EU model options preferred."},
  onprem:   {label:"On-prem / private",sub:"your own GPUs",      infra:1100000, tokenMult:0.30, note:"Self-hosted on your GPU cluster — a large fixed infrastructure + MLOps cost, but low marginal cost per token. Open / self-hostable models only. The usual answer for tier-1 banks and patient data."},
 };
-function hostingDefault(group,region){let h=(group==="health")?"onprem":(group==="bank"||group==="insurance"||group==="transport")?"sovereign":"cloud";if(region==="CH"&&h==="cloud")h="sovereign";return h;}
+function hostingDefault(group,region){let h=(group==="health")?"onprem":(group==="bank"||group==="insurance")?"sovereign":"cloud";if(region==="CH"&&h==="cloud")h="sovereign";return h;}
 const HOST_SELF=["llama","mistral_l","aleph"];
 function hostCandidates(){return state.hosting==="onprem"?realModels().filter(m=>HOST_SELF.includes(m.id)):realModels();}
 function hostMult(){return (HOSTING[state.hosting]||HOSTING.cloud).tokenMult;}
@@ -3181,15 +3155,6 @@ function applyProfile(resetSliders){
 function setIndustry(id,first){
   const I=INDUSTRIES.find(x=>x.id===id);if(!I)return;
   state.industry=I;state.sub=I.subs[0];
-  if(!first){
-    if(I.scenarios){state.scenarios=[...I.scenarios];state.scenarioRequests={};state.scenarioUsers={};}
-    const b=I.base;
-    if(b.orgSize){state.orgSize=b.orgSize;}
-    if(b.orgStaff!=null){state.orgStaff=b.orgStaff;}
-    if(b.divisions!=null){state.divisions=b.divisions;if($("divisions"))$("divisions").value=b.divisions;if($("divisionsNote"))$("divisionsNote").textContent=`Your division funds ${Math.round(100/b.divisions)}% of platform build & run`;}
-    state.hosting=hostingDefault(I.group,state.region);
-    syncOrgSlider();syncDiscBoxes();renderScenarioChips();applyScenarios();
-  }
   [...$("industries").children].forEach(c=>c.classList.toggle("on",c.dataset.ind===id));
   populateSubtypes();applyProfile(!first);
 }
