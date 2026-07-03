@@ -3295,7 +3295,7 @@ wire();
   const gate=$("pwGate"),inp=$("pwInput"),btn=$("pwBtn"),err=$("pwErr");
   if(sessionStorage.getItem("pw_ok")==="1"){gate.classList.add("hidden");return;}
   function attempt(){
-    if(inp.value==="Thomas123"){sessionStorage.setItem("pw_ok","1");gate.classList.add("hidden");}
+    if(inp.value==="Studio2026"){sessionStorage.setItem("pw_ok","1");gate.classList.add("hidden");}
     else{err.textContent="Incorrect password";inp.value="";inp.focus();}
   }
   btn.addEventListener("click",attempt);
