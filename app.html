@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <script>if(!sessionStorage.getItem('nfr_auth')){location.replace('index.html');}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accenture AI Cost Estimator</title>
+<title>Accenture AI Cost Simulator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0a0711;--ink2:#140e20;--ink3:#1d1530;
@@ -17,7 +17,7 @@
     --text:#191223;--muted:#6c6480;--faint:#a99fbb;
     --fixed:#3d0568;--peruser:#9b4ff0;--usage:#A100FF;
     --r:6px;--r-lg:14px;
-    --mono:'JetBrains Mono',ui-monospace,monospace;--display:'Archivo',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;--display:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;
     --shadow:0 1px 2px rgba(20,10,40,.04),0 8px 28px -12px rgba(60,20,110,.18);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -105,18 +105,6 @@
   .dq-note{margin-top:9px;font-size:11px;color:var(--muted);line-height:1.5;}
   .scen-note{margin-top:10px;font-size:11.5px;color:var(--muted);line-height:1.5;}
   .scope-off{display:none;}
-
-  /* ===== Password gate ===== */
-  #pwGate{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;}
-  #pwGate.hidden{display:none;}
-  .pw-box{background:#1a1030;border:1px solid #3a2060;border-radius:18px;padding:44px 48px;width:340px;text-align:center;}
-  .pw-logo{font-family:var(--display);font-weight:800;font-size:20px;color:#efe9f7;margin-bottom:6px;letter-spacing:-.03em;}
-  .pw-sub{font-size:12px;color:#8070a8;margin-bottom:32px;}
-  .pw-input{width:100%;padding:12px 16px;border:1px solid #3a2060;border-radius:10px;background:#130a22;color:#efe9f7;font-size:15px;font-family:var(--mono);text-align:center;letter-spacing:.12em;outline:none;transition:.2s;}
-  .pw-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(161,0,255,.18);}
-  .pw-btn{margin-top:14px;width:100%;padding:12px;background:var(--purple);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;}
-  .pw-btn:hover{background:var(--purple-d);}
-  .pw-err{color:#f472b6;font-size:12px;margin-top:10px;min-height:18px;}
 
   #snapshotPanel{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);}
   .snap-row{display:flex;gap:6px;align-items:center;margin-bottom:8px;}
@@ -410,6 +398,7 @@
   .hero-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#b59bd8;margin-bottom:9px;}
   .hero-eyebrow b{color:var(--purple-br);font-weight:600;}
   .hero-total{font-family:var(--display);font-weight:800;font-size:46px;letter-spacing:-.03em;color:#fff;line-height:.95;}
+  .hero-yearnote{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:#b59bd8;margin-top:7px;}
   .hero-sub{font-size:12.5px;color:#cdbfe0;margin-top:8px;max-width:440px;line-height:1.45;}
   .toggle{display:flex;border:1px solid rgba(255,255,255,.16);border-radius:30px;overflow:hidden;flex:none;background:rgba(255,255,255,.04);}
   .toggle button{border:none;background:transparent;padding:8px 15px;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:#b7a8cf;cursor:pointer;transition:.15s;}
@@ -636,6 +625,19 @@
   .bb-total.sub{border-top:none;padding-top:2px;color:var(--purple-d);font-size:12px;}
   .bb-note{font-size:10.5px;color:var(--faint);line-height:1.55;margin-top:10px;border-top:1px solid var(--line-soft);padding-top:10px;}
   .bb-note b{color:var(--muted);}
+  /* ===== Build team · roles & day rates ===== */
+  details.bteam-dd{margin-top:14px;border:1px solid var(--line);border-radius:11px;background:#fbfafd;overflow:hidden;}
+  details.bteam-dd>summary{cursor:pointer;list-style:none;padding:11px 14px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--purple-d);font-weight:700;user-select:none;display:flex;align-items:center;gap:8px;}
+  details.bteam-dd>summary::-webkit-details-marker{display:none;}
+  details.bteam-dd>summary:before{content:"+ ";}
+  details.bteam-dd[open]>summary:before{content:"– ";}
+  .bteam{padding:2px 14px 14px;}
+  .bteam-row{display:grid;grid-template-columns:1.5fr 1.2fr .7fr .6fr .9fr;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line-soft);font-size:11.5px;}
+  .bteam-row.head{font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:700;border-bottom:1.5px solid var(--line);}
+  .bteam-row.tot{border-bottom:none;border-top:2px solid var(--line);font-weight:700;color:var(--purple-deep);}
+  .bteam-role{color:var(--ink2);font-weight:600;}
+  .bteam-grade{color:var(--muted);}
+  .bteam-num{font-family:var(--mono);text-align:right;color:var(--ink2);}
 
   /* ===== Per-inquiry: definitions + smart routing ===== */
   .inq-defs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 18px;}
@@ -712,14 +714,14 @@
   .sum-sheet{max-width:760px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:30px 34px 38px;}
   .sum-actions{display:flex;gap:10px;justify-content:flex-end;margin-bottom:18px;}
   .sum-actions .summary-btn{width:auto;margin-top:0;}
-  .sum-h{font-family:Archivo,sans-serif;font-weight:800;font-size:21px;color:var(--ink);margin:0 0 2px;}
+  .sum-h{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:21px;color:var(--ink);margin:0 0 2px;}
   .sum-eyebrow{font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
   .sum-sub{font-size:13px;color:var(--muted);margin-bottom:18px;}
   .sum-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:16px 18px;border:1px solid var(--line);border-radius:11px;background:var(--paper);margin-bottom:18px;}
-  .sum-hero .big{font-family:Archivo,sans-serif;font-weight:800;font-size:30px;color:var(--ink);line-height:1;}
+  .sum-hero .big{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:30px;color:var(--ink);line-height:1;}
   .sum-hero .lab{font-size:11px;color:var(--muted);margin-top:4px;}
   .sum-hero .grade{text-align:right;}
-  .sum-hero .grade b{font-family:Archivo,sans-serif;font-size:20px;}
+  .sum-hero .grade b{font-family:'Space Grotesk',sans-serif;font-size:20px;}
   .sum-sec-h{font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:20px 0 9px;border-bottom:1px solid var(--line-soft);padding-bottom:5px;}
   .sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 26px;}
   .sum-row{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:3px 0;border-bottom:1px dotted var(--line-soft);}
@@ -771,18 +773,8 @@
 </head>
 <body>
 
-<div id="pwGate">
-  <div class="pw-box">
-    <div class="pw-logo">Accenture AI Cost Estimator</div>
-    <div class="pw-sub">Accenture · internal estimation aid</div>
-    <input class="pw-input" type="password" id="pwInput" placeholder="Enter password" autocomplete="off">
-    <button class="pw-btn" id="pwBtn">Enter</button>
-    <div class="pw-err" id="pwErr"></div>
-  </div>
-</div>
-
 <div class="bar">
-  <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>Accenture AI Cost Estimator</span></span></div>
+  <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>Accenture AI Cost Simulator</span></span></div>
   <div class="industries" id="industries"></div>
 </div>
 
@@ -827,14 +819,9 @@
         </div>
         <div class="q-help" id="hostHelp">Regulated NFR data usually can't sit on a vendor's shared cloud, so where the AI runs changes the cost shape — and the answer to "how can a self-hosted model have a token price."<span class="ex"><b>Vendor cloud</b> → per-token API pricing, no infrastructure to run. <b>EU-sovereign</b> → EU-resident hosting, a small premium and commitment. <b>On-prem / private</b> → your own GPU cluster: a large <b>fixed</b> infrastructure + MLOps cost, but a <b>low marginal cost per token</b> (you bought the hardware, you're not billed per call). Only open / self-hostable models run here. Tier-1 banks and patient data typically need this — and it's why the all-in is far higher than a pure cloud build.</span></div>
       </div>
-      <div class="dq"><div class="dq-l">Which functions share the platform?<span class="dq-hint">select departments to unlock their scenarios below</span></div>
+      <div class="dq"><div class="dq-l">Which functions share the platform?<span class="dq-hint">select departments to unlock their scenarios — your platform share = 1 ÷ (number of functions selected)</span></div>
         <div class="dept-chips" id="deptChips"></div>
-      </div>
-      <div class="dq"><div class="dq-l">How many divisions share the platform cost?<span class="dq-hint">Your share = 1 ÷ N — e.g. 3 divisions means you fund a third</span></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-top:6px">
-          <input type="number" id="divisions" min="1" max="20" step="1" value="3" style="width:64px;padding:4px 8px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(255,255,255,0.06);color:var(--fg);font-size:14px;font-family:var(--mono);text-align:center">
-          <span class="dq-hint" id="divisionsNote">Your division funds 33% of platform build &amp; run</span>
-        </div>
+        <div class="dq-note" id="deptNote"></div>
       </div>
       <div class="dq"><div class="dq-l">How automated is the work today?<button type="button" class="q-help-btn" id="baseHelpBtn" style="display:inline-flex;margin-left:8px;vertical-align:middle">?</button><span class="dq-hint">sets the &lsquo;today&rsquo; baseline for the gains — not the cost</span></div>
         <div class="boxrow" data-disc="baseLevel">
@@ -909,6 +896,8 @@
         <div class="adv-row"><label>Use-case build · medium reference (<span id="ucCur">€</span>) <span class="dq-hint">to ~85% coverage; simple ×0.5, high ×1.65</span></label><input type="number" id="ucRate" placeholder="90000" value="90000"></div>
         <div class="adv-row"><label>Build amortisation (yrs) <span class="dq-hint">spreads one-off build cost — does not affect recurring run costs (hosting, ops)</span></label><input type="number" id="amort" min="1" max="10" step="1" placeholder="3" value="3"></div>
         <div class="adv-row"><label>Staff rate (€/day) <span class="dq-hint">assumed analyst day rate — used only for ROI benefit estimate</span></label><input type="number" id="staffRate" placeholder="500" value="500"></div>
+        <div class="adv-row"><label>Avoided supervisory findings / yr <span class="dq-hint">risk-reduction benefit — one avoided finding typically costs €150K–€500K+ to remediate</span></label><input type="number" id="riskFindings" min="0" step="1" value="1"></div>
+        <div class="adv-row"><label>Remediation cost per finding (<span id="riskCur">€</span>) <span class="dq-hint">avg cost to remediate one supervisory finding</span></label><input type="number" id="riskCostPer" step="50000" value="250000"></div>
         <div class="adv-row"><label>Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
         <div class="adv-row"><label>Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
         <div class="adv-row"><label>Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
@@ -957,6 +946,7 @@
         <div>
           <div class="hero-eyebrow"><span class="stepn light">2</span>What it costs to run · per year · <b id="heroLevel">L3 Does multi-step work</b></div>
           <div class="hero-total num" id="hTotal">—</div>
+          <div class="hero-yearnote" id="heroYearNote"></div>
           <div class="hero-sub" id="heroSub"></div>
           <div class="shared-note" id="sharedNote"></div>
         </div>
@@ -1167,6 +1157,7 @@
       <div class="card" id="meth-models">
         <div class="est-head"><h3>Model prices · per million tokens</h3><span class="ai-pill">vendor-neutral · ~2026</span></div>
         <div class="est-sub">Published list prices (research-backed estimates). The router picks the best value per task; <span class="mdl-dot routed"></span> = routed in your setup, <span class="mdl-dot self"></span> = self-hostable on-prem.</div>
+        <div class="share-note" style="margin-top:12px"><b>Model pricing is provider-agnostic.</b> The figures here size the token economics whichever provider you deploy. For <b>Azure OpenAI</b> deployments, select <b>GPT-4o / GPT-4o-mini</b> (or the GPT-5.x current-gen equivalents) via the model override in Advanced settings — see the ICS Implementation Blueprint for the Azure reference architecture. Switching provider changes unit prices, not the method.</div>
         <div class="meth-providers">
           <span class="mprov mprov-ant">Anthropic</span>
           <span class="mprov mprov-oai">OpenAI</span>
@@ -1197,8 +1188,8 @@
             Pay-per-use inference charges: input tokens (context + retrieval) × input price, plus output tokens × output price. The token price trajectory you set compounds annually — the most uncertain but also most likely to fall.</div>
             <div><b style="color:var(--text)">Adoption ramp</b><br>
             Users do not adopt on day one. The model applies 40% utilisation in the go-live year, 75% the following year, and 100% from year 3 onward. This suppresses usage costs in early years.</div>
-            <div><b style="color:var(--text)">Division breadth share</b><br>
-            Fixed platform and run costs are shared across however many divisions you specify. Your slice = total ÷ number of divisions. The single biggest lever on your fixed-cost line.</div>
+            <div><b style="color:var(--text)">Function breadth share</b><br>
+            Fixed platform and run costs are shared across the functions you select in step 1. Your slice = total ÷ number of selected functions (your division plus adjacent functions). The single biggest lever on your fixed-cost line.</div>
             <div><b style="color:var(--text)">Scenario scaling</b><br>
             Each scenario has a distinct FTE count and request volume — sized from realistic org-proportion estimates. The model sums across all selected scenarios.</div>
           </div>
@@ -1279,8 +1270,8 @@ const CUR={
 };
 /* regulator string by industry group × region — keeps the profile note region-true */
 const REG={
- bank:{DE:"BaFin · Bundesbank · ECB/EBA",AT:"FMA · OeNB · ECB/EBA",CH:"FINMA · SNB"},
- insurance:{DE:"BaFin · EIOPA · Solvency II",AT:"FMA · EIOPA · Solvency II",CH:"FINMA · Swiss Solvency Test"},
+ bank:{DE:"BaFin · Bundesbank · ECB/EBA · DORA · EU AI Act",AT:"FMA · OeNB · ECB/EBA · DORA · EU AI Act",CH:"FINMA · SNB"},
+ insurance:{DE:"BaFin · EIOPA · Solvency II · DORA · EU AI Act",AT:"FMA · EIOPA · Solvency II · DORA · EU AI Act",CH:"FINMA · Swiss Solvency Test"},
  health:{DE:"G-BA · MDR · GDPR-health",AT:"BASG · MDR · GDPR-health",CH:"Swissmedic · MedDO · nFADP"},
  telecom:{DE:"Bundesnetzagentur · NIS2 · GDPR",AT:"RTR / TKK · NIS2 · GDPR",CH:"BAKOM / ComCom · nFADP"},
 };
@@ -1313,8 +1304,8 @@ const SCENARIOS=[
  {id:"issue",  name:"Issue & incident management",       dept:"nfr", tier:"medium", perYear:80,  adopt:50, aiSave:0.20, desc:"Triage, root-cause and action tracking on risk events",
    dash:"Open issues by severity, root-cause clustering, overdue actions and thematic links to controls — updated as events and actions move.",
    why:"Medium generation. Triage and clustering across event text; moderate reasoning per refresh."},
- {id:"regch",  name:"Regulatory change & horizon scan",  dept:"compliance", tier:"simple", perYear:120, adopt:40, aiSave:0.35, desc:"Scan, interpret and map new rules to controls",
-   dash:"New and upcoming rules, an applicability read, and a first-pass mapping to affected policies and controls — refreshed as feeds publish.",
+ {id:"regch",  name:"Regulatory change & horizon scan",  dept:"compliance", tier:"simple", perYear:120, adopt:40, aiSave:0.35, reg:["EU AI Act Art.6","EU AI Act Art.9"], desc:"Scan, interpret and map new rules to controls — incl. EU AI Act Art.6/9 high-risk AI classification for credit & insurance",
+   dash:"New and upcoming rules, an applicability read, and a first-pass mapping to affected policies and controls. Includes EU AI Act Art.6/9 high-risk AI-system classification and risk-management obligations for credit-scoring and insurance use cases — refreshed as feeds publish.",
    why:"Lighter generation per item, but high item volume. Mostly retrieve-classify-map rather than deep multi-step reasoning. Sized 'simple'."},
  {id:"policy", name:"Policy & standards Q&A",             dept:"compliance", tier:"simple", perYear:200, adopt:70, aiSave:0.30, desc:"Everyday lookups across policy and standards",
    dash:"A curated answer surface over the policy corpus: most-asked topics pre-answered with citations — the rest handled in chat.",
@@ -1352,9 +1343,9 @@ const SCENARIOS=[
  {id:"esg",    name:"ESG / climate risk",                  dept:"esg",      tier:"high",   perYear:12,  adopt:35, effortDays:30, cyclesPerYear:4, aiSave:0.25, desc:"Climate scenario analysis, transition & physical risk, ESG disclosures",
    dash:"Portfolio exposure by sector and region, transition risk scores, physical risk heat maps and drafted disclosure sections — refreshed as scenario parameters and portfolio data update.",
    why:"Heavy generation. Reasoning across macro climate scenarios, sector-level exposure and regulatory disclosure requirements. High complexity per cycle. Sized 'high'."},
- {id:"opres",  name:"Operational resilience",              dept:"nfr",      tier:"medium", perYear:12,  adopt:40, effortDays:25, cyclesPerYear:4, aiSave:0.25, desc:"Business continuity, important business services mapping, impact tolerance testing",
-   dash:"IBS map with dependency chains, impact tolerance thresholds, scenario test results and remediation plans — refreshed after each exercise or significant operational change.",
-   why:"Medium generation. Maps dependencies and reasons across service chains and impact scenarios; moderately complex per service line."},
+ {id:"opres",  name:"Operational & digital resilience (DORA)", dept:"nfr",  tier:"medium", perYear:12,  adopt:40, effortDays:25, cyclesPerYear:4, aiSave:0.25, reg:["DORA Art.17","DORA Art.28","DORA Art.30"], desc:"DORA-aligned: ICT incident management (Art.17), ICT third-party risk (Art.28/30), important business services mapping and impact tolerance testing",
+   dash:"IBS map with dependency chains, impact tolerance thresholds, ICT third-party (Art.28/30) concentration and register-of-information views, ICT-incident classification and reporting drafts (Art.17), scenario test results and remediation plans — refreshed after each exercise or significant operational change.",
+   why:"Medium generation. Maps dependencies and reasons across service chains, ICT third-party exposure and impact scenarios; moderately complex per service line. Directly supports DORA operational-resilience obligations."},
 ];
 /* Estimated FTE as % of orgStaff typically working in each function at a regulated bank.
    Used to seed realistic default user counts per scenario, scaled to org size. */
@@ -1415,6 +1406,72 @@ const INDUSTRIES=[
     ucEx:"real-time alert triage, control auto-testing, policy Q&A, incident RCA",
     useCases:NFR_UC},
   ]},
+ {id:"insurance",label:"Insurance",icon:"shield",group:"insurance",
+  base:{fn:"your risk function",brand:"AI",deck:"your NFR architecture deck",assess:"RCSA",unit:"controls"},
+  subs:[
+   {id:"life",label:"Life & pensions",client:"a life insurer",brand:"Risk & Actuarial",assess:"ORSA & control review",
+    diff:"Long-dated liabilities and <b>Solvency II / EIOPA</b> capital modelling dominate. The prize is faster ORSA cycles, model validation and conduct oversight across a large policy book — supported by <b>DORA</b> resilience and <b>EU AI Act</b> governance where AI touches underwriting.",
+    defaults:{users:180,systems:14,ucs:6,intensity:0.6},usersEx:"~180 risk, actuarial-support & compliance staff",
+    systemsEx:"policy admin, actuarial models, GRC/RCSA tool, complaints, AML/KYC, TPRM register, regulatory feeds",
+    ucEx:"ORSA narrative drafting, control testing, conduct-risk review, model validation, regulatory mapping",
+    useCases:NFR_UC},
+   {id:"pc",label:"P&C / general insurer",client:"a general insurer",brand:"Conduct & Claims Risk",assess:"claims & conduct review",
+    diff:"High claim and policy volume pushes work toward <b>claims-fraud, conduct and third-party risk</b> across many products. Throughput matters more than depth per case, and consumer-protection scrutiny is constant.",
+    defaults:{users:260,systems:15,ucs:6,intensity:0.6},usersEx:"200–350 first- and second-line staff",
+    systemsEx:"claims, underwriting, policy admin, fraud engine, complaints, GRC tool, TPRM register, regulatory feeds",
+    ucEx:"claims-fraud triage, conduct-risk assessment, control testing, TPRM, complaints Q&A",
+    useCases:NFR_UC},
+   {id:"health_ins",label:"Health insurer",client:"a health insurer",brand:"Privacy & Conduct Risk",assess:"DPIA & control review",
+    diff:"Sensitive member-health data raises the <b>privacy and data-residency</b> bar. DPIA and processing-inventory work sit alongside standard NFR controls, so documentation and lawful-basis evidence become the binding constraint.",
+    defaults:{users:150,systems:13,ucs:5,intensity:0.6},usersEx:"~150 risk, privacy & compliance staff",
+    systemsEx:"claims, member data platform, DPIA register, policy library, fraud engine, regulatory feeds",
+    ucEx:"DPIA support, privacy Q&A, claims-fraud triage, control testing",
+    useCases:NFR_UC},
+  ]},
+ {id:"health",label:"Health",icon:"health",group:"health",
+  base:{fn:"your risk & quality function",brand:"AI",deck:"your governance architecture deck",assess:"risk assessment",unit:"controls"},
+  subs:[
+   {id:"hospital",label:"Hospital / provider",client:"a hospital group",brand:"Quality & Safety Risk",assess:"patient-safety review",
+    diff:"Patient-safety and <b>MDR / GDPR-health</b> obligations dominate. Incident review and documentation are the binding constraints, and sensitive data usually must stay <b>on-prem / private</b>.",
+    defaults:{users:120,systems:12,ucs:5,intensity:0.6},usersEx:"~120 risk, quality & compliance staff",
+    systemsEx:"EHR, incident-reporting, quality/audit system, policy library, medical-device register, regulatory feeds",
+    ucEx:"incident triage, policy Q&A, control testing, regulatory mapping",
+    useCases:NFR_UC},
+   {id:"medtech",label:"Medical device / MedTech",client:"a medical-device maker",brand:"Regulatory & Quality Risk",assess:"post-market surveillance",
+    diff:"<b>MDR</b> technical documentation, post-market surveillance and supplier risk drive the workload across a regulated product portfolio, where data integrity and audit-readiness are paramount.",
+    defaults:{users:100,systems:13,ucs:5,intensity:0.6},usersEx:"~100 regulatory, quality & risk staff",
+    systemsEx:"QMS, complaints/vigilance, supplier register, document store, CAPA system, regulatory feeds",
+    ucEx:"post-market surveillance, supplier risk, document review, regulatory mapping",
+    useCases:NFR_UC},
+   {id:"pharma",label:"Pharma / life sciences",client:"a pharma company",brand:"Safety & Quality Risk",assess:"pharmacovigilance review",
+    diff:"<b>Pharmacovigilance</b>, GxP quality and supplier oversight dominate. Audit-readiness and data integrity across the product lifecycle are the value drivers.",
+    defaults:{users:140,systems:14,ucs:6,intensity:0.6},usersEx:"~140 quality, safety & compliance staff",
+    systemsEx:"safety database, QMS, LIMS, supplier register, document store, regulatory feeds",
+    ucEx:"pharmacovigilance triage, quality control testing, supplier risk, audit support",
+    useCases:NFR_UC},
+  ]},
+ {id:"telecom",label:"Telecom",icon:"telecom",group:"telecom",
+  base:{fn:"your risk function",brand:"AI",deck:"your governance architecture deck",assess:"risk assessment",unit:"controls"},
+  subs:[
+   {id:"mno",label:"Mobile network operator",client:"a network operator",brand:"Resilience & Fraud Risk",assess:"resilience & fraud review",
+    diff:"Scale and real time: <b>NIS2</b> resilience, fraud and vendor risk across a large network estate. Multi-cloud and edge inference keep cost down, so integration count and automation matter most.",
+    defaults:{users:200,systems:18,ucs:7,intensity:0.6},usersEx:"~200 risk, security & compliance staff",
+    systemsEx:"OSS/BSS, fraud-management, SIEM, GRC tool, vendor register, policy library, regulatory feeds",
+    ucEx:"fraud triage, cyber/IT risk, control testing, TPRM, regulatory mapping",
+    useCases:NFR_UC},
+   {id:"broadband",label:"Broadband / fixed-line",client:"a broadband provider",brand:"Conduct & Continuity Risk",assess:"conduct & continuity review",
+    diff:"Consumer-protection and <b>service-continuity</b> obligations dominate. Complaints, conduct and resilience testing carry the load across a broad customer base.",
+    defaults:{users:150,systems:15,ucs:6,intensity:0.6},usersEx:"~150 first- and second-line staff",
+    systemsEx:"BSS, complaints, network monitoring, GRC tool, vendor register, regulatory feeds",
+    ucEx:"complaints & conduct review, resilience testing, control testing, TPRM",
+    useCases:NFR_UC},
+   {id:"towerco",label:"Infrastructure / towerco",client:"an infrastructure operator",brand:"Third-party & Resilience Risk",assess:"third-party & resilience review",
+    diff:"Asset-heavy and vendor-dependent: <b>third-party and operational-resilience</b> risk across shared passive infrastructure is the defining exposure.",
+    defaults:{users:90,systems:12,ucs:5,intensity:0.6},usersEx:"~90 risk, security & compliance staff",
+    systemsEx:"asset register, vendor management, incident system, GRC tool, policy library, regulatory feeds",
+    ucEx:"TPRM, operational-resilience testing, incident triage, control testing",
+    useCases:NFR_UC},
+  ]},
 ];
 /* merge industry base + chosen sub + region regulator into the flat profile the app uses */
 function resolveProfile(){
@@ -1439,6 +1496,10 @@ const MODELS=[
  {id:"mistral_l",name:"Mistral Large",prov:"Mistral · EU",in:2,out:6,b:{reason:83,speed:82,context:80,sovereign:90,safety:83}},
  {id:"aleph",name:"Aleph Alpha",prov:"Aleph Alpha · DE",in:3,out:12,b:{reason:78,speed:70,context:74,sovereign:97,safety:91}},
  {id:"llama",name:"Llama (self-host)",prov:"Open · self-host",in:1.2,out:2.2,b:{reason:73,speed:76,context:78,sovereign:99,safety:78}},
+ /* Azure OpenAI GPT-4o references (ICS Implementation Blueprint). Provider-agnostic — selectable as an override
+    for consultants presenting against the Blueprint; excluded from the curated auto-routing pool so defaults are unchanged. */
+ {id:"gpt4o",name:"Azure OpenAI GPT-4o",prov:"OpenAI · Azure",in:2.5,out:10,azure:true,b:{reason:82,speed:70,context:80,sovereign:32,safety:85}},
+ {id:"gpt4omini",name:"Azure OpenAI GPT-4o-mini",prov:"OpenAI · Azure",in:0.15,out:0.6,azure:true,b:{reason:62,speed:92,context:76,sovereign:32,safety:80}},
  {id:"auto",name:"Auto (best fit · routed)",in:0,out:0},
 ];
 const LEVELS=[
@@ -1517,7 +1578,7 @@ function getBuildSched(){
 }
 function getAdoptRamp(g){return Array.from({length:11},(_,t)=>t===0||t<g?0:t===g?0.40:t===g+1?0.75:1.0);}
 const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let state={level:3,tier:"medium",view:"outlook",detail:false,animate:true,industry:INDUSTRIES[0],sub:INDUSTRIES[0].subs[0],region:"DE",orgSize:"mid",orgStaff:12000,platformExists:"building",platProgress:30,depts:["compliance","procurement"],functions:3,baseLevel:"1",scenarios:["rcsa","control","tprm"],hosting:"sovereign",ind:null,scenarioRequests:{},scenarioUsers:{},divisions:3};
+let state={level:3,tier:"medium",view:"outlook",detail:false,animate:true,industry:INDUSTRIES[0],sub:INDUSTRIES[0].subs[0],region:"DE",orgSize:"mid",orgStaff:12000,platformExists:"building",platProgress:30,depts:["compliance","procurement"],functions:3,baseLevel:"1",scenarios:["rcsa","control","tprm"],hosting:"sovereign",ind:null,scenarioRequests:{},scenarioUsers:{}};
 let CURK=CUR.EUR;
 state.ind=resolveProfile();
 let useCases=JSON.parse(JSON.stringify(state.sub.useCases));
@@ -1531,7 +1592,7 @@ const num=id=>parseFloat($(id).value)||0;
 const modelById=id=>MODELS.find(m=>m.id===id);
 /* ===== open, benchmark-driven model selection (not vendor-locked) ===== */
 const NFR_AX=[["reason","Reasoning"],["speed","Speed"],["cost","Cost-efficiency"],["context","Long-context"],["sovereign","EU-sovereign"],["safety","Safety / compliance"]];
-const realModels=()=>MODELS.filter(m=>m.id!=="auto"&&m.b);
+const realModels=()=>MODELS.filter(m=>m.id!=="auto"&&m.b&&!m.azure);
 const blendedPrice=m=>m.in*0.75+m.out*0.25;
 const _maxBP=Math.max.apply(null,realModels().map(blendedPrice));
 const costScore=m=>Math.round(Math.max(0,Math.min(100,(1-blendedPrice(m)/_maxBP)*100)));
@@ -1667,7 +1728,9 @@ function toggleDept(id){
 }
 function syncPlatSlider(){const wrap=$("platWrap"),sl=$("platProg");if(!wrap||!sl)return;const b=PLATEXISTS[state.platformExists];if(!b||!b.lbl){wrap.style.display="none";return;}wrap.style.display="block";let v=state.platProgress;if(v==null||v<b.min||v>b.max)v=b.def;state.platProgress=v;sl.min=b.min;sl.max=b.max;sl.step=b.step;sl.value=v;if($("platLbl"))$("platLbl").textContent=b.lbl;if($("platProgV"))$("platProgV").textContent=v+"%";}
 const BREADTH={nfr:{label:"This division only"},few:{label:"A few functions",min:2,max:5,step:1,def:3},many:{label:"Several",min:6,max:14,step:1,def:9},ent:{label:"Enterprise-wide",min:15,max:40,step:1,def:20}};
-function breadthShare(){return Math.max(0.05,Math.min(1,1/Math.max(1,state.divisions||3)));}
+/* Sharing denominator = number of selected function chips (your division + adjacent functions).
+   This is the single control that drives the shared-platform split — see the function chips in step 1. */
+function breadthShare(){return Math.max(0.05,Math.min(1,1/Math.max(1,state.functions||1)));}
 const PLATEXISTS={none:{label:"No — greenfield"},building:{label:"Building it now",min:0,max:80,step:5,def:30,lbl:"How far along is it?"},yes:{label:"Yes, in place",min:0,max:100,step:5,def:70,lbl:"How much can you reuse as-is?"}};
 function platFactor(){const k=state.platformExists;if(!k||k==="none")return 1.0;const b=PLATEXISTS[k];const v=state.platProgress==null?b.def:state.platProgress;if(k==="building")return 1.0-0.75*(v/100);return 0.40-0.32*(v/100);}
 function fixedYr(levelN){
@@ -1756,6 +1819,34 @@ function compCol(cls,clabel,total,sublabel,lines,note){
     lines.map(([l,v])=>`<div class="comp-line"><span>${l}</span><span class="v">${eurK(v)}</span></div>`).join("")+
     (note?`<div class="comp-note">${note}</div>`:"")+`</div>`;
 }
+/* Indicative delivery team for the platform build — realistic Accenture grades & EUR day rates.
+   Days derive from each role's share of the platform build divided by its day rate, so subtotals
+   track the current build number. Representative of a typical L3 engagement. */
+const BUILD_TEAM=[
+ ["Programme Manager","Manager / Senior Mgr",2800,0.10],
+ ["Solution Architect","Manager",2500,0.12],
+ ["GRC Lead","Manager",2500,0.12],
+ ["AI/ML Engineer","Consultant / Manager",1600,0.22],
+ ["Data Engineer","Consultant",1400,0.15],
+ ["Backend Developer","Analyst / Consultant",1200,0.12],
+ ["Security Architect","Manager",2200,0.10],
+ ["Change Manager","Consultant / Manager",1900,0.07],
+];
+function renderBuildTeam(build){
+  const rows=BUILD_TEAM.map(([role,grade,rate,share])=>{
+    const cost=build*share, days=Math.max(1,Math.round(cost/rate)), subtotal=days*rate;
+    return{role,grade,rate,days,subtotal};
+  });
+  const totDays=rows.reduce((s,r)=>s+r.days,0), totCost=rows.reduce((s,r)=>s+r.subtotal,0);
+  return `<details class="bteam-dd"><summary>Build team · roles, grades &amp; day rates</summary>
+    <div class="bteam">
+      <div class="bteam-row head"><span>Role</span><span>Accenture grade</span><span class="bteam-num">Day rate</span><span class="bteam-num">Days</span><span class="bteam-num">Subtotal</span></div>
+      ${rows.map(r=>`<div class="bteam-row"><span class="bteam-role">${r.role}</span><span class="bteam-grade">${r.grade}</span><span class="bteam-num">${eur(r.rate)}</span><span class="bteam-num">${r.days}</span><span class="bteam-num">${eurK(r.subtotal)}</span></div>`).join("")}
+      <div class="bteam-row tot"><span>Total · platform build</span><span></span><span class="bteam-num"></span><span class="bteam-num">${totDays}</span><span class="bteam-num">${eurK(totCost)}</span></div>
+    </div>
+    <p class="bb-note" style="margin:0 12px 12px;border-top:none;padding-top:2px">Indicative delivery team for a typical L3 engagement — grades and day rates are illustrative Accenture blended rates in ${CURK.code}. Days scale with the platform-build figure above (${eurK(build)}); Programme Manager days also scale with the go-live duration. Integration, dashboard build and run/oversight are costed separately in the lines above.</p>
+  </details>`;
+}
 function renderBuildBasis(sel,L){
   if(!$("buildBasis"))return;
   const amort=getGoliveYr(),systems=num("systems"),ucs=state.detail?useCases.length:num("ucs");
@@ -1773,7 +1864,8 @@ function renderBuildBasis(sel,L){
    </div>
    <div class="bb-total"><span>Your fixed cost · what you pay</span><b>${eurK(f.total)}/yr</b></div>
    <div class="bb-total sub"><span>If you funded the whole platform alone</span><b>${eurK(f.standalone)}/yr</b></div>
-   <p class="bb-note">Indicative estimate — tune all rates in Advanced. Platform foundation ${eurK(f.build)} (scaled by org size)${f.bf<1?`, scaled to ${Math.round(f.bf*100)}% for the platform already in place`:""}; per system <b>${eur(f.intg)}</b>. Each dashboard's day-0 build reaches ~85% coverage of one process — <b>${eur(f.ucr)}</b> for a medium workflow, ~½ for a simple one, ~1.65× for a complex agentic one. After launch you fund keep-running upkeep plus a set number of functionality changes per dashboard each year; a major new capability is a fresh dashboard, not a change. Your share (${pct}%) is set by how broadly the platform is used. Tune all rates in Advanced.</p>`;
+   <p class="bb-note">Indicative estimate — tune all rates in Advanced. Platform foundation ${eurK(f.build)} (scaled by org size)${f.bf<1?`, scaled to ${Math.round(f.bf*100)}% for the platform already in place`:""}; per system <b>${eur(f.intg)}</b>. Each dashboard's day-0 build reaches ~85% coverage of one process — <b>${eur(f.ucr)}</b> for a medium workflow, ~½ for a simple one, ~1.65× for a complex agentic one. After launch you fund keep-running upkeep plus a set number of functionality changes per dashboard each year; a major new capability is a fresh dashboard, not a change. Your share (${pct}%) is set by how broadly the platform is used. Tune all rates in Advanced.</p>
+   ${renderBuildTeam(f.build)}`;
 }
 const clmp=(v,a,b)=>Math.min(b,Math.max(a,v));
 function computeViability(sel,L){
@@ -1834,7 +1926,7 @@ function computeViability(sel,L){
   if(!pros.length) pros.push(`Variable cost scales with use — beyond your division's platform share, you only pay for what's consumed.`);
   if(!cons.length) cons.push(`The case depends on adoption: if usage falls short of plan, the fixed platform cost still stands.`);
   /* value-beyond-efficiency framing */
-  const valueNote=`<b>What you're really buying:</b> not just labour saved. At Level ${L.n} the platform keeps <b>continuous watch</b> over controls, cuts human review from ${HUMANN[1]}% to <b>${human}%</b> of cases, and logs every step for <b>audit-readiness</b>. That monitoring and risk-reduction can justify the spend even where the pure cost-per-task looks high.`;
+  const valueNote=`<b>What you're really buying:</b> not just labour saved. At Level ${L.n} the platform keeps <b>continuous watch</b> over controls, cuts human review from ${HUMANN[1]}% to <b>${human}%</b> of cases, and logs every step for <b>audit-readiness</b>. It also underpins <b>DORA</b> compliance — ICT incident management (Art.17) and ICT third-party risk (Art.28/30) — and the governance, risk-management and logging expectations of the <b>EU AI Act</b> for high-risk AI. That monitoring, regulatory-compliance and risk-reduction value can justify the spend even where the pure cost-per-task looks high.`;
   /* critical verdict — names the weakest input */
   const issues=[];
   if(intensity<0.5) issues.push(["light usage",sDepth]);
@@ -1942,7 +2034,7 @@ function buildSummary(){
       <div><div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:2px">In favour</div><ul class="sum-list">${v.pros.map(p=>`<li>${p}</li>`).join("")}</ul></div>
       <div><div style="font-size:11px;font-weight:700;color:#d4574e;margin-bottom:2px">Against</div><ul class="sum-list">${v.cons.map(c=>`<li>${c}</li>`).join("")}</ul></div>
     </div>
-    <div class="sum-foot"><b>Disclaimer.</b> This summary is provided for discussion and indicative planning purposes only. It is <b>not an offer, proposal, quotation, or commitment</b> by Accenture, does not create any contractual obligation, and must not be relied upon as a price. All figures are <b>illustrative estimates</b> based on assumptions — model benchmarks, routing weights, allocation shares, build rates, dashboard upkeep, caching and coverage assumptions, hosting infrastructure and governance coefficients — that must be validated against actual requirements, delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders for licensed assets. Generated by the AI Cost Estimator.</div>`;
+    <div class="sum-foot"><b>Disclaimer.</b> This summary is provided for discussion and indicative planning purposes only. It is <b>not an offer, proposal, quotation, or commitment</b> by Accenture, does not create any contractual obligation, and must not be relied upon as a price. All figures are <b>illustrative estimates</b> based on assumptions — model benchmarks, routing weights, allocation shares, build rates, dashboard upkeep, caching and coverage assumptions, hosting infrastructure and governance coefficients — that must be validated against actual requirements, delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders for licensed assets. Generated by the AI Cost Simulator.</div>`;
 }
 function openSummary(){buildSummary();$("summaryOverlay").style.display="block";document.body.style.overflow="hidden";}
 function closeSummary(){$("summaryOverlay").style.display="none";document.body.style.overflow="";}
@@ -1965,12 +2057,16 @@ function scenarioBenefitYr(id){
   const aiSave=s.aiSave||0.40;
   return Math.round(fte*aiSave*rate*220);
 }
-function totalAnnualBenefit(sel){
+/* Risk reduction & avoided findings — the Blueprint's primary business-case driver beyond labour time.
+   Continuous monitoring cuts the chance of supervisory findings; each avoided finding saves remediation cost. */
+function riskReductionYr(){return Math.max(0,Math.round((num("riskFindings")||0)*(num("riskCostPer")||0)));}
+function labourBenefitYr(sel){
   if(state.scenarios.length>0)return state.scenarios.reduce((s,id)=>s+scenarioBenefitYr(id),0);
   // Fallback: org-size-scaled proxy — 0.15% of staff × 40% time saved × annual day rate
   const rate=num("staffRate")||500;
   return Math.round(state.orgStaff*0.0015*0.40*rate*220);
 }
+function totalAnnualBenefit(sel){return labourBenefitYr(sel)+riskReductionYr();}
 function scenarioMults(){const pd=num("priceDelta")/100,hc=num("hcGrowth")/100,intg=num("intGrowth")/100;
   const licM=1+hc;
   const base=(1+hc)*(1+intg)*(1+pd);
@@ -1985,6 +2081,7 @@ function recompute(){
   if($("buildAbs")&&document.activeElement!==$("buildAbs"))$("buildAbs").value=Math.round(buildOverride[state.level]!=null?buildOverride[state.level]:BUILD[state.level]*orgFactor());
 
   animateValue($("hTotal"),sel.platform,eurK);
+  if($("heroYearNote")){const ay=getGoliveYr();$("heroYearNote").textContent=`Year 1 of a ${ay}-year plan · build amortised over ${ay} yr${ay===1?"":"s"} (drops off after)`;}
   $("heroLevel").textContent="L"+L.n+" "+L.name;
   if(state.scenarios.length>0){
     const totalReq=state.scenarios.reduce((s,id)=>s+scenReqPerMonth(id),0);
@@ -2128,7 +2225,7 @@ function drawFlow(sel,L){
   let nodes="";
   drivers.forEach(d=>{const cy=d.y+d.h/2;nodes+=rrect(Lx0,d.y,Lx1-Lx0,d.h,"#fbfafd","#e7e1ef")+txt(Lx0+10,cy-2,d.label,{w:600,s:10})+txt(Lx0+10,cy+11,d.sub,{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace'});});
   order.forEach(k=>{const l=layers[k],cy=l.y+l.h/2,pct=Math.round(l.val/total*100);nodes+=rrect(Mx0,l.y,Mx1-Mx0,l.h,l.color)+txt(Mx0+10,cy-3,l.label,{w:600,s:9.5,c:'#fff'})+txt(Mx0+10,cy+10,eurK(l.val)+" · "+pct+"%",{s:8.5,c:'#efe7fb',f:'JetBrains Mono,monospace'});});
-  nodes+=`<rect x="${Tx0}" y="${tY.toFixed(1)}" width="${Tx1-Tx0}" height="${tH.toFixed(1)}" rx="9" fill="url(#flowTot)"/>`+txt((Tx0+Tx1)/2,tY+tH/2-4,"Annual total",{a:'middle',s:8.5,c:'#cdbfe0',f:'JetBrains Mono,monospace'})+`<text x="${((Tx0+Tx1)/2).toFixed(1)}" y="${(tY+tH/2+14).toFixed(1)}" font-family="Archivo,sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">${eurK(total)}</text>`;
+  nodes+=`<rect x="${Tx0}" y="${tY.toFixed(1)}" width="${Tx1-Tx0}" height="${tH.toFixed(1)}" rx="9" fill="url(#flowTot)"/>`+txt((Tx0+Tx1)/2,tY+tH/2-4,"Annual total",{a:'middle',s:8.5,c:'#cdbfe0',f:'JetBrains Mono,monospace'})+`<text x="${((Tx0+Tx1)/2).toFixed(1)}" y="${(tY+tH/2+14).toFixed(1)}" font-family="'Space Grotesk',sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">${eurK(total)}</text>`;
 
   const heads=txt(Lx0,padT-16,"YOUR ANSWERS",{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace',w:600})+txt(Mx0,padT-16,"COST LAYERS",{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace',w:600})+txt(Tx0,padT-16,"TOTAL",{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace',w:600});
   const animA=(state.animate&&!prefersReduced)?`style="animation:flowIn .7s ease both"`:"";
@@ -2309,6 +2406,15 @@ function renderBenefits(all,sel,L){
         return{name:s.name,fte,aiSave,ben,pct};
       }).filter(Boolean).sort((a,b)=>b.ben-a.ben);
       const totalFTEs=rows.reduce((t,r)=>t+r.fte,0);
+      const risk=riskReductionYr();
+      const riskPct=annualBenefit>0?Math.round(risk/annualBenefit*100):0;
+      const riskRow=risk>0?`<div class="ben-tr">
+          <span class="ben-name">Risk reduction &amp; avoided findings</span>
+          <span class="ben-fte">—</span>
+          <span class="ben-save">—</span>
+          <span class="ben-val">${eurK(risk)}</span>
+          <span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${riskPct}%"></span></span><span class="ben-pct-lbl">${riskPct}%</span></span>
+        </div>`:"";
       $("benScenRows").innerHTML=`<div class="ben-table">
         <div class="ben-th"><span>Scenario</span><span>FTEs</span><span>Saved</span><span>Annual value</span><span>Share</span></div>`+
         rows.map(r=>`<div class="ben-tr">
@@ -2317,7 +2423,7 @@ function renderBenefits(all,sel,L){
           <span class="ben-save">${r.aiSave}%</span>
           <span class="ben-val">${eurK(r.ben)}</span>
           <span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${r.pct}%"></span></span><span class="ben-pct-lbl">${r.pct}%</span></span>
-        </div>`).join("")+
+        </div>`).join("")+riskRow+
         `<div class="ben-total-row"><span>Total</span><span>${totalFTEs} FTEs</span><span>—</span><span>${eurK(annualBenefit)}</span><span>100%</span></div></div>`;
     } else {
       $("benScenRows").innerHTML=`<p style="font-size:12px;color:var(--muted)">Select scenarios to see the function-level breakdown.</p>`;
@@ -2349,7 +2455,8 @@ function renderBenefits(all,sel,L){
       <div class="ba-row"><div class="ba-k">Method</div><div class="ba-v">FTE-based time savings — FTEs in each function × % of hours AI frees × staff rate × 220 working days. This values time freed, not necessarily headcount reduction.</div></div>
       <div class="ba-row"><div class="ba-k">Staff rate</div><div class="ba-v">€${rate.toLocaleString("de-DE")}/day (all-in incl. overheads). Change in Advanced settings → Staff rate.</div></div>
       <div class="ba-row"><div class="ba-k">Time saved</div><div class="ba-v">20–40% of daily routine effort depending on the scenario. Documentation-heavy tasks (TPRM, contract review, policy) sit at the higher end; judgment-intensive processes (credit underwriting, model validation, capital adequacy) sit at the lower end.</div></div>
-      <div class="ba-row"><div class="ba-k">Not counted</div><div class="ba-v">Quality uplift, faster regulatory response, error reduction, avoided fines. These are real but harder to quantify — treat this as a conservative floor.</div></div>
+      <div class="ba-row"><div class="ba-k">Risk reduction</div><div class="ba-v">${riskReductionYr()>0?`Avoided supervisory findings: <b>${num("riskFindings")||0}/yr × ${eurK(num("riskCostPer")||0)}</b> = <b>${eurK(riskReductionYr())}/yr</b> of avoided remediation cost. One finding typically costs €150K–€500K+ to remediate. Adjust in Advanced settings.`:`Set an avoided-findings estimate in Advanced settings to add risk-reduction value — one supervisory finding typically costs €150K–€500K+ to remediate.`}</div></div>
+      <div class="ba-row"><div class="ba-k">Not counted</div><div class="ba-v">Quality uplift, faster regulatory response, error reduction, avoided fines beyond the findings above. These are real but harder to quantify — treat this as a conservative floor.</div></div>
       <div class="ba-row"><div class="ba-k">Adoption</div><div class="ba-v">Benefits ramp from 40% at go-live → 75% in year 2 → 100% from year 3. Adjust go-live timeline in Advanced settings.</div></div>`;
   }
 }
@@ -2421,7 +2528,10 @@ function renderROI(all,sel,L){
         const aiSave=Math.round((s.aiSave||0.40)*100);
         return{name:s.name,ben,pct,fte,aiSave};
       }).filter(Boolean).sort((a,b)=>b.ben-a.ben);
-      $("roiBenBox").innerHTML=`<div class="roi-ben">`+benRows.map(r=>`<div class="rb-row"><div class="rb-name">${r.name}</div><div class="rb-bar"><span style="width:${r.pct}%"></span></div><div class="rb-val">${eurK(r.ben)}/yr · ${r.fte} FTEs · ${r.aiSave}% saved</div></div>`).join("")+`</div>`;
+      const risk=riskReductionYr();
+      const riskPct=annualBenefit>0?Math.round(risk/annualBenefit*100):0;
+      const riskRow=risk>0?`<div class="rb-row"><div class="rb-name">Risk reduction &amp; avoided findings</div><div class="rb-bar"><span style="width:${riskPct}%"></span></div><div class="rb-val">${eurK(risk)}/yr · ${num("riskFindings")||0} finding(s) avoided</div></div>`:"";
+      $("roiBenBox").innerHTML=`<div class="roi-ben">`+benRows.map(r=>`<div class="rb-row"><div class="rb-name">${r.name}</div><div class="rb-bar"><span style="width:${r.pct}%"></span></div><div class="rb-val">${eurK(r.ben)}/yr · ${r.fte} FTEs · ${r.aiSave}% saved</div></div>`).join("")+riskRow+`</div>`;
     } else {
       $("roiBenBox").innerHTML=`<p style="font-size:12px;color:var(--muted)">Select scenarios in step 1 to see benefit breakdown.</p>`;
     }
@@ -2430,7 +2540,7 @@ function renderROI(all,sel,L){
   // Recommendations
   const recs=[];
   if(noBenefitData)recs.push({title:"Add scenarios to unlock the ROI case",body:"Without selected scenarios the benefit is an org-size placeholder. Pick the real processes — RCSA, control testing, TPRM — to get function-level FTE savings you can defend in a business case.",act:"Step 1 → Scenarios"});
-  if(beYr===null||beYr>7)recs.push({title:"Share the platform across more divisions",body:`You currently share costs across ${state.divisions} division${state.divisions===1?"":"s"}. Adding one more typically cuts the fixed cost by ${Math.round(100*(1-state.divisions/(state.divisions+1)))}%. The platform doesn't get more expensive — everyone just pays less.`,act:"Step 1 → Functions sharing this"});
+  if(beYr===null||beYr>7)recs.push({title:"Share the platform across more functions",body:`You currently share costs across ${state.functions} function${state.functions===1?"":"s"}. Adding one more typically cuts the fixed cost by ${Math.round(100*(1-state.functions/(state.functions+1)))}%. The platform doesn't get more expensive — everyone just pays less.`,act:"Step 1 → Which functions share the platform"});
   if(GOLIVE_YR>3&&(beYr===null||beYr>5))recs.push({title:"Shorten the go-live timeline",body:`A ${GOLIVE_YR}-year build pushes benefit recognition into the future. Compressing to 2-3 years with a phased launch (first 2-3 scenarios) moves the break-even earlier without changing total build cost.`,act:"Advanced → Go-live / amortisation"});
   if(state.hosting==="onprem"&&sel.fx.allocRun>sel.usage*2)recs.push({title:"Consider sovereign cloud to reduce fixed costs",body:"On-prem GPU infrastructure is your largest fixed cost. Sovereign cloud (EU-resident) cuts that by ~84% in exchange for a modest token premium — often the right trade unless data residency requires on-prem.",act:"Step 1 → Hosting"});
   if(state.level<4)recs.push({title:"Target a higher maturity level",body:`At L${state.level}, each task costs ${grp()}${sel.taskCost.toFixed(3)}. Moving to L${state.level+1} reduces per-task cost by ~${Math.round((1-all[state.level].taskCost/sel.taskCost)*100)}% through better caching and model routing — compounding over 10 years.`,act:"Step 1 → Target AI level"});
@@ -2546,7 +2656,7 @@ function buildMathSummary(){
   const scenList=state.scenarios.map(id=>{const s=scenById(id);return s?s.name+" ("+s.tier+")":id;}).join(", ")||"—";
   const priceRows=realModels().map(mm=>{const self=HOST_SELF.includes(mm.id);return `<div class="msum-row"><span class="msum-k">${mm.name} <span style="color:var(--faint);font-weight:400">${mm.prov}${self?" · self-hostable":""}</span></span><span class="msum-v num">$${mm.in.toFixed(2)} / $${mm.out.toFixed(2)}</span><span class="msum-d">blended $${blendedPrice(mm).toFixed(2)}/M</span></div>`;}).join("");
   $("mathSummaryBody").innerHTML=`
-    <div class="sum-head"><div><div class="sum-eyebrow">AI Cost Estimator — methodology &amp; calculation</div><h2 class="sum-title">How every number is produced</h2><div class="sum-date">${date} · all figures in ${CURK.code}</div></div></div>
+    <div class="sum-head"><div><div class="sum-eyebrow">AI Cost Simulator — methodology &amp; calculation</div><h2 class="sum-title">How every number is produced</h2><div class="sum-date">${date} · all figures in ${CURK.code}</div></div></div>
 
     ${h("The scenario this is calculated for")}
     ${r("Industry",state.ind.label,REGIONS[state.region].label)}
@@ -2605,7 +2715,7 @@ function buildMathSummary(){
     ${r("Intensity growth",num("intGrowth")+"%/yr","usage per user")}
     ${r("Price decline",num("priceDelta")+"%/yr","token prices, applied to usage")}
 
-    <div class="sum-foot"><b>Disclaimer.</b> Every figure above is an <b>illustrative planning estimate</b> derived from assumptions — model benchmarks and list prices, routing weights, token-per-step sizing, caching/coverage, the share who stop after one pass, dashboard build/upkeep rates, hosting infrastructure, allocation shares (1/functions), org and platform factors, and governance coefficients. This is <b>not an offer, proposal, quotation or commitment</b> by Accenture and creates no contractual obligation. Calibrate against actual delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders. Generated by the AI Cost Estimator.</div>`;
+    <div class="sum-foot"><b>Disclaimer.</b> Every figure above is an <b>illustrative planning estimate</b> derived from assumptions — model benchmarks and list prices, routing weights, token-per-step sizing, caching/coverage, the share who stop after one pass, dashboard build/upkeep rates, hosting infrastructure, allocation shares (1/functions), org and platform factors, and governance coefficients. This is <b>not an offer, proposal, quotation or commitment</b> by Accenture and creates no contractual obligation. Calibrate against actual delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders. Generated by the AI Cost Simulator.</div>`;
 }
 function openMath(){buildMathSummary();$("mathOverlay").style.display="block";document.body.style.overflow="hidden";}
 function closeMath(){$("mathOverlay").style.display="none";document.body.style.overflow="";}
@@ -2815,10 +2925,11 @@ function drawChart(all,sel){
 
   } else if(state.view==="amortized"){
     const yrs=[0,1,2,3,4,5,6,7,8,9,10];xs=yrs;
-    base=yrs.map(t=>t===0?0:sel.fx.total+sel.perUser*Math.pow(sc.licM,t)+sel.usage*Math.pow(sc.base,t-1));
+    const amortYrs=getGoliveYr(),buildPortion=sel.fx.allocBuild+sel.fx.nfrDashBuild;
+    base=yrs.map(t=>t===0?0:(t<=amortYrs?sel.fx.total:sel.fx.total-buildPortion)+sel.perUser*Math.pow(sc.licM,t)+sel.usage*Math.pow(sc.base,t-1));
     xlabels=yrs.map(t=>t===0?"Now":"Yr "+t);
-    hint="Amortized view: build cost is spread over the amortization period; each year shows an equal annual charge.";
-    const leg=$("chartLegend");if(leg)leg.innerHTML=`<div class="it"><span class="ln" style="border-color:var(--purple-br)"></span>Annual cost · amortized fixed</div>`;
+    hint=`Amortized view: the one-off build is spread evenly over the ${amortYrs}-year amortisation window, then drops off — from Year ${amortYrs+1} you pay only run, licences, usage and dashboard upkeep.`;
+    const leg=$("chartLegend");if(leg)leg.innerHTML=`<div class="it"><span class="ln" style="border-color:var(--purple-br)"></span>Annual cost · amortized fixed (build ends Yr ${amortYrs})</div>`;
 
   } else if(state.view==="roi"){
     const yrs=[0,1,2,3,4,5,6,7,8,9,10];xs=yrs;
@@ -2923,13 +3034,18 @@ function drawChart(all,sel){
     mainContent=marker+phases+stackPaths+dotsH+`<circle id="chHL" r="6" fill="#c061ff" stroke="#1a0d2e" stroke-width="2.5" opacity="0"/>`+hitsH;
 
   } else if(state.view==="amortized"){
-    CHARTPTS=base.map((v,i)=>({
-      px:X(i),py:Y(v),title:i===0?"Now":"Year "+i,total:v,
-      rows:i===0?[["Amortized view — same annual cost every year",0]]:
-        [["Fixed · amortized build + run",sel.fx.total],["Licences",sel.perUser*Math.pow(sc.licM,i)],["Usage",sel.usage*Math.pow(sc.base,i-1)]],
-      range:null,
-      note:i===0?"Starting point.":`Year ${i}: build is amortized evenly — no front-loaded spike. Licences and usage grow slowly year-on-year.`
-    }));
+    const amortYrs=getGoliveYr(),buildPortion=sel.fx.allocBuild+sel.fx.nfrDashBuild;
+    CHARTPTS=base.map((v,i)=>{
+      const built=i>0&&i<=amortYrs;
+      const fixedThisYr=i===0?0:(built?sel.fx.total:sel.fx.total-buildPortion);
+      return{
+        px:X(i),py:Y(v),title:i===0?"Now":"Year "+i,total:v,
+        rows:i===0?[["Amortized view — build spread over "+amortYrs+" yrs, then drops",0]]:
+          [[built?"Fixed · amortized build + run":"Fixed · run + upkeep (build fully amortised)",fixedThisYr],["Licences",sel.perUser*Math.pow(sc.licM,i)],["Usage",sel.usage*Math.pow(sc.base,i-1)]],
+        range:null,
+        note:i===0?"Starting point.":built?`Year ${i}: build amortized evenly over the ${amortYrs}-yr window — no front-loaded spike. Licences and usage grow slowly year-on-year.`:`Year ${i}: build fully amortised — the ${eurK(buildPortion)}/yr build charge has dropped off; only run, licences, usage and dashboard upkeep remain.`
+      };
+    });
     mainContent=areaLine(base,X,Y,n);
 
   } else if(state.view==="roi"){
@@ -3138,7 +3254,7 @@ function toggleScenario(id){
 }
 function applyProfile(resetSliders){
   state.ind=resolveProfile();const ind=state.ind;
-  $("brandTitle").innerHTML=`${ind.brand} <span>AI Cost Estimator</span>`;
+  $("brandTitle").innerHTML=`${ind.brand} <span>AI Cost Simulator</span>`;
   $("quizEyebrow").textContent="Accenture · "+ind.industryLabel+" · "+REGIONS[state.region].label;
   $("q2text").textContent=`Platform users`;
   $("kUserLbl").textContent="Cost per user / month";
@@ -3171,6 +3287,7 @@ function setRegion(r){
   if($("buildCur"))$("buildCur").textContent=CURK.sym;
   if($("intgCur"))$("intgCur").textContent=CURK.sym;
   if($("ucCur"))$("ucCur").textContent=CURK.sym;
+  if($("riskCur"))$("riskCur").textContent=CURK.sym;
   if($("perUser"))$("perUser").placeholder=CURK.perUser;
   applyProfile(false);
 }
@@ -3180,10 +3297,10 @@ function syncDiscBoxes(){document.querySelectorAll(".boxrow").forEach(row=>{cons
 function applyBase(){
   Object.assign(state,{level:3,tier:"medium",view:"outlook",detail:false,orgSize:"mid",orgStaff:12000,platformExists:"building",platProgress:30,depts:[...DEPT_DEFAULT],functions:3,baseLevel:"1",scenarios:[...SCEN_DEFAULT],hosting:hostingDefault(state.industry.group,state.region)});
   buildOverride={};
-  state.scenarioRequests={};state.scenarioUsers={};state.divisions=3;
-  if($("divisions")){$("divisions").value=3;if($("divisionsNote"))$("divisionsNote").textContent="Your division funds 33% of platform build & run";}
+  state.scenarioRequests={};state.scenarioUsers={};
   $("model").value="auto";$("eurusd").value=CURK.rate;
   $("perUser").value=CURK.perUser;$("intgRate").value=35000;$("ucRate").value=90000;$("amort").value=3;$("ucUpkeep").value=8;$("ucChanges").value=2;$("ucChangeCost").value=6;
+  if($("staffRate"))$("staffRate").value=500;if($("riskFindings"))$("riskFindings").value=1;if($("riskCostPer"))$("riskCostPer").value=250000;
   $("priceDelta").value=-15;$("priceDeltaV").textContent="-15%";$("priceDeltaV").style.color="var(--blue)";
   $("hcGrowth").value=2;$("hcGrowthV").textContent="+2%";
   $("intGrowth").value=6;$("intGrowthV").textContent="+6%";
@@ -3237,12 +3354,6 @@ function wire(){
     const usrInp=e.target.closest("[data-scen-usr]");
     if(usrInp){const id=usrInp.dataset.scenUsr,v=parseInt(usrInp.value)||1;state.scenarioUsers[id]=Math.max(1,v);state.animate=false;recompute();}
   });
-  if($("divisions"))$("divisions").addEventListener("input",()=>{
-    state.divisions=Math.max(1,parseInt($("divisions").value)||1);
-    const pct=Math.round(100/state.divisions);
-    if($("divisionsNote"))$("divisionsNote").textContent=`Your division funds ${pct}% of platform build & run`;
-    state.animate=false;recompute();
-  });
   $("addUc").addEventListener("click",()=>{useCases.push({name:"New use case",tier:"medium",perDay:1,adopt:50});renderUC();recompute();});
   $("ucList").addEventListener("input",e=>{const i=+e.target.dataset.i,f=e.target.dataset.f;if(f===undefined)return;if(f==="name")useCases[i].name=e.target.value;else if(f==="perYear")useCases[i].perDay=(parseFloat(e.target.value)||0)/WDYEAR;else useCases[i][f]=parseFloat(e.target.value)||0;recompute();});
   $("ucList").addEventListener("click",e=>{if(e.target.dataset.del!==undefined){useCases.splice(+e.target.dataset.del,1);renderUC();recompute();return;}const tb=e.target.closest("button[data-tier]");if(tb){const s=tb.closest(".seg");useCases[+s.dataset.segi].tier=tb.dataset.tier;s.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===tb));recompute();}});
@@ -3256,7 +3367,7 @@ function wire(){
   sl("intGrowth","intGrowthV",v=>"+"+v+"%");
   sl("warmShare","warmShareV",v=>v+"%");
   if($("liveMon"))sl("liveMon","liveMonV",v=>v+"%");
-  ["model","eurusd","perUser","intgRate","ucRate","amort","ucUpkeep","ucChanges","ucChangeCost","nFollow","staffRate"].forEach(id=>$(id)&&$(id).addEventListener("input",recompute));
+  ["model","eurusd","perUser","intgRate","ucRate","amort","ucUpkeep","ucChanges","ucChangeCost","nFollow","staffRate","riskFindings","riskCostPer"].forEach(id=>$(id)&&$(id).addEventListener("input",recompute));
   $("summaryBtn").addEventListener("click",openSummary);
   if($("mathBtn"))$("mathBtn").addEventListener("click",openMath);
   if($("mathClose"))$("mathClose").addEventListener("click",closeMath);
@@ -3291,18 +3402,6 @@ function wire(){
 }
 wire();
 
-// Password gate
-(function(){
-  const gate=$("pwGate"),inp=$("pwInput"),btn=$("pwBtn"),err=$("pwErr");
-  if(sessionStorage.getItem("pw_ok")==="1"){gate.classList.add("hidden");return;}
-  function attempt(){
-    if(inp.value==="Studio2026"){sessionStorage.setItem("pw_ok","1");gate.classList.add("hidden");}
-    else{err.textContent="Incorrect password";inp.value="";inp.focus();}
-  }
-  btn.addEventListener("click",attempt);
-  inp.addEventListener("keydown",e=>{if(e.key==="Enter")attempt();if(err.textContent)err.textContent="";});
-})();
-
 // Token price preset buttons
 document.querySelectorAll(".price-preset").forEach(b=>{
   b.addEventListener("click",()=>{
@@ -3328,8 +3427,8 @@ document.querySelectorAll(".price-preset").forEach(b=>{
 
 // Snapshot save/restore
 const SNAP_KEY="ai_snapshots_v2";
-const SNAP_INPUTS=["users","systems","ucs","intensity","amort","perUser","eurusd","intgRate","ucRate","ucUpkeep","ucChanges","ucChangeCost","nFollow","priceDelta","hcGrowth","intGrowth","warmShare","staffRate","buildAbs"];
-const SNAP_STATE=["level","tier","hosting","orgSize","orgStaff","divisions","platformExists","platProgress","region","scenarios","scenarioRequests","scenarioUsers","depts"];
+const SNAP_INPUTS=["users","systems","ucs","intensity","amort","perUser","eurusd","intgRate","ucRate","ucUpkeep","ucChanges","ucChangeCost","nFollow","priceDelta","hcGrowth","intGrowth","warmShare","staffRate","riskFindings","riskCostPer","buildAbs"];
+const SNAP_STATE=["level","tier","hosting","orgSize","orgStaff","platformExists","platProgress","region","scenarios","scenarioRequests","scenarioUsers","depts"];
 
 function snapGetInputs(){
   const o={};
@@ -3353,7 +3452,6 @@ function snapApply(snap){
   Object.entries(snap.inputs||{}).forEach(([id,v])=>{const el=$(id);if(el)el.value=v;});
   // Sync derived UI
   syncOrgSlider();syncPlatSlider();renderDeptChips();
-  if($("divisionsNote"))$("divisionsNote").textContent=`Your division funds ${Math.round(100/Math.max(1,state.divisions))}% of platform build & run`;
   renderScenarioChips();applyScenarios();
   [...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x.dataset.view===state.view));
   state.animate=true;recompute();
