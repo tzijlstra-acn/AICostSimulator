@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -32,17 +32,16 @@
   @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 
   /* ===== App bar ===== */
-  .bar{background:var(--ink);color:#efe9f7;padding:14px 28px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;border-bottom:1px solid #221831;}
-  .brand{display:flex;align-items:center;gap:10px;}
-  .brand .gt{color:var(--purple);font-weight:800;font-size:22px;font-family:var(--display);line-height:1;}
-  .brand .bt{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-.01em;color:#fff;}
-  .brand .bt span{color:var(--purple-br);}
-  .industries{display:flex;gap:7px;overflow-x:auto;max-width:100%;padding-bottom:2px;scrollbar-width:none;}
-  .industries::-webkit-scrollbar{display:none;}
-  .chip{display:flex;align-items:center;gap:7px;border:1px solid #2c2140;background:#150f22;color:#b7a8cf;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:.18s;font-family:var(--body);}
-  .chip svg{width:15px;height:15px;flex:none;}
-  .chip:hover{border-color:var(--purple-d);color:#fff;}
-  .chip.on{background:linear-gradient(120deg,var(--purple),var(--purple-d));border-color:var(--purple);color:#fff;box-shadow:0 4px 16px -4px rgba(161,0,255,.6);}
+  .bar{background:linear-gradient(90deg,#160029 0%,#A100FF 100%);color:#efe9f7;padding:0 28px;display:flex;align-items:center;gap:0;justify-content:space-between;position:sticky;top:0;z-index:50;height:var(--bar-h);border-bottom:1px solid rgba(255,255,255,.12);}
+  .brand{display:flex;align-items:center;gap:0;}
+  .brand-logo{font-family:var(--display);font-size:15px;font-weight:700;color:#fff;white-space:nowrap;letter-spacing:-.01em;}
+  .brand-sep{width:1px;height:20px;background:rgba(255,255,255,.25);margin:0 12px;flex-shrink:0;}
+  .brand-tool{font-family:var(--display);font-size:15px;font-weight:600;color:#fff;white-space:nowrap;letter-spacing:-.01em;}
+  .brand-sect{color:rgba(255,255,255,.55);font-size:13px;margin-left:14px;white-space:nowrap;font-family:var(--body);}
+  .bar-actions{display:flex;align-items:center;gap:10px;}
+  .bar-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;font-family:var(--body);font-size:12px;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;text-decoration:none;}
+  .bar-btn:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5);}
+  .bar-btn svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;}
 
   .wrap{display:grid;grid-template-columns:404px 1fr;align-items:start;}
   .quiz{background:var(--card);border-right:1px solid var(--line);padding:24px 24px 60px;min-height:calc(100vh - var(--bar-h));}
@@ -810,16 +809,25 @@
 <body>
 
 <div class="bar">
-  <div class="brand"><span class="gt">&gt;</span><span class="bt" id="brandTitle"><span>Accenture AI Cost Simulator</span></span></div>
-  <div class="industries" id="industries"></div>
+  <div class="brand">
+    <span class="brand-logo">Accenture</span>
+    <span class="brand-sep"></span>
+    <span class="brand-tool">AI Cost Simulator</span>
+    <span class="brand-sect">Banking · NFR Practice</span>
+  </div>
+  <div class="bar-actions">
+    <button type="button" class="bar-btn" onclick="document.getElementById('summaryBtn').click()">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Save summary
+    </button>
+  </div>
 </div>
 
 <div class="wrap">
   <!-- ===== QUESTIONNAIRE ===== -->
   <div class="quiz">
-    <div class="quiz-eyebrow section-tag" id="quizEyebrow">Accenture · Banking</div>
-    <div class="quiz-title" id="quizTitle">Configure the estimate</div>
-    <p class="quiz-intro">Set up the scenario in three steps. The annual running cost updates live on the right.</p>
+    <div class="quiz-title">AI Cost Simulator</div>
+    <p class="quiz-intro">Configure your banking scenario in three steps. The annual cost updates live as you go.</p>
     <button type="button" id="resetBase" class="reset-base">↺ Reset defaults</button>
 
     <div class="profile">
@@ -1415,72 +1423,6 @@ const INDUSTRIES=[
     defaults:{users:90,systems:20,ucs:8,intensity:0.6},usersEx:"~90 risk, compliance & ops staff",
     systemsEx:"event bus / streaming, core ledger, real-time TM, KYC/onboarding, fraud engine, policy library, partner APIs, data warehouse",
     ucEx:"real-time alert triage, control auto-testing, policy Q&A, incident RCA",
-    useCases:NFR_UC},
-  ]},
- {id:"insurance",label:"Insurance",icon:"shield",group:"insurance",
-  base:{fn:"your risk function",brand:"AI",deck:"your NFR architecture deck",assess:"RCSA",unit:"controls"},
-  subs:[
-   {id:"life",label:"Life & pensions",client:"a life insurer",brand:"Risk & Actuarial",assess:"ORSA & control review",
-    diff:"Long-dated liabilities and <b>Solvency II / EIOPA</b> capital modelling dominate. The prize is faster ORSA cycles, model validation and conduct oversight across a large policy book — supported by <b>DORA</b> resilience and <b>EU AI Act</b> governance where AI touches underwriting.",
-    defaults:{users:180,systems:14,ucs:6,intensity:0.6},usersEx:"~180 risk, actuarial-support & compliance staff",
-    systemsEx:"policy admin, actuarial models, GRC/RCSA tool, complaints, AML/KYC, TPRM register, regulatory feeds",
-    ucEx:"ORSA narrative drafting, control testing, conduct-risk review, model validation, regulatory mapping",
-    useCases:NFR_UC},
-   {id:"pc",label:"P&C / general insurer",client:"a general insurer",brand:"Conduct & Claims Risk",assess:"claims & conduct review",
-    diff:"High claim and policy volume pushes work toward <b>claims-fraud, conduct and third-party risk</b> across many products. Throughput matters more than depth per case, and consumer-protection scrutiny is constant.",
-    defaults:{users:260,systems:15,ucs:6,intensity:0.6},usersEx:"200–350 first- and second-line staff",
-    systemsEx:"claims, underwriting, policy admin, fraud engine, complaints, GRC tool, TPRM register, regulatory feeds",
-    ucEx:"claims-fraud triage, conduct-risk assessment, control testing, TPRM, complaints Q&A",
-    useCases:NFR_UC},
-   {id:"health_ins",label:"Health insurer",client:"a health insurer",brand:"Privacy & Conduct Risk",assess:"DPIA & control review",
-    diff:"Sensitive member-health data raises the <b>privacy and data-residency</b> bar. DPIA and processing-inventory work sit alongside standard NFR controls, so documentation and lawful-basis evidence become the binding constraint.",
-    defaults:{users:150,systems:13,ucs:5,intensity:0.6},usersEx:"~150 risk, privacy & compliance staff",
-    systemsEx:"claims, member data platform, DPIA register, policy library, fraud engine, regulatory feeds",
-    ucEx:"DPIA support, privacy Q&A, claims-fraud triage, control testing",
-    useCases:NFR_UC},
-  ]},
- {id:"health",label:"Health",icon:"health",group:"health",
-  base:{fn:"your risk & quality function",brand:"AI",deck:"your governance architecture deck",assess:"risk assessment",unit:"controls"},
-  subs:[
-   {id:"hospital",label:"Hospital / provider",client:"a hospital group",brand:"Quality & Safety Risk",assess:"patient-safety review",
-    diff:"Patient-safety and <b>MDR / GDPR-health</b> obligations dominate. Incident review and documentation are the binding constraints, and sensitive data usually must stay <b>on-prem / private</b>.",
-    defaults:{users:120,systems:12,ucs:5,intensity:0.6},usersEx:"~120 risk, quality & compliance staff",
-    systemsEx:"EHR, incident-reporting, quality/audit system, policy library, medical-device register, regulatory feeds",
-    ucEx:"incident triage, policy Q&A, control testing, regulatory mapping",
-    useCases:NFR_UC},
-   {id:"medtech",label:"Medical device / MedTech",client:"a medical-device maker",brand:"Regulatory & Quality Risk",assess:"post-market surveillance",
-    diff:"<b>MDR</b> technical documentation, post-market surveillance and supplier risk drive the workload across a regulated product portfolio, where data integrity and audit-readiness are paramount.",
-    defaults:{users:100,systems:13,ucs:5,intensity:0.6},usersEx:"~100 regulatory, quality & risk staff",
-    systemsEx:"QMS, complaints/vigilance, supplier register, document store, CAPA system, regulatory feeds",
-    ucEx:"post-market surveillance, supplier risk, document review, regulatory mapping",
-    useCases:NFR_UC},
-   {id:"pharma",label:"Pharma / life sciences",client:"a pharma company",brand:"Safety & Quality Risk",assess:"pharmacovigilance review",
-    diff:"<b>Pharmacovigilance</b>, GxP quality and supplier oversight dominate. Audit-readiness and data integrity across the product lifecycle are the value drivers.",
-    defaults:{users:140,systems:14,ucs:6,intensity:0.6},usersEx:"~140 quality, safety & compliance staff",
-    systemsEx:"safety database, QMS, LIMS, supplier register, document store, regulatory feeds",
-    ucEx:"pharmacovigilance triage, quality control testing, supplier risk, audit support",
-    useCases:NFR_UC},
-  ]},
- {id:"telecom",label:"Telecom",icon:"telecom",group:"telecom",
-  base:{fn:"your risk function",brand:"AI",deck:"your governance architecture deck",assess:"risk assessment",unit:"controls"},
-  subs:[
-   {id:"mno",label:"Mobile network operator",client:"a network operator",brand:"Resilience & Fraud Risk",assess:"resilience & fraud review",
-    diff:"Scale and real time: <b>NIS2</b> resilience, fraud and vendor risk across a large network estate. Multi-cloud and edge inference keep cost down, so integration count and automation matter most.",
-    defaults:{users:200,systems:18,ucs:7,intensity:0.6},usersEx:"~200 risk, security & compliance staff",
-    systemsEx:"OSS/BSS, fraud-management, SIEM, GRC tool, vendor register, policy library, regulatory feeds",
-    ucEx:"fraud triage, cyber/IT risk, control testing, TPRM, regulatory mapping",
-    useCases:NFR_UC},
-   {id:"broadband",label:"Broadband / fixed-line",client:"a broadband provider",brand:"Conduct & Continuity Risk",assess:"conduct & continuity review",
-    diff:"Consumer-protection and <b>service-continuity</b> obligations dominate. Complaints, conduct and resilience testing carry the load across a broad customer base.",
-    defaults:{users:150,systems:15,ucs:6,intensity:0.6},usersEx:"~150 first- and second-line staff",
-    systemsEx:"BSS, complaints, network monitoring, GRC tool, vendor register, regulatory feeds",
-    ucEx:"complaints & conduct review, resilience testing, control testing, TPRM",
-    useCases:NFR_UC},
-   {id:"towerco",label:"Infrastructure / towerco",client:"an infrastructure operator",brand:"Third-party & Resilience Risk",assess:"third-party & resilience review",
-    diff:"Asset-heavy and vendor-dependent: <b>third-party and operational-resilience</b> risk across shared passive infrastructure is the defining exposure.",
-    defaults:{users:90,systems:12,ucs:5,intensity:0.6},usersEx:"~90 risk, security & compliance staff",
-    systemsEx:"asset register, vendor management, incident system, GRC tool, policy library, regulatory feeds",
-    ucEx:"TPRM, operational-resilience testing, incident triage, control testing",
     useCases:NFR_UC},
   ]},
 ];
@@ -3322,8 +3264,6 @@ function toggleScenario(id){
 }
 function applyProfile(resetSliders){
   state.ind=resolveProfile();const ind=state.ind;
-  $("brandTitle").innerHTML=`${ind.brand} <span>AI Cost Simulator</span>`;
-  $("quizEyebrow").textContent="Accenture · "+ind.industryLabel+" · "+REGIONS[state.region].label;
   $("q2text").textContent=`Active users across selected use cases`;
   $("kUserLbl").textContent="Cost per user / month";
   if(resetSliders){
@@ -3340,7 +3280,6 @@ function applyProfile(resetSliders){
 function setIndustry(id,first){
   const I=INDUSTRIES.find(x=>x.id===id);if(!I)return;
   state.industry=I;state.sub=I.subs[0];
-  [...$("industries").children].forEach(c=>c.classList.toggle("on",c.dataset.ind===id));
   populateSubtypes();applyProfile(!first);
 }
 function setSubtype(id){
@@ -3382,8 +3321,6 @@ function applyBase(){
   applyProfile(true);
 }
 function wire(){
-  $("industries").innerHTML=INDUSTRIES.map(i=>`<button class="chip" data-ind="${i.id}">${svg(IC[i.icon])}<span>${i.label}</span></button>`).join("");
-  $("industries").addEventListener("click",e=>{const c=e.target.closest(".chip");if(c)setIndustry(c.dataset.ind);});
   $("model").innerHTML=MODELS.map(m=>`<option value="${m.id}">${m.name}${m.in?` · $${m.in}/$${m.out}`:''}</option>`).join("");$("model").value="auto";
   $("ic1").innerHTML=svg(IC.user);$("ic2").innerHTML=svg(IC.task);$("ic3").innerHTML=svg(IC.clock);$("ic4").innerHTML=svg(IC.chart);
 
