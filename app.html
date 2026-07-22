@@ -778,6 +778,33 @@
   @media(max-width:760px){.comp{grid-template-columns:1fr;}}
   @media(max-width:1060px){.wrap{grid-template-columns:1fr;}.quiz{border-right:none;border-bottom:1px solid var(--line);min-height:auto;}.kpis{grid-template-columns:1fr 1fr;}.insight-grid{grid-template-columns:1fr;}.loop{flex-direction:column;}.loop .arrow{transform:rotate(90deg);}}
   @media(max-width:560px){.bar{padding:12px 15px;}.results{padding:18px 14px 50px;}.quiz{padding:18px 16px 40px;}.kpis{grid-template-columns:1fr 1fr;}.hero-total{font-size:36px;}.est-line{grid-template-columns:120px 1fr 74px;}}
+
+  /* ===== Grouped scenario accordion ===== */
+  .scen-groups { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .sg-block { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+  .sg-block.sg-core { border-color: rgba(161,0,255,.2); background: rgba(161,0,255,.025); }
+  .sg-head { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; font-size: 13px; font-weight: 600; color: var(--ink2); }
+  .sg-toggle { width: 100%; border: none; background: transparent; cursor: pointer; font-family: var(--body); text-align: left; transition: background .14s; }
+  .sg-toggle:hover { background: var(--surface, #f5f3f9); }
+  .sg-count { font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--purple-d); margin-left: auto; margin-right: 8px; }
+  .sg-caret { font-size: 11px; color: var(--muted); flex-shrink: 0; transition: transform .2s; }
+  .sg-toggle[aria-expanded="true"] .sg-caret { transform: rotate(180deg); }
+  .sg-body { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 6px; }
+  .sg-body .scen-chips { flex-direction: column; gap: 5px; }
+  .sg-body .scen-item { flex: none; width: 100%; }
+  .sg-body .scen-chip { flex-direction: row; align-items: center; gap: 8px; padding: 7px 10px; }
+  .sg-body .scen-chip b { font-size: 12px; white-space: normal; flex: 1; }
+
+  /* ===== Step headers ===== */
+  .step-head { display: flex; align-items: center; gap: 10px; margin: 20px 0 10px; padding-top: 16px; border-top: 1px solid var(--line-soft); }
+  .step-head:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+  .step-head .step-n { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, var(--purple), var(--purple-d)); color: #fff; font-family: var(--mono); font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-head .step-lbl { font-family: var(--display); font-size: 16px; font-weight: 700; color: var(--ink2); letter-spacing: -.01em; }
+  .step-head .step-sub { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ===== Use-case count summary ===== */
+  .scen-summary { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--purple-tint); border: 1px solid rgba(161,0,255,.18); border-radius: 8px; margin-top: 8px; font-size: 12px; color: var(--purple-deep); }
+  .scen-summary b { font-family: var(--mono); font-size: 14px; color: var(--purple); }
 </style>
 </head>
 <body>
@@ -791,9 +818,9 @@
   <!-- ===== QUESTIONNAIRE ===== -->
   <div class="quiz">
     <div class="quiz-eyebrow section-tag" id="quizEyebrow">Accenture · Banking</div>
-    <div class="quiz-title" id="quizTitle"><span class="stepn">1</span>About you</div>
-    <p class="quiz-intro">Tell us about your setup. The yearly cost updates on the right; fine-tune it in step 2.</p>
-    <button type="button" id="resetBase" class="reset-base">↺ Reset to base case</button>
+    <div class="quiz-title" id="quizTitle">Configure the estimate</div>
+    <p class="quiz-intro">Set up the scenario in three steps. The annual running cost updates live on the right.</p>
+    <button type="button" id="resetBase" class="reset-base">↺ Reset defaults</button>
 
     <div class="profile">
       <div class="profile-grid">
@@ -803,92 +830,72 @@
       <div class="profile-note" id="profileNote"></div>
     </div>
 
+    <div class="step-head"><span class="step-n">1</span><div><div class="step-lbl">Your context</div><div class="step-sub">Where and how the platform runs</div></div></div>
+
     <div class="disc">
-      <div class="dq"><div class="dq-l">How big is the organisation?</div>
-        <div class="boxrow" data-disc="orgSize" role="radiogroup" aria-label="How big is the organisation?">
-          <button class="box" data-v="small" role="radio" aria-checked="false">Up to 5,000 staff</button>
-          <button class="box" data-v="mid" role="radio" aria-checked="false">5,000–20,000</button>
-          <button class="box" data-v="large" role="radio" aria-checked="false">20,000+</button>
+      <div class="dq"><div class="dq-l">Organisation size</div>
+        <div class="boxrow" data-disc="orgSize" role="radiogroup" aria-label="Organisation size">
+          <button class="box" data-v="small" role="radio" aria-checked="false">Small<br>up to 5,000</button>
+          <button class="box" data-v="mid" role="radio" aria-checked="false">Mid<br>5,000–20,000</button>
+          <button class="box" data-v="large" role="radio" aria-checked="false">Large<br>20,000+</button>
         </div>
-        <div class="dq-slider" id="orgWrap"><div class="slider-top"><label class="lbl" for="orgStaff">Roughly how many staff?</label><span class="slider-val num" id="orgStaffV">12,000</span></div><input type="range" id="orgStaff" min="5000" max="20000" step="500" value="12000"></div>
+        <div class="dq-slider" id="orgWrap" style="display:none"><div class="slider-top"><label class="lbl" for="orgStaff">Roughly how many staff?</label><span class="slider-val num" id="orgStaffV">12,000</span></div><input type="range" id="orgStaff" min="5000" max="20000" step="500" value="12000"></div>
       </div>
-      <div class="dq"><div class="dq-l">Do you already have an enterprise AI platform?</div>
-        <div class="boxrow" data-disc="platformExists" role="radiogroup" aria-label="Do you already have an enterprise AI platform?">
-          <button class="box" data-v="none" role="radio" aria-checked="false">No — greenfield</button>
-          <button class="box" data-v="building" role="radio" aria-checked="false">Building it now</button>
-          <button class="box" data-v="yes" role="radio" aria-checked="false">Yes, in place</button>
-        </div>
-        <div class="dq-slider" id="platWrap"><div class="slider-top"><label class="lbl" id="platLbl" for="platProg">How far along is it?</label><span class="slider-val num" id="platProgV">30%</span></div><input type="range" id="platProg" min="0" max="80" step="5" value="30"></div>
-      </div>
-      <div class="dq"><div class="dq-l">Where does the AI run?<button type="button" class="q-help-btn" id="hostHelpBtn" style="display:inline-flex;margin-left:8px;vertical-align:middle">?</button><span class="dq-hint">hosting drives both infrastructure cost and which models you can use</span></div>
-        <div class="boxrow" data-disc="hosting" role="radiogroup" aria-label="Where does the AI run?">
+      <div class="dq"><div class="dq-l">Where the AI runs<button type="button" class="q-help-btn" id="hostHelpBtn" style="display:inline-flex;margin-left:8px;vertical-align:middle">?</button></div>
+        <div class="boxrow" data-disc="hosting" role="radiogroup" aria-label="Where the AI runs">
           <button class="box" data-v="cloud" role="radio" aria-checked="false">Vendor cloud</button>
           <button class="box" data-v="sovereign" role="radio" aria-checked="false">EU-sovereign</button>
-          <button class="box" data-v="onprem" role="radio" aria-checked="false">On-prem / private</button>
+          <button class="box" data-v="onprem" role="radio" aria-checked="false">On-prem</button>
         </div>
         <div class="q-help" id="hostHelp">Regulated NFR data usually can't sit on a vendor's shared cloud, so where the AI runs changes the cost shape — and the answer to "how can a self-hosted model have a token price."<span class="ex"><b>Vendor cloud</b> → per-token API pricing, no infrastructure to run. <b>EU-sovereign</b> → EU-resident hosting, a small premium and commitment. <b>On-prem / private</b> → your own GPU cluster: a large <b>fixed</b> infrastructure + MLOps cost, but a <b>low marginal cost per token</b> (you bought the hardware, you're not billed per call). Only open / self-hostable models run here. Tier-1 banks and patient data typically need this — and it's why the all-in is far higher than a pure cloud build.</span></div>
       </div>
-      <div class="dq"><div class="dq-l">Which functions share the platform?<span class="dq-hint">select departments to unlock their scenarios — your platform share = 1 ÷ (number of functions selected)</span></div>
-        <div class="dept-chips" id="deptChips"></div>
-        <div class="dq-note" id="deptNote"></div>
-      </div>
-      <div class="dq"><div class="dq-l">How automated is the work today?<button type="button" class="q-help-btn" id="baseHelpBtn" style="display:inline-flex;margin-left:8px;vertical-align:middle">?</button><span class="dq-hint">sets the &lsquo;today&rsquo; baseline for the gains — not the cost</span></div>
-        <div class="boxrow" data-disc="baseLevel" role="radiogroup" aria-label="How automated is the work today?">
-          <button class="box" data-v="1" role="radio" aria-checked="false">Mostly manual</button>
-          <button class="box" data-v="2" role="radio" aria-checked="false">Some tools, still hands-on</button>
-          <button class="box" data-v="3" role="radio" aria-checked="false">Already part-automated</button>
+      <div class="dq"><div class="dq-l">Existing AI platform?</div>
+        <div class="boxrow" data-disc="platformExists" role="radiogroup" aria-label="Existing AI platform?">
+          <button class="box" data-v="none" role="radio" aria-checked="false">None</button>
+          <button class="box" data-v="building" role="radio" aria-checked="false">Building</button>
+          <button class="box" data-v="yes" role="radio" aria-checked="false">In place</button>
         </div>
-        <div class="q-help" id="baseHelp">Sets the &lsquo;today&rsquo; baseline for 18-month gains — not the cost.<span class="ex"><b>Mostly manual</b> → large gains ahead. <b>Some tools, still hands-on</b> → moderate gains. <b>Already part-automated</b> → smaller incremental gains.</span></div>
       </div>
     </div>
 
+    <div class="step-head"><span class="step-n">2</span><div><div class="step-lbl">What you want AI to do</div><div class="step-sub">Maturity target, use cases and scale</div></div></div>
+
     <div class="q">
-      <div class="q-head"><span class="q-num">1</span><div><div class="q-text">How far should the AI go?</div><div class="q-sub">Pick the level you'll realistically reach in 12–18 months</div></div></div>
+      <div class="q-head"><span class="q-num">A</span><div><div class="q-text">Maturity target</div><div class="q-sub">Pick the level you'll realistically reach in 12–18 months</div></div></div>
       <div class="q-body"><div class="ladder" id="segLevel" role="radiogroup" aria-label="Maturity level"></div><div class="ladder-foot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V8m0 0l-4 4m4-4l4 4M5 4h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="levelName"></span></div></div>
     </div>
 
-    <div class="quiz-title" id="quizTitle2" style="margin-top:30px"><span class="stepn">2</span>Fine-tune the scenario</div>
-
     <div class="scen-block">
-      <div class="scen-h">Which processes does it cover?<span class="dq-hint">each is one dashboard, pre-set — click to include</span></div>
-      <div class="scen-chips" id="scenChips"></div>
+      <div class="scen-h">AI use cases<span class="dq-hint">each is one dashboard, pre-set — click to include</span></div>
+      <div class="scen-groups" id="scenGroups"></div>
+      <div class="scen-summary" id="scenSummary"></div>
       <div class="scen-note" id="scenNote"></div>
     </div>
 
     <div class="q">
-      <div class="q-head"><span class="q-num">2</span><div class="q-text" id="q2text">Platform users</div></div>
+      <div class="q-head"><span class="q-num">B</span><div class="q-text" id="q2text">Active users across selected use cases</div></div>
       <div class="q-body">
         <div class="users-field">
-          <input type="number" id="users" min="1" step="1" value="150" class="users-inp" aria-labelledby="q2text" aria-describedby="usersHint">
-          <span class="users-hint" id="usersHint">Auto-set from selected functions — override by typing</span>
+          <input type="number" id="users" min="1" step="1" value="150" class="users-inp" aria-labelledby="q2text">
         </div>
       </div>
     </div>
 
-    <div id="manualScope">
     <div class="q">
-      <div class="q-head"><span class="q-num">3</span><div class="q-text">How heavily will each user use it?</div></div>
-      <div class="q-body"><div class="slider-top"><label class="lbl" for="intensity">AI tasks / user / day</label><span class="slider-val num" id="intensityV">0.6</span></div><input type="range" id="intensity" min="0.1" max="5" step="0.1" value="0.6"></div>
-    </div>
-
-    <div class="q" id="tierQ">
-      <div class="q-head"><span class="q-num">4</span><div class="q-text">How complex is a typical task?</div></div>
-      <div class="q-body"><div class="seg" id="segTier" role="group" aria-label="Task complexity"><button data-tier="simple" role="radio" aria-checked="false">Simple</button><button data-tier="medium" role="radio" aria-checked="false">Medium</button><button data-tier="high" role="radio" aria-checked="false">High</button></div><div class="q-sub" id="tierNote" style="margin-top:8px"></div></div>
-    </div>
-
-    <div class="q">
-      <div class="q-head"><span class="q-num">5</span><div><div class="q-text">How many dashboards do you launch on day 0?</div><div class="q-sub">One dashboard = one process (RCSA, control testing, TPRM…) covered to ~85%</div></div></div>
-      <div class="q-body"><div class="slider-top"><label class="lbl" for="ucs">Dashboards at launch</label><span class="slider-val num" id="ucsV">5</span></div><input type="range" id="ucs" min="1" max="15" step="1" value="5"></div>
-    </div>
-    </div>
-
-    <div class="q">
-      <div class="q-head"><span class="q-num">6</span><div class="q-text">How many source systems must be integrated?</div></div>
+      <div class="q-head"><span class="q-num">C</span><div class="q-text">Data source systems to connect</div></div>
       <div class="q-body"><div class="slider-top"><label class="lbl" for="systems">Systems</label><span class="slider-val num" id="systemsV">12</span></div><input type="range" id="systems" min="2" max="40" step="1" value="12"></div>
     </div>
 
+    <input type="number" id="ucs" value="3" style="display:none">
+
     <details class="adv">
-      <summary>Advanced settings</summary>
+      <summary>Step 3 — Advanced calibration</summary>
+      <div class="adv-sec">
+        <h5>Usage &amp; complexity</h5>
+        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="intensity">AI requests per user / day</label><span class="slider-val num" id="intensityV">0.6</span></div><input type="range" id="intensity" min="0.1" max="5" step="0.1" value="0.6"></div>
+        <div id="tierQ" style="margin-bottom:6px"><label class="lbl" style="display:block;margin-bottom:6px">Task complexity</label><div class="seg" id="segTier" role="group" aria-label="Task complexity"><button data-tier="simple" role="radio" aria-checked="false">Simple</button><button data-tier="medium" role="radio" aria-checked="false">Medium</button><button data-tier="high" role="radio" aria-checked="false">High</button></div><div class="q-sub" id="tierNote" style="margin-top:8px"></div></div>
+        <div class="dq-slider" id="platWrap" style="display:none;margin-top:6px"><div class="slider-top"><label class="lbl" id="platLbl" for="platProg">How far along is it?</label><span class="slider-val num" id="platProgV">30%</span></div><input type="range" id="platProg" min="0" max="80" step="5" value="30"></div>
+      </div>
       <div class="adv-sec">
         <h5>Dashboards — adjust each</h5>
         <div id="detailWrap"><label class="check"><input type="checkbox" id="detailToggle"> Size each dashboard individually</label></div>
@@ -953,7 +960,7 @@
     <div class="hero">
       <div class="hero-top">
         <div>
-          <div class="hero-eyebrow"><span class="stepn light">2</span>What it costs to run · per year · <b id="heroLevel">L3 Does multi-step work</b></div>
+          <div class="hero-eyebrow">Annual running cost · <b id="heroLevel">L3 Automated workflows</b></div>
           <div class="hero-total num" id="hTotal">—</div>
           <div class="hero-yearnote" id="heroYearNote"></div>
           <div class="hero-sub" id="heroSub"></div>
@@ -997,11 +1004,9 @@
     </div>
 
     <div class="rtabs" id="rtabs" role="tablist" aria-label="Result views">
-      <button data-tab="breakdown" id="rtab-breakdown" class="on" role="tab" aria-selected="true" aria-controls="tabBreakdown">Annual Cost</button>
-      <button data-tab="benefits" id="rtab-benefits" role="tab" aria-selected="false" aria-controls="tabBenefits">Annual Benefits</button>
-      <button data-tab="connect" id="rtab-connect" role="tab" aria-selected="false" aria-controls="tabConnect">ROI</button>
+      <button data-tab="breakdown" id="rtab-breakdown" class="on" role="tab" aria-selected="true" aria-controls="tabBreakdown">Overview</button>
+      <button data-tab="connect" id="rtab-connect" role="tab" aria-selected="false" aria-controls="tabConnect">ROI &amp; Benefits</button>
       <button data-tab="perf" id="rtab-perf" role="tab" aria-selected="false" aria-controls="tabPerf">Roadmap</button>
-      <button data-tab="inquiry" id="rtab-inquiry" role="tab" aria-selected="false" aria-controls="tabInquiry">Per Request</button>
       <button data-tab="models" id="rtab-models" role="tab" aria-selected="false" aria-controls="tabModels">Methodology</button>
     </div>
 
@@ -1055,20 +1060,20 @@
       </div>
     </details>
       <div class="card">
-        <div class="est-head"><h3>What moves your number most</h3><span class="ai-pill">your setup</span></div>
+        <div class="est-head"><h3>What drives your cost</h3><span class="ai-pill">your setup</span></div>
         <div class="est-sub">From where you are now, the levers that change the annual total the most — <b style="color:var(--green)">green</b> lowers it, <b style="color:var(--purple-deep)">purple</b> raises it.</div>
         <div id="moversBox"></div>
       </div>
       <div class="card">
-        <div class="est-head"><h3>Where the economies of scale come from</h3><span class="ai-pill">build once · share everywhere</span></div>
+        <div class="est-head"><h3>Where the cost efficiency comes from</h3><span class="ai-pill">build once · share everywhere</span></div>
         <div class="est-sub">Three things make your division's slice affordable: the costly heavy lift is <b>reused</b>, <b>users</b> share the platform, and other <b>functions</b> share the foundation.</div>
         <div class="scale-grid" id="scaleTiles"></div>
       </div>
     </div>
 
-    <div id="tabBenefits" role="tabpanel" aria-labelledby="rtab-benefits" style="display:none">
+    <div id="tabConnect" role="tabpanel" aria-labelledby="rtab-connect" style="display:none">
       <div class="card">
-        <div class="est-head"><h3>Annual benefit at full adoption</h3><span class="ben-hero" id="benTotal">—</span></div>
+        <div class="est-head"><h3>Annual value at full adoption</h3><span class="ben-hero" id="benTotal">—</span></div>
         <div class="est-sub" id="benSub"></div>
         <div id="benScenRows" style="margin-top:16px"></div>
       </div>
@@ -1081,16 +1086,13 @@
         <div class="est-head"><h3>What's behind the numbers</h3></div>
         <div id="benAssump" style="margin-top:4px"></div>
       </div>
-    </div>
-
-    <div id="tabConnect" role="tabpanel" aria-labelledby="rtab-connect" style="display:none">
       <div class="card roi-kpi-card">
         <div class="est-head"><h3>Return on investment · 10-year view</h3><span class="ai-pill" id="roiPill">—</span></div>
         <div class="est-sub" id="roiSub">Select scenarios and set your organisation size to see a data-driven ROI.</div>
         <div class="roi-kpis" id="roiKpis"></div>
       </div>
       <div class="card">
-        <div class="est-head"><h3>Year-by-year · cumulative net value</h3><span class="ai-pill">ROI chart</span></div>
+        <div class="est-head"><h3>Cumulative net value over 10 years</h3><span class="ai-pill">ROI chart</span></div>
         <div class="est-sub">Switch to <b>ROI view</b> on the chart above to see the J-curve. The table below shows the numbers behind it.</div>
         <div id="roiTable"></div>
       </div>
@@ -1128,7 +1130,8 @@
       </div>
     </div>
 
-    <div id="tabInquiry" role="tabpanel" aria-labelledby="rtab-inquiry" style="display:none">
+    <div id="tabModels" role="tabpanel" aria-labelledby="rtab-models" style="display:none">
+      <h2 class="method-head" style="margin-bottom:14px">Per request · how costs flow</h2>
       <div class="card">
         <div class="est-head"><h3>One request, start to finish — and where the cents land</h3><button type="button" class="rf-replay" id="reqReplay">▶ Replay</button></div>
         <div class="est-sub">Watch a single question flow through the platform: the dashboard is built by one shared heavy lift, then each user reads it for cents.</div>
@@ -1154,9 +1157,8 @@
         <details class="dd" style="margin-top:18px"><summary>See the full request pipeline <span class="ddh">every step, with the tools used</span></summary><div class="dd-in"><div class="pipe" id="inqPipe"></div></div></details>
         <details class="dd"><summary>Why a request costs about one heavy lift <span class="ddh">the defensible version</span></summary><div class="dd-in"><div class="inq-defend" id="inqDefend"></div></div></details>
       </div>
-    </div>
 
-    <div id="tabModels" role="tabpanel" aria-labelledby="rtab-models" style="display:none">
+      <h2 class="method-head" style="margin:26px 0 14px;padding-top:22px;border-top:1px solid var(--line)">Methodology · how every number is built</h2>
       <div class="meth-nav">
         <a href="#meth-models" class="meth-na">Model pricing</a>
         <a href="#meth-math" class="meth-na">Token math</a>
@@ -1512,19 +1514,19 @@ const MODELS=[
  {id:"auto",name:"Auto (best fit · routed)",in:0,out:0},
 ];
 const LEVELS=[
- {n:1,name:"Assistant",model:"opus48",cache:25,ctx:1.30,retry:12,batch:0,save:"~15%",cov:"5–10%"},
- {n:2,name:"Reads your data",model:"sonnet46",cache:45,ctx:1.0,retry:8,batch:0,save:"~25%",cov:"20%"},
- {n:3,name:"Does multi-step work",model:"sonnet46",cache:60,ctx:0.85,retry:6,batch:15,save:"~45%",cov:"65%"},
- {n:4,name:"Works on triggers",model:"sonnet46",cache:72,ctx:0.70,retry:5,batch:25,save:"~70%",cov:"85%"},
- {n:5,name:"Runs itself",model:"haiku45",cache:88,ctx:0.55,retry:3,batch:40,save:"~90%+",cov:"95%"},
+ {n:1, name:"Static reporting",        model:"opus48",   cache:25, ctx:1.30, retry:12, batch:0,  save:"~15%",   cov:"5–10%"},
+ {n:2, name:"AI-assisted analysis",    model:"sonnet46", cache:45, ctx:1.0,  retry:8,  batch:0,  save:"~25%",   cov:"20%"},
+ {n:3, name:"Automated workflows",     model:"sonnet46", cache:60, ctx:0.85, retry:6,  batch:15, save:"~45%",   cov:"65%"},
+ {n:4, name:"Triggered automation",    model:"sonnet46", cache:72, ctx:0.70, retry:5,  batch:25, save:"~70%",   cov:"85%"},
+ {n:5, name:"Autonomous operations",   model:"haiku45",  cache:88, ctx:0.55, retry:3,  batch:40, save:"~90%+",  cov:"95%"},
 ];
 /* plain-language capability + who stays in control, per level — drives the ladder UI */
 const LADDER=[
- {cap:"Answers questions using your current tools. A person still does the work.",over:"Person does the work"},
- {cap:"Looks things up in your policies and systems before it answers.",over:"Person leads"},
- {cap:"Runs a whole task — finds, checks, drafts — then hands it back for sign-off.",over:"You approve each result"},
- {cap:"Acts automatically when something happens; people handle the exceptions.",over:"People handle exceptions"},
- {cap:"Runs and improves itself; people step in only for exceptions.",over:"Exceptions only"},
+ {cap:"Answers questions from your current tools and policies. A person still does the work.",over:"Person does the work"},
+ {cap:"Looks up policies and data before it answers — your analyst gets a briefed starting point.",over:"Person leads"},
+ {cap:"Runs a complete task — retrieves, reasons, drafts — then hands the result back for sign-off.",over:"You review each result"},
+ {cap:"Acts automatically when a trigger fires; your team handles the exceptions.",over:"People handle exceptions"},
+ {cap:"Runs, monitors and improves itself; people step in only for exceptions.",over:"Exceptions only"},
 ];
 /* level-linked insight metrics: automation coverage and the share of tasks a person still reviews */
 const COVN={1:8,2:20,3:65,4:85,5:95};
@@ -1718,6 +1720,19 @@ function syncOrgSlider(){
   }
 }
 function syncFunctions(){state.functions=1+(state.depts||[]).filter(d=>d!=="nfr").length;}
+/* Auto-derive depts, functions, baseLevel and the hidden #ucs input from the selected scenarios
+   and the maturity target. Called whenever scenarios or level change. */
+function syncDerived(){
+  const scenDepts=new Set(['nfr']);
+  (state.scenarios||[]).forEach(id=>{const s=scenById(id);if(s&&s.dept)scenDepts.add(s.dept);});
+  state.depts=[...scenDepts];
+  state.functions=scenDepts.size;
+  if(state.level<=1)state.baseLevel="1";
+  else if(state.level<=3)state.baseLevel="2";
+  else state.baseLevel="3";
+  const ucEl=document.getElementById('ucs');
+  if(ucEl)ucEl.value=Math.max(1,(state.scenarios||[]).length);
+}
 function renderDeptChips(){
   const el=$("deptChips");if(!el)return;
   el.innerHTML=DEPTS.map(d=>{const on=d.core||(state.depts||[]).includes(d.id);const n=d.scen.length;
@@ -3167,9 +3182,6 @@ function buildHelpContent(ind){
   HELP=[
    {c:"",b:`<b>What it sets:</b> how far the AI goes — and so how efficiently each task runs (caching, context precision, routing) and how much work it takes off people.`,ex:`<b>Examples:</b> L1 = an assistant over today's tools · L3 = continuous ${ind.unit} testing on a live event bus · L5 = a self-evolving ${ind.assess} framework, exception-only oversight.`},
    {c:`Count ${ind.fn} seats that will log in — not the whole organisation.`,b:`<b>What it sets:</b> the licence count and total usage. More users spread the fixed platform cost further.`,ex:`<b>Example:</b> ${ind.usersEx}.`},
-   {c:"One inquiry = one agent run: a question answered, a control tested, an assessment drafted.",b:`<b>What it sets:</b> usage (token) volume. work is periodic — RCSA, control testing, TPRM — so the realistic blend is low; each engagement is one heavy primer + a few cached follow-ups.`,ex:`<b>Pre-set 0.6/user/day</b>, derived from those three processes and their cadence. Light ≈ 0.3 · heavy ≈ 0.9. Refine after a pilot.`},
-   {c:"Drives tokens per task — agent steps, retrieved context, output length.",b:`<b>What it sets:</b> the cost and routing of a typical task. It also scales the build cost of each use case.`,ex:`<b>Examples:</b> Simple = look up a policy · Medium = test one ${ind.unit.replace(/s$/,'')} with evidence · High = draft a full ${ind.assess}. Mixed? Use 'Model each use case individually' in Advanced.`},
-   {c:"Each use case is a distinct workflow that needs its own build on the shared platform.",b:`<b>What it sets:</b> the dashboard build cost and governance load. A use case (e.g. TPRM) is run thousands of times — it is <b>not</b> a single task.`,ex:`<b>Examples:</b> ${ind.ucEx}. Each build reaches ~85% coverage; the rate is in Advanced. Focused rollout ≈ 2–3 · broad programme ≈ 8–12.`},
    {c:"Count distinct systems to connect, not documents.",b:`<b>What it sets:</b> integration build cost. Each system must be connected and vectorised so agents can retrieve from it.`,ex:`<b>Examples:</b> ${ind.systemsEx}.`},
   ];
 }
@@ -3246,6 +3258,47 @@ function renderScenarioChips(){
       </div>
     </div>`;}).join("");
 }
+const SCEN_GROUPS=[
+  { id:'core',       label:'Core NFR',                scenarios:['rcsa','control','tprm'],           locked:true },
+  { id:'compliance', label:'Compliance & Monitoring', scenarios:['policy','regch','issue','kri'],    locked:false },
+  { id:'reporting',  label:'Reporting & Capital',     scenarios:['corep','icaap','mrm'],             locked:false },
+  { id:'specialist', label:'Specialist Risk',         scenarios:['fincrime','audit','credit','esg'], locked:false },
+  { id:'resilience', label:'Resilience & Privacy',    scenarios:['opres','cyber','dpia','contract'], locked:false },
+];
+let openGroups=new Set();
+function scenItemHTML(id){
+  const s=scenById(id);if(!s)return"";const on=state.scenarios.includes(s.id);const dep=DEPTS.find(d=>d.id===s.dept);
+  const effortMo=s.effortDays&&s.cyclesPerYear?+(s.effortDays*s.cyclesPerYear/20).toFixed(1):null;
+  const valueSave=effortMo?Math.round(effortMo*20*500*(s.aiSave||0.5)/1000)*1000:null;
+  const valueLine=effortMo
+    ?`<div class="scr-row scr-value"><span class="scr-k">Value target</span><span class="scr-v"><b>~${effortMo} FTE-months/yr</b> of manual effort → AI covers ~${Math.round((s.aiSave||0.5)*100)}%, freeing ≈ <b>€${(valueSave/1000).toFixed(0)}k/yr</b> in analyst time (at €500/day).</span></div>`
+    :"";
+  return `<div class="scen-item${on?' on':''}">
+      <div class="scen-chip${on?' on':''}" data-scen="${s.id}" role="button" tabindex="0"><span class="sc-name"><b>${s.name}</b>${on?'<span class="sc-tick">✓</span>':''}</span><span class="sc-meta">${effortMo?`<span class="sc-effort">~${effortMo} FTE-mo/yr</span>`:''}${on?'':'<span class="sc-tier t-'+s.tier+'">'+s.tier+' build</span>'}<span class="sc-dep">${dep?dep.label:''}</span></span></div>
+      ${on?`<div class="scen-req"><div class="sr-field"><label class="sr-lbl">FTE in team</label><input type="number" class="sr-inp" data-scen-usr="${s.id}" min="1" step="1" value="${scenUsers(s.id)}"></div><div class="sr-field"><label class="sr-lbl">Req / month</label><input type="number" class="sr-inp" data-scen-req="${s.id}" min="1" step="10" value="${scenReqPerMonth(s.id)}"></div></div>`:''}
+      <button type="button" class="sc-info" data-info="${s.id}" title="What this dashboard does &amp; why it costs what it does">ⓘ</button>
+      <div class="sc-reveal" id="screv-${s.id}">
+        <div class="scr-row"><span class="scr-k">What the dashboard shows</span><span class="scr-v">${s.dash}</span></div>
+        <div class="scr-row"><span class="scr-k">Compute &amp; coverage</span><span class="scr-v">${s.why} Built to ~85% coverage.</span></div>
+        ${valueLine}
+        <div class="scr-row"><span class="scr-k">Volume</span><span class="scr-v">Est. ${scenUsers(s.id)} FTE in this function at your org size · ${scenReqPerMonth(s.id).toLocaleString("de-DE")} req/month — adjust above.</span></div>
+      </div>
+    </div>`;
+}
+function renderScenarioGroups(){
+  const host=$("scenGroups");if(!host)return;
+  host.innerHTML=SCEN_GROUPS.map(g=>{
+    const selCount=g.scenarios.filter(id=>state.scenarios.includes(id)).length;
+    const shown=g.locked||openGroups.has(g.id)||selCount>0;
+    const chips=`<div class="scen-chips">`+g.scenarios.map(scenItemHTML).join("")+`</div>`;
+    if(g.locked){
+      return `<div class="sg-block sg-core"><div class="sg-head">${g.label} <span class="sg-count" id="sgc-${g.id}">${selCount} selected</span></div><div class="sg-body" id="sgb-${g.id}">${chips}</div></div>`;
+    }
+    return `<div class="sg-block"><button type="button" class="sg-head sg-toggle" data-group="${g.id}" aria-expanded="${shown?'true':'false'}">${g.label} <span class="sg-count" id="sgc-${g.id}">${selCount} selected</span><span class="sg-caret">▾</span></button><div class="sg-body" id="sgb-${g.id}" style="display:${shown?'flex':'none'}">${chips}</div></div>`;
+  }).join("");
+  const summ=$("scenSummary");
+  if(summ){const n=(state.scenarios||[]).length;summ.innerHTML=`<b>${n}</b> use case${n===1?"":"s"} selected across <b>${state.functions}</b> function${state.functions===1?"":"s"} — your platform share ≈ <b>${Math.round(breadthShare()*100)}%</b>.`;}
+}
 function toggleReveal(id){const r=$("screv-"+id);if(r)r.classList.toggle("open");}
 function updateScenarioNote(){
   const note=$("scenNote");if(!note)return;const n=state.scenarios.length;
@@ -3254,10 +3307,10 @@ function updateScenarioNote(){
     const totalReq=state.scenarios.reduce((s,id)=>s+scenReqPerMonth(id),0);
     const defU=defaultPlatformUsers()||num("users");
     note.innerHTML=`<b>${n} dashboard${n===1?"":"s"}</b> · <b>${defU.toLocaleString("de-DE")}</b> licensed users (FTE estimate) · <b>${totalReq.toLocaleString("de-DE")}</b> req/month · build ≈ <b>${eurK(f.uccfg)}</b>.`;
-    if($("q2text"))$("q2text").textContent="Platform users (auto from selected functions — override below)";
+    if($("q2text"))$("q2text").textContent="Active users across selected use cases";
   } else {
     note.innerHTML=`No scenarios selected — sizing manually with the sliders below.`;
-    if($("q2text"))$("q2text").textContent="Platform users";
+    if($("q2text"))$("q2text").textContent="Active users";
   }
   const ms=$("manualScope");if(ms)ms.classList.toggle("scope-off",n>0);
 }
@@ -3265,18 +3318,18 @@ function toggleScenario(id){
   const i=state.scenarios.indexOf(id);
   if(i>=0){state.scenarios.splice(i,1);delete state.scenarioRequests[id];delete state.scenarioUsers[id];}
   else state.scenarios.push(id);
-  applyScenarios();renderScenarioChips();syncUsersFromScenarios();state.animate=true;recompute();
+  syncDerived();applyScenarios();renderScenarioGroups();syncUsersFromScenarios();state.animate=true;recompute();
 }
 function applyProfile(resetSliders){
   state.ind=resolveProfile();const ind=state.ind;
   $("brandTitle").innerHTML=`${ind.brand} <span>AI Cost Simulator</span>`;
   $("quizEyebrow").textContent="Accenture · "+ind.industryLabel+" · "+REGIONS[state.region].label;
-  $("q2text").textContent=`Platform users`;
+  $("q2text").textContent=`Active users across selected use cases`;
   $("kUserLbl").textContent="Cost per user / month";
   if(resetSliders){
     $("users").value=ind.defaults.users;
     $("systems").value=ind.defaults.systems;$("systemsV").textContent=ind.defaults.systems;
-    $("ucs").value=ind.defaults.ucs;$("ucsV").textContent=ind.defaults.ucs;
+    $("ucs").value=ind.defaults.ucs;
     $("intensity").value=ind.defaults.intensity;$("intensityV").textContent=ind.defaults.intensity.toFixed(1);
     useCases=(state.scenarios&&state.scenarios.length)?scenarioUC():JSON.parse(JSON.stringify(state.sub.useCases));renderUC();
   }
@@ -3324,8 +3377,8 @@ function applyBase(){
   if($("liveMon")){$("liveMon").value=100;$("liveMonV").textContent="100%";}
   renderLadder();selSeg("segLevel","lv",state.level);selSeg("segTier","tier",state.tier);
   [...$("chartToggle").children].forEach(x=>{const on=x.dataset.view===state.view;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on?"true":"false");});
-  syncDiscBoxes();syncOrgSlider();renderDeptChips();syncPlatSlider();
-  renderScenarioChips();applyScenarios();
+  syncDiscBoxes();syncOrgSlider();syncPlatSlider();
+  syncDerived();renderScenarioGroups();applyScenarios();
   applyProfile(true);
 }
 function wire(){
@@ -3334,12 +3387,12 @@ function wire(){
   $("model").innerHTML=MODELS.map(m=>`<option value="${m.id}">${m.name}${m.in?` · $${m.in}/$${m.out}`:''}</option>`).join("");$("model").value="auto";
   $("ic1").innerHTML=svg(IC.user);$("ic2").innerHTML=svg(IC.task);$("ic3").innerHTML=svg(IC.clock);$("ic4").innerHTML=svg(IC.chart);
 
-  $("segLevel").addEventListener("click",e=>{const b=e.target.closest("[data-lv]");if(!b)return;state.level=+b.dataset.lv;selSeg("segLevel","lv",state.level);state.animate=true;recompute();});
+  $("segLevel").addEventListener("click",e=>{const b=e.target.closest("[data-lv]");if(!b)return;state.level=+b.dataset.lv;syncDerived();selSeg("segLevel","lv",state.level);state.animate=true;recompute();});
   $("subType").addEventListener("change",e=>setSubtype(e.target.value));
   $("region").addEventListener("change",e=>setRegion(e.target.value));
   $("segTier").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.tier=b.dataset.tier;selSeg("segTier","tier",state.tier);recompute();});
   $("chartToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.view=b.dataset.view;[...$("chartToggle").children].forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on?"true":"false");});state.animate=true;recompute();});
-  $("rtabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.tab;[...$("rtabs").children].forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-selected",on?"true":"false");});const map={breakdown:"tabBreakdown",benefits:"tabBenefits",connect:"tabConnect",perf:"tabPerf",inquiry:"tabInquiry",models:"tabModels"};Object.keys(map).forEach(k=>$(map[k]).style.display=k===t?"":"none");state.animate=true;recompute();if(t==="connect")setTimeout(playRequestFlow,80);if(t==="perf")setTimeout(playJourney,80);if(t==="inquiry")setTimeout(playInquiry,80);});
+  $("rtabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.tab;[...$("rtabs").children].forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-selected",on?"true":"false");});const map={breakdown:"tabBreakdown",connect:"tabConnect",perf:"tabPerf",models:"tabModels"};Object.keys(map).forEach(k=>$(map[k]).style.display=k===t?"":"none");state.animate=true;recompute();if(t==="perf")setTimeout(playJourney,80);if(t==="models"){setTimeout(playRequestFlow,80);setTimeout(playInquiry,120);}});
   if($("reqReplay"))$("reqReplay").addEventListener("click",playRequestFlow);
   if($("inqReplay"))$("inqReplay").addEventListener("click",playInquiry);
   if($("jrnReplay"))$("jrnReplay").addEventListener("click",playJourney);
@@ -3362,8 +3415,13 @@ function wire(){
   if(csplit)csplit.addEventListener("mouseleave",hideSplit);
   $("chart").addEventListener("mouseleave",hideChartTip);
   $("detailToggle").addEventListener("change",e=>{if(state.scenarios.length){e.target.checked=true;return;}state.detail=e.target.checked;$("ucDetail").style.display=state.detail?"block":"none";$("tierQ").style.opacity=state.detail?0.4:1;recompute();});
-  $("scenChips").addEventListener("click",e=>{const inf=e.target.closest("[data-info]");if(inf){toggleReveal(inf.dataset.info);return;}const b=e.target.closest("[data-scen]");if(b)toggleScenario(b.dataset.scen);});
-  $("scenChips").addEventListener("input",e=>{
+  $("scenGroups").addEventListener("click",e=>{
+    const tog=e.target.closest(".sg-toggle");
+    if(tog){const g=tog.dataset.group;if(openGroups.has(g))openGroups.delete(g);else openGroups.add(g);renderScenarioGroups();return;}
+    const inf=e.target.closest("[data-info]");if(inf){toggleReveal(inf.dataset.info);return;}
+    const b=e.target.closest("[data-scen]");if(b)toggleScenario(b.dataset.scen);
+  });
+  $("scenGroups").addEventListener("input",e=>{
     const reqInp=e.target.closest("[data-scen-req]");
     if(reqInp){const id=reqInp.dataset.scenReq,v=parseInt(reqInp.value)||1;state.scenarioRequests[id]=Math.max(1,v);state.animate=false;recompute();return;}
     const usrInp=e.target.closest("[data-scen-usr]");
@@ -3375,7 +3433,7 @@ function wire(){
 
   const sl=(id,vid,fmt)=>$(id).addEventListener("input",()=>{$(vid).textContent=fmt($(id).value);recompute();});
   $("users").addEventListener("input",()=>{if($("usersHint"))$("usersHint").textContent="Custom value — re-select a scenario to auto-set";recompute();});
-  sl("intensity","intensityV",v=>parseFloat(v).toFixed(1));sl("ucs","ucsV",v=>v);
+  sl("intensity","intensityV",v=>parseFloat(v).toFixed(1));
   sl("systems","systemsV",v=>v);
   sl("priceDelta","priceDeltaV",v=>{const n=parseInt(v);$("priceDeltaV").style.color=n<=0?"var(--blue)":"var(--magenta)";return (n>0?"+":"")+n+"%";});
   sl("hcGrowth","hcGrowthV",v=>"+"+v+"%");
@@ -3388,7 +3446,7 @@ function wire(){
   if($("mathClose"))$("mathClose").addEventListener("click",closeMath);
   if($("mathPrint"))$("mathPrint").addEventListener("click",()=>window.print());
   if($("mathOverlay"))$("mathOverlay").addEventListener("click",e=>{if(e.target.id==="mathOverlay")closeMath();});
-  $("baseHelpBtn").addEventListener("click",()=>{const p=$("baseHelp"),on=p.classList.toggle("show");$("baseHelpBtn").classList.toggle("on",on);});
+  if($("baseHelpBtn"))$("baseHelpBtn").addEventListener("click",()=>{const p=$("baseHelp"),on=p.classList.toggle("show");$("baseHelpBtn").classList.toggle("on",on);});
   $("hostHelpBtn").addEventListener("click",()=>{const p=$("hostHelp"),on=p.classList.toggle("show");$("hostHelpBtn").classList.toggle("on",on);});  $("summaryClose").addEventListener("click",closeSummary);
   $("summaryPrint").addEventListener("click",()=>window.print());
   $("summaryOverlay").addEventListener("click",e=>{if(e.target.id==="summaryOverlay")closeSummary();});
@@ -3411,7 +3469,7 @@ function wire(){
   $("region").innerHTML=Object.entries(REGIONS).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join("");
   $("region").value=state.region;
   selSeg("segLevel","lv",3);selSeg("segTier","tier","medium");
-  renderScenarioChips();applyScenarios();
+  syncDerived();renderScenarioGroups();applyScenarios();
   renderSnapList();
   renderUC();setIndustry("bank",true);
 }
@@ -3466,8 +3524,8 @@ function snapApply(snap){
   // Restore inputs AFTER setIndustry so they are not overwritten by applyProfile
   Object.entries(snap.inputs||{}).forEach(([id,v])=>{const el=$(id);if(el)el.value=v;});
   // Sync derived UI
-  syncOrgSlider();syncPlatSlider();renderDeptChips();
-  renderScenarioChips();applyScenarios();
+  syncOrgSlider();syncPlatSlider();syncDerived();
+  renderScenarioGroups();applyScenarios();
   [...$("chartToggle").children].forEach(x=>{const on=x.dataset.view===state.view;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on?"true":"false");});
   state.animate=true;recompute();
 }
