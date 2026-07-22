@@ -10,15 +10,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0a0711;--ink2:#140e20;--ink3:#1d1530;
+    --ink:#160029;--ink2:#140e20;--ink3:#1d1530;
     --purple:#A100FF;--purple-br:#c061ff;--purple-d:#7a14d4;--purple-deep:#2a0a47;--purple-tint:#f4e9ff;
-    --magenta:#ff2d8e;--green:#13c08a;--blue:#3b82f6;
+    --magenta:#ff2d8e;--green:#1A7A52;--blue:#3b82f6;
     --paper:#f5f3f9;--card:#fff;--line:#e7e1ef;--line-soft:#f0ebf6;
-    --text:#191223;--muted:#6c6480;--faint:#a99fbb;
+    --text:#191223;--muted:#6c6480;--faint:#726A85;
     --fixed:#3d0568;--peruser:#9b4ff0;--usage:#A100FF;
-    --r:6px;--r-lg:14px;
+    /* semantic color system (paired token + tint bg) — matches Blueprint */
+    --g:#1A7A52;--gb:#e6f6f0;--a:#9A6500;--ab:#fef7e6;--r-dan:#C0306A;--rb:#fde8ef;
+    --r:6px;--r-lg:12px;
     --mono:'JetBrains Mono',ui-monospace,monospace;--display:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;
-    --shadow:0 1px 2px rgba(20,10,40,.04),0 8px 28px -12px rgba(60,20,110,.18);
+    --shadow:0 1px 3px rgba(22,0,41,.06),0 4px 14px rgba(22,0,41,.05);
+    --shadow-hover:0 4px 12px rgba(22,0,41,.08),0 12px 32px rgba(22,0,41,.1);
+    --section-tag-bg:#f4e9ff;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--body);background:var(--paper);color:var(--text);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;}
@@ -35,7 +39,7 @@
   .brand .bt span{color:var(--purple-br);}
   .industries{display:flex;gap:7px;overflow-x:auto;max-width:100%;padding-bottom:2px;scrollbar-width:none;}
   .industries::-webkit-scrollbar{display:none;}
-  .chip{display:flex;align-items:center;gap:7px;border:1px solid #2c2140;background:#150f22;color:#b7a8cf;padding:7px 12px;border-radius:40px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:.18s;font-family:var(--body);}
+  .chip{display:flex;align-items:center;gap:7px;border:1px solid #2c2140;background:#150f22;color:#b7a8cf;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;transition:.18s;font-family:var(--body);}
   .chip svg{width:15px;height:15px;flex:none;}
   .chip:hover{border-color:var(--purple-d);color:#fff;}
   .chip.on{background:linear-gradient(120deg,var(--purple),var(--purple-d));border-color:var(--purple);color:#fff;box-shadow:0 4px 16px -4px rgba(161,0,255,.6);}
@@ -45,6 +49,9 @@
   .results{padding:26px 30px 80px;}
 
   .quiz-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple-d);margin-bottom:8px;}
+  /* Standard section entry pill (matches Blueprint .section-tag) */
+  .section-tag{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--section-tag-bg);color:var(--purple);border-radius:20px;padding:2px 10px;margin-bottom:8px;}
+  .section-header{display:flex;flex-direction:column;gap:6px;}
   .quiz-title{font-family:var(--display);font-weight:700;font-size:21px;letter-spacing:-.015em;margin-bottom:6px;line-height:1.1;}
   .quiz-intro{font-size:12.5px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
 
@@ -72,10 +79,10 @@
   .sc-name{display:flex;align-items:center;gap:6px;justify-content:space-between;overflow:hidden;}
   .sc-tick{color:var(--purple);font-weight:800;}
   .sc-meta{display:flex;align-items:center;gap:7px;}
-  .sc-tier{font-size:9px;text-transform:uppercase;letter-spacing:.03em;font-weight:700;border-radius:5px;padding:1px 6px;}
-  .sc-tier.t-simple{background:#eafaf3;color:#1f9d6b;}
-  .sc-tier.t-medium{background:#fff2dd;color:#b8791b;}
-  .sc-tier.t-high{background:#fde8ef;color:#c0306a;}
+  .sc-tier{font-size:9px;text-transform:uppercase;letter-spacing:.03em;font-weight:700;border-radius:8px;padding:1px 6px;}
+  .sc-tier.t-simple{background:var(--gb);color:var(--g);}
+  .sc-tier.t-medium{background:var(--ab);color:var(--a);}
+  .sc-tier.t-high{background:var(--rb);color:var(--r-dan);}
   .sc-dep{font-size:9.5px;color:var(--faint);}
   .scen-chip:hover{border-color:var(--purple);}
   .scen-chip.on{background:var(--purple-tint);border-color:var(--purple);}
@@ -85,8 +92,8 @@
   .sr-lbl{font-size:10px;color:var(--muted);white-space:nowrap;text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono);}
   .sr-inp{width:100%;padding:6px 8px;border:1px solid rgba(255,255,255,0.15);border-radius:6px;background:rgba(255,255,255,0.07);color:var(--fg);font-size:13px;font-family:var(--mono);text-align:right;box-sizing:border-box;transition:border-color .15s;}
   .sr-inp:focus{outline:none;border-color:var(--purple-br);background:rgba(161,0,255,.08);}
-  .sc-effort{display:inline-block;padding:1px 6px;border-radius:4px;background:rgba(19,192,138,0.15);color:#13c08a;font-size:10px;font-weight:600;margin-right:2px;}
-  .scr-value{background:rgba(19,192,138,0.06);border-left:2px solid #13c08a !important;}
+  .sc-effort{display:inline-block;padding:1px 6px;border-radius:4px;background:var(--gb);color:var(--g);font-size:10px;font-weight:600;margin-right:2px;}
+  .scr-value{background:var(--gb);border-left:2px solid var(--g) !important;}
   .sc-info:hover{border-color:var(--purple);color:var(--purple-deep);background:#faf6ff;}
   .sc-reveal{flex:1 1 100%;display:none;background:#faf7fe;border:1px solid #ece4f8;border-radius:9px;padding:9px 11px;margin-top:-1px;}
   .sc-reveal.open{display:block;animation:revealIn .25s ease both;}
@@ -96,7 +103,7 @@
   .scr-k{flex:0 0 96px;color:var(--purple-deep);font-weight:700;}
   .scr-v{flex:1;color:var(--ink2);}
   .dept-chips{display:flex;flex-wrap:wrap;gap:8px;}
-  .dept-chip{border:1px solid var(--line);background:#fff;color:var(--text);font:inherit;font-size:12px;font-weight:600;text-align:left;padding:7px 11px;border-radius:10px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:2px;}
+  .dept-chip{border:1px solid var(--line);background:#fff;color:var(--text);font:inherit;font-size:12px;font-weight:600;text-align:left;padding:7px 11px;border-radius:20px;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:2px;}
   .dept-chip .dc-n{font-size:9.5px;font-weight:600;color:var(--faint);}
   .dept-chip:hover{border-color:var(--purple);}
   .dept-chip.on{background:var(--purple-tint);border-color:var(--purple);color:var(--purple-deep);}
@@ -104,7 +111,8 @@
   .dept-chip.on .dc-n{color:var(--purple-d);}
   .dq-note{margin-top:9px;font-size:11px;color:var(--muted);line-height:1.5;}
   .scen-note{margin-top:10px;font-size:11.5px;color:var(--muted);line-height:1.5;}
-  .scope-off{display:none;}
+  .scope-off{opacity:.35;pointer-events:none;position:relative;}
+  .scope-off::after{content:'Not in scope';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.92);padding:2px 8px;border-radius:4px;pointer-events:none;}
 
   #snapshotPanel{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);}
   .snap-row{display:flex;gap:6px;align-items:center;margin-bottom:8px;}
@@ -143,7 +151,7 @@
   .mv-pct{font-size:10px;font-weight:600;opacity:.65;margin-left:6px;}
   .mv-bar{height:7px;background:#f0ebf7;border-radius:4px;overflow:hidden;}
   .mv-bar span{display:block;height:100%;border-radius:4px;}
-  .mv-bar span.dn{background:linear-gradient(90deg,#13c08a,#39d3a5);}
+  .mv-bar span.dn{background:linear-gradient(90deg,#1A7A52,#2f9e6f);}
   .mv-bar span.up{background:linear-gradient(90deg,#b860ff,#7a14d4);}
   .inq-defend{margin-top:16px;border:1px solid #e6dcf5;background:linear-gradient(180deg,#faf7ff,#fff);border-radius:13px;padding:15px 17px;}
   .inq-defend .defend-h{font-family:var(--display);font-weight:800;font-size:13.5px;color:var(--purple-deep);margin-bottom:8px;}
@@ -181,7 +189,7 @@
   .jm-delta .jm-from{color:var(--faint);}
   .jm-delta b{color:var(--purple-deep);font-family:var(--display);}
   .jm-track{position:relative;height:9px;background:#f0ebf7;border-radius:5px;}
-  .jm-fill{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:linear-gradient(90deg,#5fd3a3,#1f9d6b);transition:width 1.1s cubic-bezier(.4,0,.2,1);}
+  .jm-fill{position:absolute;left:0;top:0;height:100%;border-radius:5px;background:linear-gradient(90deg,#2f9e6f,#1A7A52);transition:width 1.1s cubic-bezier(.4,0,.2,1);}
   .jm-tick{position:absolute;top:-2px;width:2px;height:13px;background:var(--faint);z-index:2;border-radius:1px;}
   /* Maturity roadmap visual */
   .rdmap{display:flex;flex-direction:column;gap:20px;margin-top:4px}
@@ -191,10 +199,10 @@
   .rdl-sep{flex:1;height:2px;background:var(--line);align-self:flex-start;margin-top:33px;min-width:10px}
   .rdl-sep.rdl-sep-on{background:var(--purple)}
   .rdl-badge{position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:9px;font-family:var(--mono);font-weight:700;letter-spacing:.07em;padding:1px 6px;border-radius:4px;white-space:nowrap}
-  .rdl-now-b{background:rgba(19,192,138,.12);color:var(--green)}
+  .rdl-now-b{background:rgba(26,122,82,.12);color:var(--green)}
   .rdl-tgt-b{background:var(--purple-tint);color:var(--purple-d)}
   .rdl-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);background:var(--paper);position:relative;z-index:1}
-  .rdl-now .rdl-dot{width:22px;height:22px;border-color:var(--green);background:var(--green);box-shadow:0 0 0 4px rgba(19,192,138,.15)}
+  .rdl-now .rdl-dot{width:22px;height:22px;border-color:var(--green);background:var(--green);box-shadow:0 0 0 4px rgba(26,122,82,.15)}
   .rdl-tgt .rdl-dot{width:22px;height:22px;border-color:var(--purple);background:var(--purple);box-shadow:0 0 0 4px rgba(161,0,255,.12)}
   .rdl-mid .rdl-dot{border-color:var(--purple);background:var(--purple-tint)}
   .rdl-past .rdl-dot{border-color:var(--green);background:var(--green)}
@@ -229,10 +237,8 @@
   .rk-neg{color:var(--magenta)}
   .rk-k{font-size:10px;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
   .roi-tbl{font-size:12px;margin-top:8px}
-  .roi-th{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);border-bottom:1px solid var(--line)}
-  .roi-tr{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;padding:6px 8px;border-bottom:1px solid var(--line-soft);font-family:var(--mono)}
-  .roi-tr:hover{background:var(--paper)}
-  .roi-be{background:rgba(19,192,138,.06);font-weight:600}
+  .roi-tr{font-family:var(--mono)}
+  .roi-be{font-weight:600}
   .roi-ben{display:flex;flex-direction:column;gap:8px;margin-top:4px}
   .rb-row{display:grid;grid-template-columns:1fr 2fr auto;gap:10px;align-items:center}
   .rb-name{font-size:11px;color:var(--text)}
@@ -262,11 +268,11 @@
   .br-pre .br-val,.br-pre .br-pct{color:var(--line)}
   .br-yr{font-family:var(--mono);color:var(--muted);font-size:11px;white-space:nowrap}
   .br-bar{height:8px;background:var(--line-soft);border-radius:4px;overflow:hidden}
-  .br-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--green,#2dc675),var(--blue));border-radius:4px;transition:width .6s ease}
+  .br-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--green,#1A7A52),var(--blue));border-radius:4px;transition:width .6s ease}
   .br-pre .br-bar span{background:var(--line)}
   .br-val{font-family:var(--mono);font-size:11px;color:var(--text);text-align:right}
   .br-pct{font-size:10px;color:var(--muted);font-family:var(--mono)}
-  .ben-gl{font-size:10px;font-weight:700;color:var(--green,#2dc675);margin-left:4px}
+  .ben-gl{font-size:10px;font-weight:700;color:var(--green,#1A7A52);margin-left:4px}
   .ba-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:12px}
   .ba-row:last-child{border-bottom:none}
   .ba-k{font-weight:700;color:var(--muted);font-size:11px;padding-top:1px}
@@ -287,7 +293,7 @@
   .mprov-alp{background:#A100FF20;color:var(--purple-d);border:1px solid #A100FF40}
   .meth-loop-h{font-size:11px;font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
   .scale-tile,.mv-row,.scen-chip{transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease;}
-  .scale-tile:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(122,20,212,.07);}
+  .scale-tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-hover);}
   @media(prefers-reduced-motion:reduce){.jstage,.jarrow,.jm-fill,.rf-row,.rf-meter,.scale-tile{transition:none!important;}}
   .reqflow{margin-top:8px;}
   .rf-track{position:relative;}
@@ -304,9 +310,9 @@
   .rf-chip em{font-style:normal;font-family:Inter,sans-serif;font-weight:600;font-size:8.5px;color:var(--faint);}
   .rf-chip.big{color:#fff;background:linear-gradient(135deg,#b860ff,#7a14d4);border-color:transparent;font-size:13px;}
   .rf-chip.big em{color:rgba(255,255,255,.82);}
-  .rf-chip.zero{color:var(--green);background:#eafaf3;border-color:#cfeede;}
+  .rf-chip.zero{color:var(--green);background:var(--gb);border-color:#cfe6da;}
   .rf-brk{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;}
-  .rf-bk{font-size:10px;color:var(--muted);background:#faf7fe;border:1px solid #ece4f8;border-radius:7px;padding:3px 8px;}
+  .rf-bk{font-size:10px;color:var(--muted);background:#faf7fe;border:1px solid #ece4f8;border-radius:8px;padding:3px 8px;}
   .rf-bk b{font-family:var(--display);color:var(--purple-deep);font-size:11px;}
   .rf-meter{margin-top:14px;border-radius:13px;padding:15px 17px;background:linear-gradient(135deg,#1a0d2e,#3a1c63);color:#fff;opacity:0;transform:translateY(6px);transition:opacity .6s ease,transform .6s ease;}
   .rf-meter.on{opacity:1;transform:none;}
@@ -323,8 +329,9 @@
   .mdl-play{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-bottom:8px;}
   .mdl-auto{font:inherit;font-size:11px;font-weight:700;color:var(--purple-deep);background:#f3ecfd;border:1px solid #e2d3f6;border-radius:8px;padding:5px 11px;cursor:pointer;transition:.15s;}
   .mdl-auto:hover{background:#ece0fb;}
-  .mdl-auto.on{background:#eafaf3;color:var(--green);border-color:#cfeede;cursor:default;}
-  .mdl-row.off{opacity:.4;}
+  .mdl-auto.on{background:var(--gb);color:var(--green);border-color:#cfe6da;cursor:default;}
+  .mdl-row.off{opacity:.4;pointer-events:none;position:relative;}
+  .mdl-row.off::after{content:'Not on-prem';position:absolute;top:50%;right:8px;transform:translateY(-50%);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.92);padding:2px 8px;border-radius:4px;pointer-events:none;}
   .mdl-name{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
   .mdl-name b{font-weight:600;color:var(--ink2);}
   .mdl-prov{font-size:10px;color:var(--faint);}
@@ -347,6 +354,17 @@
   .mc-line.tot{border-top:1px solid #e6dcf5;margin-top:4px;padding-top:8px;font-weight:700;color:var(--purple-deep);}
   .mc-line.tot .num{font-size:15px;font-weight:800;color:var(--purple-deep);}
   @media(max-width:640px){.math-grid{grid-template-columns:1fr;}.mdl-row{grid-template-columns:1.6fr .6fr .6fr .9fr;}.mdl-row .mdl-b{display:none;}}
+
+  /* ===== Semantic data tables ===== */
+  .data-table{width:100%;border-collapse:collapse;}
+  .data-table th,.data-table td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:13px;}
+  .data-table thead th{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:700;}
+  .data-table tbody tr:nth-child(even) td{background:rgba(161,0,255,.03);}
+  .data-table tbody tr:hover td{background:rgba(161,0,255,.05);}
+  .data-table td.num,.data-table th.num{text-align:right;font-family:var(--mono);}
+  .data-table tr.roi-be td{background:var(--gb);font-weight:600;}
+  .data-table tr.ben-total td{border-top:2px solid var(--line);font-weight:700;background:rgba(161,0,255,.04);}
+  .data-table tr.bteam-tot td{border-top:2px solid var(--line);font-weight:700;color:var(--purple-deep);}
 
   .slider-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
   .users-field{display:flex;flex-direction:column;gap:6px;}
@@ -392,7 +410,7 @@
   .addbtn{width:100%;padding:8px;border:1px dashed var(--line);background:#fff;border-radius:var(--r);color:var(--purple);font-family:var(--mono);font-size:10.5px;cursor:pointer;font-weight:600;}
 
   /* ===== HERO forecast ===== */
-  .hero{position:relative;background:radial-gradient(120% 140% at 12% -10%,#2c0d52 0%,#140e20 46%,#0a0711 100%);border-radius:var(--r-lg);padding:26px 28px 22px;margin-bottom:20px;overflow:hidden;color:#efe9f7;box-shadow:0 20px 50px -22px rgba(80,20,150,.6);animation:fadeUp .6s both;}
+  .hero{position:relative;background:radial-gradient(120% 140% at 12% -10%,#3D0066 0%,#160029 55%,#160029 100%);border-radius:var(--r-lg);padding:26px 28px 22px;margin-bottom:20px;overflow:hidden;color:#efe9f7;box-shadow:0 20px 50px -22px rgba(80,20,150,.6);animation:fadeUp .6s both;}
   .hero:after{content:"";position:absolute;right:-80px;top:-90px;width:320px;height:320px;background:radial-gradient(circle,rgba(161,0,255,.35),transparent 65%);pointer-events:none;}
   .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;position:relative;z-index:2;}
   .hero-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#b59bd8;margin-bottom:9px;}
@@ -424,14 +442,15 @@
   /* ===== KPI tiles ===== */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
   .kpi-tile{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 17px;box-shadow:var(--shadow);transition:.2s;animation:fadeUp .55s both;}
-  .kpi-tile:hover{transform:translateY(-3px);box-shadow:0 1px 2px rgba(20,10,40,.05),0 16px 34px -14px rgba(80,20,150,.32);}
+  .kpi-tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-hover);}
   .kpi-ic{width:30px;height:30px;border-radius:9px;background:var(--purple-tint);color:var(--purple-d);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
   .kpi-ic svg{width:16px;height:16px;}
   .kpi-tile .k{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);margin-bottom:6px;}
   .kpi-tile .v{font-family:var(--display);font-weight:700;font-size:23px;color:var(--ink2);letter-spacing:-.02em;}
   .kpi-tile .d{font-size:10.5px;color:var(--muted);margin-top:5px;}
 
-  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;margin-bottom:20px;box-shadow:var(--shadow);animation:fadeUp .6s both;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;margin-bottom:20px;box-shadow:var(--shadow);animation:fadeUp .6s both;transition:box-shadow .2s ease;}
+  .card:hover{box-shadow:var(--shadow-hover);}
   .est-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
   .est-head h3{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:-.01em;}
   .ai-pill{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(120deg,var(--purple),var(--purple-d));color:#fff;padding:4px 9px;border-radius:20px;font-weight:600;}
@@ -533,7 +552,7 @@
   .hero-cum .hc-v{font-family:var(--display);font-weight:700;font-size:19px;color:#fff;letter-spacing:-.02em;}
 
   /* ===== Result tabs ===== */
-  .rtabs{display:flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:5px;margin-bottom:18px;box-shadow:var(--shadow);}
+  .rtabs{display:flex;gap:4px;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:5px;margin-bottom:18px;box-shadow:var(--shadow);position:sticky;top:64px;z-index:40;}
   .rtabs button{flex:1;border:none;background:transparent;padding:11px;font-family:var(--body);font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:9px;transition:.16s;letter-spacing:-.01em;}
   .rtabs button:hover{color:var(--ink2);}
   .rtabs button.on{background:linear-gradient(120deg,var(--purple),var(--purple-d));color:#fff;box-shadow:0 6px 18px -8px rgba(161,0,255,.6);}
@@ -641,7 +660,7 @@
 
   /* ===== Per-inquiry: definitions + smart routing ===== */
   .inq-defs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 18px;}
-  .idf{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .idf{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px;}
   .idf-k{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--purple-d);font-weight:700;margin-bottom:5px;}
   .idf-v{font-size:10.6px;line-height:1.45;color:var(--muted);}
   .idf-v b{color:var(--ink2);}
@@ -698,19 +717,19 @@
   .ev-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .ev-col-h{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px;}
   .ev-col.pro .ev-col-h{color:var(--green);}
-  .ev-col.con .ev-col-h{color:#c9851f;}
+  .ev-col.con .ev-col-h{color:var(--a);}
   .ev-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
   .ev-col li{font-size:11.6px;line-height:1.45;color:var(--muted);padding-left:18px;position:relative;}
   .ev-col li b{color:var(--ink2);font-weight:600;}
   .ev-col.pro li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green);font-weight:800;}
-  .ev-col.con li::before{content:"!";position:absolute;left:2px;top:0;color:#c9851f;font-weight:800;}
+  .ev-col.con li::before{content:"!";position:absolute;left:2px;top:0;color:var(--a);font-weight:800;}
   .ev-prompt{font-size:12px;color:var(--faint);line-height:1.5;padding:4px 0 2px;}
   .ev-value{display:block;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted);line-height:1.55;}
   .summary-btn{margin-top:10px;width:100%;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:600;padding:8px 12px;border-radius:9px;cursor:pointer;transition:background .15s,border-color .15s;}
   .summary-btn:hover{background:var(--paper);border-color:var(--purple);}
   .summary-btn.solid{background:var(--purple);color:#fff;border-color:var(--purple);}
   .summary-btn.solid:hover{filter:brightness(1.06);}
-  .sum-overlay{position:fixed;inset:0;background:rgba(10,7,17,.55);z-index:9999;overflow:auto;padding:28px 16px;backdrop-filter:blur(2px);}
+  .sum-overlay{position:fixed;inset:0;background:rgba(22,0,41,.55);z-index:9999;overflow:auto;padding:28px 16px;backdrop-filter:blur(2px);}
   .sum-sheet{max-width:760px;margin:0 auto;background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:30px 34px 38px;}
   .sum-actions{display:flex;gap:10px;justify-content:flex-end;margin-bottom:18px;}
   .sum-actions .summary-btn{width:auto;margin-top:0;}
@@ -781,41 +800,41 @@
 <div class="wrap">
   <!-- ===== QUESTIONNAIRE ===== -->
   <div class="quiz">
-    <div class="quiz-eyebrow" id="quizEyebrow">Accenture · Banking</div>
+    <div class="quiz-eyebrow section-tag" id="quizEyebrow">Accenture · Banking</div>
     <div class="quiz-title" id="quizTitle"><span class="stepn">1</span>About you</div>
     <p class="quiz-intro">Tell us about your setup. The yearly cost updates on the right; fine-tune it in step 2.</p>
     <button type="button" id="resetBase" class="reset-base">↺ Reset to base case</button>
 
     <div class="profile">
       <div class="profile-grid">
-        <div class="pf"><label>Sub-type</label><select id="subType"></select></div>
-        <div class="pf"><label>Region</label><select id="region"></select></div>
+        <div class="pf"><label for="subType">Sub-type</label><select id="subType"></select></div>
+        <div class="pf"><label for="region">Region</label><select id="region"></select></div>
       </div>
       <div class="profile-note" id="profileNote"></div>
     </div>
 
     <div class="disc">
       <div class="dq"><div class="dq-l">How big is the organisation?</div>
-        <div class="boxrow" data-disc="orgSize">
-          <button class="box" data-v="small">Up to 5,000 staff</button>
-          <button class="box" data-v="mid">5,000–20,000</button>
-          <button class="box" data-v="large">20,000+</button>
+        <div class="boxrow" data-disc="orgSize" role="radiogroup" aria-label="How big is the organisation?">
+          <button class="box" data-v="small" role="radio" aria-checked="false">Up to 5,000 staff</button>
+          <button class="box" data-v="mid" role="radio" aria-checked="false">5,000–20,000</button>
+          <button class="box" data-v="large" role="radio" aria-checked="false">20,000+</button>
         </div>
-        <div class="dq-slider" id="orgWrap"><div class="slider-top"><span class="lbl">Roughly how many staff?</span><span class="slider-val num" id="orgStaffV">12,000</span></div><input type="range" id="orgStaff" min="5000" max="20000" step="500" value="12000"></div>
+        <div class="dq-slider" id="orgWrap"><div class="slider-top"><label class="lbl" for="orgStaff">Roughly how many staff?</label><span class="slider-val num" id="orgStaffV">12,000</span></div><input type="range" id="orgStaff" min="5000" max="20000" step="500" value="12000"></div>
       </div>
       <div class="dq"><div class="dq-l">Do you already have an enterprise AI platform?</div>
-        <div class="boxrow" data-disc="platformExists">
-          <button class="box" data-v="none">No — greenfield</button>
-          <button class="box" data-v="building">Building it now</button>
-          <button class="box" data-v="yes">Yes, in place</button>
+        <div class="boxrow" data-disc="platformExists" role="radiogroup" aria-label="Do you already have an enterprise AI platform?">
+          <button class="box" data-v="none" role="radio" aria-checked="false">No — greenfield</button>
+          <button class="box" data-v="building" role="radio" aria-checked="false">Building it now</button>
+          <button class="box" data-v="yes" role="radio" aria-checked="false">Yes, in place</button>
         </div>
-        <div class="dq-slider" id="platWrap"><div class="slider-top"><span class="lbl" id="platLbl">How far along is it?</span><span class="slider-val num" id="platProgV">30%</span></div><input type="range" id="platProg" min="0" max="80" step="5" value="30"></div>
+        <div class="dq-slider" id="platWrap"><div class="slider-top"><label class="lbl" id="platLbl" for="platProg">How far along is it?</label><span class="slider-val num" id="platProgV">30%</span></div><input type="range" id="platProg" min="0" max="80" step="5" value="30"></div>
       </div>
       <div class="dq"><div class="dq-l">Where does the AI run?<button type="button" class="q-help-btn" id="hostHelpBtn" style="display:inline-flex;margin-left:8px;vertical-align:middle">?</button><span class="dq-hint">hosting drives both infrastructure cost and which models you can use</span></div>
-        <div class="boxrow" data-disc="hosting">
-          <button class="box" data-v="cloud">Vendor cloud</button>
-          <button class="box" data-v="sovereign">EU-sovereign</button>
-          <button class="box" data-v="onprem">On-prem / private</button>
+        <div class="boxrow" data-disc="hosting" role="radiogroup" aria-label="Where does the AI run?">
+          <button class="box" data-v="cloud" role="radio" aria-checked="false">Vendor cloud</button>
+          <button class="box" data-v="sovereign" role="radio" aria-checked="false">EU-sovereign</button>
+          <button class="box" data-v="onprem" role="radio" aria-checked="false">On-prem / private</button>
         </div>
         <div class="q-help" id="hostHelp">Regulated NFR data usually can't sit on a vendor's shared cloud, so where the AI runs changes the cost shape — and the answer to "how can a self-hosted model have a token price."<span class="ex"><b>Vendor cloud</b> → per-token API pricing, no infrastructure to run. <b>EU-sovereign</b> → EU-resident hosting, a small premium and commitment. <b>On-prem / private</b> → your own GPU cluster: a large <b>fixed</b> infrastructure + MLOps cost, but a <b>low marginal cost per token</b> (you bought the hardware, you're not billed per call). Only open / self-hostable models run here. Tier-1 banks and patient data typically need this — and it's why the all-in is far higher than a pure cloud build.</span></div>
       </div>
@@ -824,10 +843,10 @@
         <div class="dq-note" id="deptNote"></div>
       </div>
       <div class="dq"><div class="dq-l">How automated is the work today?<button type="button" class="q-help-btn" id="baseHelpBtn" style="display:inline-flex;margin-left:8px;vertical-align:middle">?</button><span class="dq-hint">sets the &lsquo;today&rsquo; baseline for the gains — not the cost</span></div>
-        <div class="boxrow" data-disc="baseLevel">
-          <button class="box" data-v="1">Mostly manual</button>
-          <button class="box" data-v="2">Some tools, still hands-on</button>
-          <button class="box" data-v="3">Already part-automated</button>
+        <div class="boxrow" data-disc="baseLevel" role="radiogroup" aria-label="How automated is the work today?">
+          <button class="box" data-v="1" role="radio" aria-checked="false">Mostly manual</button>
+          <button class="box" data-v="2" role="radio" aria-checked="false">Some tools, still hands-on</button>
+          <button class="box" data-v="3" role="radio" aria-checked="false">Already part-automated</button>
         </div>
         <div class="q-help" id="baseHelp">Sets the &lsquo;today&rsquo; baseline for 18-month gains — not the cost.<span class="ex"><b>Mostly manual</b> → large gains ahead. <b>Some tools, still hands-on</b> → moderate gains. <b>Already part-automated</b> → smaller incremental gains.</span></div>
       </div>
@@ -835,7 +854,7 @@
 
     <div class="q">
       <div class="q-head"><span class="q-num">1</span><div><div class="q-text">How far should the AI go?</div><div class="q-sub">Pick the level you'll realistically reach in 12–18 months</div></div></div>
-      <div class="q-body"><div class="ladder" id="segLevel"></div><div class="ladder-foot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V8m0 0l-4 4m4-4l4 4M5 4h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="levelName"></span></div></div>
+      <div class="q-body"><div class="ladder" id="segLevel" role="radiogroup" aria-label="Maturity level"></div><div class="ladder-foot"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V8m0 0l-4 4m4-4l4 4M5 4h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="levelName"></span></div></div>
     </div>
 
     <div class="quiz-title" id="quizTitle2" style="margin-top:30px"><span class="stepn">2</span>Fine-tune the scenario</div>
@@ -850,7 +869,7 @@
       <div class="q-head"><span class="q-num">2</span><div class="q-text" id="q2text">Platform users</div></div>
       <div class="q-body">
         <div class="users-field">
-          <input type="number" id="users" min="1" step="1" value="150" class="users-inp">
+          <input type="number" id="users" min="1" step="1" value="150" class="users-inp" aria-labelledby="q2text" aria-describedby="usersHint">
           <span class="users-hint" id="usersHint">Auto-set from selected functions — override by typing</span>
         </div>
       </div>
@@ -859,23 +878,23 @@
     <div id="manualScope">
     <div class="q">
       <div class="q-head"><span class="q-num">3</span><div class="q-text">How heavily will each user use it?</div></div>
-      <div class="q-body"><div class="slider-top"><span class="lbl">AI tasks / user / day</span><span class="slider-val num" id="intensityV">0.6</span></div><input type="range" id="intensity" min="0.1" max="5" step="0.1" value="0.6"></div>
+      <div class="q-body"><div class="slider-top"><label class="lbl" for="intensity">AI tasks / user / day</label><span class="slider-val num" id="intensityV">0.6</span></div><input type="range" id="intensity" min="0.1" max="5" step="0.1" value="0.6"></div>
     </div>
 
     <div class="q" id="tierQ">
       <div class="q-head"><span class="q-num">4</span><div class="q-text">How complex is a typical task?</div></div>
-      <div class="q-body"><div class="seg" id="segTier"><button data-tier="simple">Simple</button><button data-tier="medium">Medium</button><button data-tier="high">High</button></div><div class="q-sub" id="tierNote" style="margin-top:8px"></div></div>
+      <div class="q-body"><div class="seg" id="segTier" role="group" aria-label="Task complexity"><button data-tier="simple" role="radio" aria-checked="false">Simple</button><button data-tier="medium" role="radio" aria-checked="false">Medium</button><button data-tier="high" role="radio" aria-checked="false">High</button></div><div class="q-sub" id="tierNote" style="margin-top:8px"></div></div>
     </div>
 
     <div class="q">
       <div class="q-head"><span class="q-num">5</span><div><div class="q-text">How many dashboards do you launch on day 0?</div><div class="q-sub">One dashboard = one process (RCSA, control testing, TPRM…) covered to ~85%</div></div></div>
-      <div class="q-body"><div class="slider-top"><span class="lbl">Dashboards at launch</span><span class="slider-val num" id="ucsV">5</span></div><input type="range" id="ucs" min="1" max="15" step="1" value="5"></div>
+      <div class="q-body"><div class="slider-top"><label class="lbl" for="ucs">Dashboards at launch</label><span class="slider-val num" id="ucsV">5</span></div><input type="range" id="ucs" min="1" max="15" step="1" value="5"></div>
     </div>
     </div>
 
     <div class="q">
       <div class="q-head"><span class="q-num">6</span><div class="q-text">How many source systems must be integrated?</div></div>
-      <div class="q-body"><div class="slider-top"><span class="lbl">Systems</span><span class="slider-val num" id="systemsV">12</span></div><input type="range" id="systems" min="2" max="40" step="1" value="12"></div>
+      <div class="q-body"><div class="slider-top"><label class="lbl" for="systems">Systems</label><span class="slider-val num" id="systemsV">12</span></div><input type="range" id="systems" min="2" max="40" step="1" value="12"></div>
     </div>
 
     <details class="adv">
@@ -888,23 +907,23 @@
       </div>
       <div class="adv-sec">
         <h5>Calibration</h5>
-        <div class="adv-row"><label>Model override</label><select id="model"></select></div>
-        <div class="adv-row"><label id="fxLabel">EUR / USD rate</label><input type="number" id="eurusd" step="0.001" value="1.137"></div>
-        <div class="adv-row"><label id="perUserLabel">Per-user cost €/user/yr <span class="dq-hint">seat licence + IAM + storage + support; mid-range market benchmark = €430</span></label><input type="number" id="perUser" placeholder="430" value="430"></div>
-        <div class="adv-row"><label id="buildLabel">Platform build (<span id="buildCur">€</span>) <button type="button" id="buildReset" class="rsetb">estimate</button></label><input type="number" id="buildAbs" step="50000" value="1600000"></div>
-        <div class="adv-row"><label>Integration / system (<span id="intgCur">€</span>) <span class="dq-hint">connector + data mapping per system</span></label><input type="number" id="intgRate" placeholder="35000" value="35000"></div>
-        <div class="adv-row"><label>Use-case build · medium reference (<span id="ucCur">€</span>) <span class="dq-hint">to ~85% coverage; simple ×0.5, high ×1.65</span></label><input type="number" id="ucRate" placeholder="90000" value="90000"></div>
-        <div class="adv-row"><label>Build amortisation (yrs) <span class="dq-hint">spreads one-off build cost — does not affect recurring run costs (hosting, ops)</span></label><input type="number" id="amort" min="1" max="10" step="1" placeholder="3" value="3"></div>
-        <div class="adv-row"><label>Staff rate (€/day) <span class="dq-hint">assumed analyst day rate — used only for ROI benefit estimate</span></label><input type="number" id="staffRate" placeholder="500" value="500"></div>
-        <div class="adv-row"><label>Avoided supervisory findings / yr <span class="dq-hint">risk-reduction benefit — one avoided finding typically costs €150K–€500K+ to remediate</span></label><input type="number" id="riskFindings" min="0" step="1" value="1"></div>
-        <div class="adv-row"><label>Remediation cost per finding (<span id="riskCur">€</span>) <span class="dq-hint">avg cost to remediate one supervisory finding</span></label><input type="number" id="riskCostPer" step="50000" value="250000"></div>
-        <div class="adv-row"><label>Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
-        <div class="adv-row"><label>Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
-        <div class="adv-row"><label>Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
+        <div class="adv-row"><label for="model">Model override</label><select id="model"></select></div>
+        <div class="adv-row"><label id="fxLabel" for="eurusd">EUR / USD rate</label><input type="number" id="eurusd" step="0.001" value="1.137"></div>
+        <div class="adv-row"><label id="perUserLabel" for="perUser">Per-user cost €/user/yr <span class="dq-hint">seat licence + IAM + storage + support; mid-range market benchmark = €430</span></label><input type="number" id="perUser" placeholder="430" value="430"></div>
+        <div class="adv-row"><label id="buildLabel" for="buildAbs">Platform build (<span id="buildCur">€</span>) <button type="button" id="buildReset" class="rsetb">estimate</button></label><input type="number" id="buildAbs" step="50000" value="1600000"></div>
+        <div class="adv-row"><label for="intgRate">Integration / system (<span id="intgCur">€</span>) <span class="dq-hint">connector + data mapping per system</span></label><input type="number" id="intgRate" placeholder="35000" value="35000"></div>
+        <div class="adv-row"><label for="ucRate">Use-case build · medium reference (<span id="ucCur">€</span>) <span class="dq-hint">to ~85% coverage; simple ×0.5, high ×1.65</span></label><input type="number" id="ucRate" placeholder="90000" value="90000"></div>
+        <div class="adv-row"><label for="amort">Build amortisation (yrs) <span class="dq-hint">spreads one-off build cost — does not affect recurring run costs (hosting, ops)</span></label><input type="number" id="amort" min="1" max="10" step="1" placeholder="3" value="3"></div>
+        <div class="adv-row"><label for="staffRate">Staff rate (€/day) <span class="dq-hint">assumed analyst day rate — used only for ROI benefit estimate</span></label><input type="number" id="staffRate" placeholder="500" value="500"></div>
+        <div class="adv-row"><label for="riskFindings">Avoided supervisory findings / yr <span class="dq-hint">risk-reduction benefit — one avoided finding typically costs €150K–€500K+ to remediate</span></label><input type="number" id="riskFindings" min="0" step="1" value="1"></div>
+        <div class="adv-row"><label for="riskCostPer">Remediation cost per finding (<span id="riskCur">€</span>) <span class="dq-hint">avg cost to remediate one supervisory finding</span></label><input type="number" id="riskCostPer" step="50000" value="250000"></div>
+        <div class="adv-row"><label for="ucUpkeep">Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
+        <div class="adv-row"><label for="ucChanges">Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
+        <div class="adv-row"><label for="ucChangeCost">Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
         <div class="adv-slider">
           <div class="slider-top"><span class="lbl">Annual token-price change <span class="dq-hint">chart projection only — shapes 10-yr outlook, not current total</span> <button type="button" class="q-help-btn" id="priceSciBtnA" style="display:inline-flex;margin-left:4px;vertical-align:middle;font-size:10px;padding:1px 5px">?</button></span><span class="slider-val num" id="priceDeltaV" style="color:var(--blue);font-size:14px">-15%</span></div>
           <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
-            <button type="button" class="price-preset" data-v="-40" style="font-size:10px;padding:3px 8px;border:1px solid var(--green);border-radius:5px;background:rgba(19,192,138,.08);color:var(--green);cursor:pointer;font-family:var(--mono)">Deflationary −40%</button>
+            <button type="button" class="price-preset" data-v="-40" style="font-size:10px;padding:3px 8px;border:1px solid var(--green);border-radius:5px;background:rgba(26,122,82,.08);color:var(--green);cursor:pointer;font-family:var(--mono)">Deflationary −40%</button>
             <button type="button" class="price-preset" data-v="-15" style="font-size:10px;padding:3px 8px;border:1px solid var(--blue);border-radius:5px;background:rgba(59,130,246,.08);color:var(--blue);cursor:pointer;font-family:var(--mono)">Base −15%</button>
             <button type="button" class="price-preset" data-v="12" style="font-size:10px;padding:3px 8px;border:1px solid var(--magenta);border-radius:5px;background:rgba(255,45,142,.08);color:var(--magenta);cursor:pointer;font-family:var(--mono)">Inflationary +12%</button>
           </div>
@@ -915,19 +934,19 @@
             <b>Inflationary (+12%/yr):</b> Demand-supply shock scenario. Goldman Sachs (2024) and Bernstein estimate $1T+ in AI capex by 2027; IEA projects data-centre electricity demand could double by 2026. NVIDIA GPU lead times and hyperscaler ROI requirements (~25–30% on capex) could push prices up if GPU supply and grid power cannot keep pace with inference demand growth.
           </div>
         </div>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Headcount growth / yr <span class="dq-hint">chart projection only — compounds licences + usage each year</span></span><span class="slider-val num" id="hcGrowthV" style="color:var(--blue);font-size:14px">+2%</span></div><input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2"></div>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Usage growth per user / yr <span class="dq-hint">chart projection only — compounds usage each year</span></span><span class="slider-val num" id="intGrowthV" style="color:var(--magenta);font-size:14px">+6%</span></div><input type="range" class="risk" id="intGrowth" min="0" max="60" value="6"></div>
+        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="hcGrowth">Headcount growth / yr <span class="dq-hint">chart projection only — compounds licences + usage each year</span></label><span class="slider-val num" id="hcGrowthV" style="color:var(--blue);font-size:14px">+2%</span></div><input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2"></div>
+        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="intGrowth">Usage growth per user / yr <span class="dq-hint">chart projection only — compounds usage each year</span></label><span class="slider-val num" id="intGrowthV" style="color:var(--magenta);font-size:14px">+6%</span></div><input type="range" class="risk" id="intGrowth" min="0" max="60" value="6"></div>
       </div>
       <div class="adv-sec">
         <h5>How users engage</h5>
         <label class="check"><input type="checkbox" id="smartRoute" checked> Most users get their answer in one pass</label>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Share who stop after the first pass</span><span class="slider-val num" id="warmShareV" style="color:var(--green);font-size:14px">85%</span></div><input type="range" id="warmShare" min="0" max="95" step="5" value="85"></div>
-        <div class="adv-row"><label>Follow-up questions, for those who continue <span class="dq-hint">cheap, cached — only the ~15% who don't stop</span></label><input type="number" id="nFollow" placeholder="4" value="4"></div>
+        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="warmShare">Share who stop after the first pass</label><span class="slider-val num" id="warmShareV" style="color:var(--green);font-size:14px">85%</span></div><input type="range" id="warmShare" min="0" max="95" step="5" value="85"></div>
+        <div class="adv-row"><label for="nFollow">Follow-up questions, for those who continue <span class="dq-hint">cheap, cached — only the ~15% who don't stop</span></label><input type="number" id="nFollow" placeholder="4" value="4"></div>
       </div>
       <div class="adv-sec">
         <h5>Live re-assessment</h5>
         <div class="dq-hint" style="margin-bottom:8px">From L4, the platform writes back and re-assesses on its own when files or risk change — fresh analysis on the changed data (the framework stays cached). This is machine-triggered volume on top of human questions. 100% = the built-in rate for the level; raise it for a very live environment.</div>
-        <div class="adv-slider"><div class="slider-top"><span class="lbl">Re-assessment intensity (L4–L5)</span><span class="slider-val num" id="liveMonV" style="font-size:14px">100%</span></div><input type="range" id="liveMon" min="0" max="300" step="10" value="100"></div>
+        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="liveMon">Re-assessment intensity (L4–L5)</label><span class="slider-val num" id="liveMonV" style="font-size:14px">100%</span></div><input type="range" id="liveMon" min="0" max="300" step="10" value="100"></div>
       </div>
       <div id="snapshotPanel">
         <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-family:var(--mono);margin-bottom:8px;font-weight:600">Saved scenarios</div>
@@ -952,7 +971,7 @@
         </div>
         <div class="hero-aside">
           <div class="hero-cum"><span class="hc-k">10-year cumulative · base</span><span class="hc-v num" id="hCum">—</span></div>
-          <div class="toggle" id="chartToggle"><button data-view="outlook" class="on">Cash flow</button><button data-view="amortized">Amortized</button><button data-view="level">By level</button><button data-view="roi">ROI</button></div>
+          <div class="toggle" id="chartToggle" role="group" aria-label="Chart view"><button data-view="outlook" class="on" aria-pressed="true">Cash flow</button><button data-view="amortized" aria-pressed="false">Amortized</button><button data-view="level" aria-pressed="false">By level</button><button data-view="roi" aria-pressed="false">ROI</button></div>
           <button type="button" id="summaryBtn" class="summary-btn">⤓ Save summary (PDF)</button>
         </div>
       </div>
@@ -965,7 +984,7 @@
         </div>
         <div class="viz-tip" id="splitTip"></div>
       </div>
-      <div class="chart-wrap"><svg id="chart" viewBox="0 0 760 280" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg><div class="viz-tip" id="chartTip"></div></div>
+      <div class="chart-wrap"><svg id="chart" role="img" aria-label="Projected annual and cumulative AI cost over a 10-year horizon, with best-case, baseline and worst-case scenarios" viewBox="0 0 760 280" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg><div class="viz-tip" id="chartTip"></div></div>
       <div class="chart-legend" id="chartLegend">
         <div class="it"><span class="ln" style="border-color:var(--green)"></span>Best case</div>
         <div class="it"><span class="ln" style="border-color:var(--purple-br)"></span>Baseline</div>
@@ -987,16 +1006,16 @@
       </div>
     </div>
 
-    <div class="rtabs" id="rtabs">
-      <button data-tab="breakdown" class="on">Annual Cost</button>
-      <button data-tab="benefits">Annual Benefits</button>
-      <button data-tab="connect">ROI</button>
-      <button data-tab="perf">Roadmap</button>
-      <button data-tab="inquiry">Per Request</button>
-      <button data-tab="models">Methodology</button>
+    <div class="rtabs" id="rtabs" role="tablist" aria-label="Result views">
+      <button data-tab="breakdown" id="rtab-breakdown" class="on" role="tab" aria-selected="true" aria-controls="tabBreakdown">Annual Cost</button>
+      <button data-tab="benefits" id="rtab-benefits" role="tab" aria-selected="false" aria-controls="tabBenefits">Annual Benefits</button>
+      <button data-tab="connect" id="rtab-connect" role="tab" aria-selected="false" aria-controls="tabConnect">ROI</button>
+      <button data-tab="perf" id="rtab-perf" role="tab" aria-selected="false" aria-controls="tabPerf">Roadmap</button>
+      <button data-tab="inquiry" id="rtab-inquiry" role="tab" aria-selected="false" aria-controls="tabInquiry">Per Request</button>
+      <button data-tab="models" id="rtab-models" role="tab" aria-selected="false" aria-controls="tabModels">Methodology</button>
     </div>
 
-    <div id="tabBreakdown">
+    <div id="tabBreakdown" role="tabpanel" aria-labelledby="rtab-breakdown">
 
     <div class="kpis">
       <div class="kpi-tile"><div class="kpi-ic" id="ic1"></div><div class="k" id="kUserLbl">Cost per user / month</div><div class="v num" id="kUser">—</div><div class="d" id="kUserNote"></div></div>
@@ -1057,7 +1076,7 @@
       </div>
     </div>
 
-    <div id="tabBenefits" style="display:none">
+    <div id="tabBenefits" role="tabpanel" aria-labelledby="rtab-benefits" style="display:none">
       <div class="card">
         <div class="est-head"><h3>Annual benefit at full adoption</h3><span class="ben-hero" id="benTotal">—</span></div>
         <div class="est-sub" id="benSub"></div>
@@ -1074,7 +1093,7 @@
       </div>
     </div>
 
-    <div id="tabConnect" style="display:none">
+    <div id="tabConnect" role="tabpanel" aria-labelledby="rtab-connect" style="display:none">
       <div class="card roi-kpi-card">
         <div class="est-head"><h3>Return on investment · 10-year view</h3><span class="ai-pill" id="roiPill">—</span></div>
         <div class="est-sub" id="roiSub">Select scenarios and set your organisation size to see a data-driven ROI.</div>
@@ -1096,7 +1115,7 @@
       </div>
     </div>
 
-    <div id="tabPerf" style="display:none">
+    <div id="tabPerf" role="tabpanel" aria-labelledby="rtab-perf" style="display:none">
       <div class="card">
         <div class="est-head"><h3>Maturity roadmap · where you stand</h3></div>
         <div class="est-sub" id="jrnSub"></div>
@@ -1105,7 +1124,7 @@
       <div class="card">
         <div class="est-head"><h3 id="perfTitle">Performance over your 18-month journey</h3><span class="ai-pill" id="perfPill">L1 → L3</span></div>
         <div class="est-sub" id="perfSub"></div>
-        <div class="radar-wrap"><svg id="radarSvg" viewBox="0 0 560 420" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
+        <div class="radar-wrap"><svg id="radarSvg" role="img" aria-label="Performance radar comparing capability today versus at 18 months across the maturity dimensions" viewBox="0 0 560 420" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
         <div class="radar-legend">
           <div class="it"><span class="sw" style="background:#c9c0d8"></span>Today <span id="rlToday" style="color:var(--faint)"></span></div>
           <div class="it"><span class="sw" style="background:var(--purple)"></span>At 18 months <span id="rlTarget" style="color:var(--faint)"></span></div>
@@ -1113,13 +1132,13 @@
         <div id="perfGains" class="perf-gains"></div>
         <h4 class="inq-sub-h" style="margin-top:26px">Why these models · task fit</h4>
         <div class="est-sub" id="mrSub"></div>
-        <div class="radar-wrap"><svg id="modelRadar" viewBox="0 0 560 430" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
+        <div class="radar-wrap"><svg id="modelRadar" role="img" aria-label="Radar chart comparing candidate models across task-fit dimensions" viewBox="0 0 560 430" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
         <div class="radar-legend" id="mrLegend" style="flex-wrap:wrap"></div>
         <p class="footnote" id="mrNote" style="margin-top:10px"></p>
       </div>
     </div>
 
-    <div id="tabInquiry" style="display:none">
+    <div id="tabInquiry" role="tabpanel" aria-labelledby="rtab-inquiry" style="display:none">
       <div class="card">
         <div class="est-head"><h3>One request, start to finish — and where the cents land</h3><button type="button" class="rf-replay" id="reqReplay">▶ Replay</button></div>
         <div class="est-sub">Watch a single question flow through the platform: the dashboard is built by one shared heavy lift, then each user reads it for cents.</div>
@@ -1128,7 +1147,7 @@
       <div class="card">
         <div class="est-head"><h3>How AI drives cost down: the optimisation chain</h3><span class="ai-pill" id="wfPill">L3</span></div>
         <div class="est-sub" id="wfSub"></div>
-        <div class="flow-wrap"><svg id="wfSvg" viewBox="0 0 760 372" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
+        <div class="flow-wrap"><svg id="wfSvg" role="img" aria-label="Optimisation chain showing how each cost-reduction lever progressively lowers the per-request cost" viewBox="0 0 760 372" width="100%" preserveAspectRatio="xMidYMid meet" style="display:block"></svg></div>
         <p class="footnote">Each step is a real lever in the question chain — same answer, progressively cheaper. The biggest is the last: one expensive heavy lift, <b>reused</b> across most questions instead of repeated.</p>
       </div>
       <div class="card">
@@ -1147,7 +1166,7 @@
       </div>
     </div>
 
-    <div id="tabModels" style="display:none">
+    <div id="tabModels" role="tabpanel" aria-labelledby="rtab-models" style="display:none">
       <div class="meth-nav">
         <a href="#meth-models" class="meth-na">Model pricing</a>
         <a href="#meth-math" class="meth-na">Token math</a>
@@ -1840,9 +1859,13 @@ function renderBuildTeam(build){
   const totDays=rows.reduce((s,r)=>s+r.days,0), totCost=rows.reduce((s,r)=>s+r.subtotal,0);
   return `<details class="bteam-dd"><summary>Build team · roles, grades &amp; day rates</summary>
     <div class="bteam">
-      <div class="bteam-row head"><span>Role</span><span>Accenture grade</span><span class="bteam-num">Day rate</span><span class="bteam-num">Days</span><span class="bteam-num">Subtotal</span></div>
-      ${rows.map(r=>`<div class="bteam-row"><span class="bteam-role">${r.role}</span><span class="bteam-grade">${r.grade}</span><span class="bteam-num">${eur(r.rate)}</span><span class="bteam-num">${r.days}</span><span class="bteam-num">${eurK(r.subtotal)}</span></div>`).join("")}
-      <div class="bteam-row tot"><span>Total · platform build</span><span></span><span class="bteam-num"></span><span class="bteam-num">${totDays}</span><span class="bteam-num">${eurK(totCost)}</span></div>
+      <table class="data-table bteam-data">
+        <thead><tr><th scope="col">Role</th><th scope="col">Accenture grade</th><th scope="col" class="num">Day rate</th><th scope="col" class="num">Days</th><th scope="col" class="num">Subtotal</th></tr></thead>
+        <tbody>
+      ${rows.map(r=>`<tr><td class="bteam-role">${r.role}</td><td class="bteam-grade">${r.grade}</td><td class="num">${eur(r.rate)}</td><td class="num">${r.days}</td><td class="num">${eurK(r.subtotal)}</td></tr>`).join("")}
+      <tr class="bteam-tot"><td>Total · platform build</td><td></td><td class="num"></td><td class="num">${totDays}</td><td class="num">${eurK(totCost)}</td></tr>
+        </tbody>
+      </table>
     </div>
     <p class="bb-note" style="margin:0 12px 12px;border-top:none;padding-top:2px">Indicative delivery team for a typical L3 engagement — grades and day rates are illustrative Accenture blended rates in ${CURK.code}. Days scale with the platform-build figure above (${eurK(build)}); Programme Manager days also scale with the go-live duration. Integration, dashboard build and run/oversight are costed separately in the lines above.</p>
   </details>`;
@@ -2223,11 +2246,11 @@ function drawFlow(sel,L){
   const rrect=(x,y,w,h,fill,stroke)=>`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w}" height="${h.toFixed(1)}" rx="7" fill="${fill}" stroke="${stroke||'none'}"/>`;
   const txt=(x,y,s,o)=>{o=o||{};return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-family="${o.f||'Inter'}" font-size="${o.s||11}" fill="${o.c||'#191223'}" font-weight="${o.w||500}" text-anchor="${o.a||'start'}">${s}</text>`;};
   let nodes="";
-  drivers.forEach(d=>{const cy=d.y+d.h/2;nodes+=rrect(Lx0,d.y,Lx1-Lx0,d.h,"#fbfafd","#e7e1ef")+txt(Lx0+10,cy-2,d.label,{w:600,s:10})+txt(Lx0+10,cy+11,d.sub,{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace'});});
+  drivers.forEach(d=>{const cy=d.y+d.h/2;nodes+=rrect(Lx0,d.y,Lx1-Lx0,d.h,"#fbfafd","#e7e1ef")+txt(Lx0+10,cy-2,d.label,{w:600,s:10})+txt(Lx0+10,cy+11,d.sub,{s:8,c:'#726A85',f:'JetBrains Mono,monospace'});});
   order.forEach(k=>{const l=layers[k],cy=l.y+l.h/2,pct=Math.round(l.val/total*100);nodes+=rrect(Mx0,l.y,Mx1-Mx0,l.h,l.color)+txt(Mx0+10,cy-3,l.label,{w:600,s:9.5,c:'#fff'})+txt(Mx0+10,cy+10,eurK(l.val)+" · "+pct+"%",{s:8.5,c:'#efe7fb',f:'JetBrains Mono,monospace'});});
   nodes+=`<rect x="${Tx0}" y="${tY.toFixed(1)}" width="${Tx1-Tx0}" height="${tH.toFixed(1)}" rx="9" fill="url(#flowTot)"/>`+txt((Tx0+Tx1)/2,tY+tH/2-4,"Annual total",{a:'middle',s:8.5,c:'#cdbfe0',f:'JetBrains Mono,monospace'})+`<text x="${((Tx0+Tx1)/2).toFixed(1)}" y="${(tY+tH/2+14).toFixed(1)}" font-family="'Space Grotesk',sans-serif" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">${eurK(total)}</text>`;
 
-  const heads=txt(Lx0,padT-16,"YOUR ANSWERS",{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace',w:600})+txt(Mx0,padT-16,"COST LAYERS",{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace',w:600})+txt(Tx0,padT-16,"TOTAL",{s:8,c:'#a99fbb',f:'JetBrains Mono,monospace',w:600});
+  const heads=txt(Lx0,padT-16,"YOUR ANSWERS",{s:8,c:'#726A85',f:'JetBrains Mono,monospace',w:600})+txt(Mx0,padT-16,"COST LAYERS",{s:8,c:'#726A85',f:'JetBrains Mono,monospace',w:600})+txt(Tx0,padT-16,"TOTAL",{s:8,c:'#726A85',f:'JetBrains Mono,monospace',w:600});
   const animA=(state.animate&&!prefersReduced)?`style="animation:flowIn .7s ease both"`:"";
   svg.innerHTML=`<defs><linearGradient id="flowTot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c0d52"/><stop offset="1" stop-color="#140e20"/></linearGradient></defs>${heads}<g ${animA}>${rib}</g>${nodes}`;
   if($("flowNote"))$("flowNote").innerHTML=`Three fixed drivers — your share of the <b>shared platform</b>, the <b>dashboards</b> built on top, and <b>governance</b> — make up the fixed layer. Your <b>${users.toLocaleString("de-DE")} users</b> at <b>${num("intensity").toFixed(1)}/day</b> drive the per-user licences and the pay-per-use layer (${state.detail?'mixed':state.tier} complexity, level ${L.n} efficiency).`;
@@ -2255,7 +2278,7 @@ function drawRadar(all,sel,L){
   AX.forEach((a,i)=>{const e=pt(i,100);spokes+=`<line x1="${cx}" y1="${cy}" x2="${e[0].toFixed(1)}" y2="${e[1].toFixed(1)}" stroke="#ece7f3" stroke-width="1"/>`;
     const lp=pt(i,116),co=Math.cos(ang(i)),anchor=Math.abs(co)<0.3?"middle":(co>0?"start":"end");
     labels+=`<text x="${lp[0].toFixed(1)}" y="${lp[1].toFixed(1)}" font-family="Inter" font-size="10" font-weight="600" fill="#3a3147" text-anchor="${anchor}">${a.k}</text>`;
-    labels+=`<text x="${lp[0].toFixed(1)}" y="${(lp[1]+11).toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#a99fbb" text-anchor="${anchor}">${Math.round(a.f(base))} → ${Math.round(a.f(n))}</text>`;
+    labels+=`<text x="${lp[0].toFixed(1)}" y="${(lp[1]+11).toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="8.5" fill="#726A85" text-anchor="${anchor}">${Math.round(a.f(base))} → ${Math.round(a.f(n))}</text>`;
   });
   const dots=AX.map((a,i)=>{const p=pt(i,a.f(n));return `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.2" fill="var(--purple)"/>`;}).join("");
   const anim=(state.animate&&!prefersReduced)?`style="animation:flowIn .6s ease both"`:"";
@@ -2319,7 +2342,7 @@ function drawWaterfall(sel,L){
   const n=steps.length, maxC=naive||1;
   const innerW=W-padL-padR, innerH=H-padT-padB, slot=innerW/n, bw=Math.min(86,slot*0.62);
   const X=i=>padL+slot*i+slot/2, Y=v=>padT+(1-v/maxC)*innerH, baseY=padT+innerH;
-  let grid="";for(let g=0;g<=3;g++){const gv=maxC*g/3,gy=Y(gv);grid+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="#eee7f4"/><text x="${padL}" y="${(gy-4).toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="9" fill="#a99fbb">${grp()}${gv.toFixed(3)}</text>`;}
+  let grid="";for(let g=0;g<=3;g++){const gv=maxC*g/3,gy=Y(gv);grid+=`<line x1="${padL}" y1="${gy.toFixed(1)}" x2="${W-padR}" y2="${gy.toFixed(1)}" stroke="#eee7f4"/><text x="${padL}" y="${(gy-4).toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="9" fill="#726A85">${grp()}${gv.toFixed(3)}</text>`;}
   let bars="",conn="";
   steps.forEach((s,i)=>{
     const x=X(i)-bw/2;
@@ -2408,23 +2431,24 @@ function renderBenefits(all,sel,L){
       const totalFTEs=rows.reduce((t,r)=>t+r.fte,0);
       const risk=riskReductionYr();
       const riskPct=annualBenefit>0?Math.round(risk/annualBenefit*100):0;
-      const riskRow=risk>0?`<div class="ben-tr">
-          <span class="ben-name">Risk reduction &amp; avoided findings</span>
-          <span class="ben-fte">—</span>
-          <span class="ben-save">—</span>
-          <span class="ben-val">${eurK(risk)}</span>
-          <span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${riskPct}%"></span></span><span class="ben-pct-lbl">${riskPct}%</span></span>
-        </div>`:"";
-      $("benScenRows").innerHTML=`<div class="ben-table">
-        <div class="ben-th"><span>Scenario</span><span>FTEs</span><span>Saved</span><span>Annual value</span><span>Share</span></div>`+
-        rows.map(r=>`<div class="ben-tr">
-          <span class="ben-name">${r.name}</span>
-          <span class="ben-fte">${r.fte}</span>
-          <span class="ben-save">${r.aiSave}%</span>
-          <span class="ben-val">${eurK(r.ben)}</span>
-          <span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${r.pct}%"></span></span><span class="ben-pct-lbl">${r.pct}%</span></span>
-        </div>`).join("")+riskRow+
-        `<div class="ben-total-row"><span>Total</span><span>${totalFTEs} FTEs</span><span>—</span><span>${eurK(annualBenefit)}</span><span>100%</span></div></div>`;
+      const riskRow=risk>0?`<tr>
+          <td class="ben-name">Risk reduction &amp; avoided findings</td>
+          <td class="num ben-fte">—</td>
+          <td class="num ben-save">—</td>
+          <td class="num ben-val">${eurK(risk)}</td>
+          <td><span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${riskPct}%"></span></span><span class="ben-pct-lbl">${riskPct}%</span></span></td>
+        </tr>`:"";
+      $("benScenRows").innerHTML=`<table class="data-table ben-data">
+        <thead><tr><th scope="col">Scenario</th><th scope="col" class="num">FTEs</th><th scope="col" class="num">Saved</th><th scope="col" class="num">Annual value</th><th scope="col">Share</th></tr></thead>
+        <tbody>`+
+        rows.map(r=>`<tr>
+          <td class="ben-name">${r.name}</td>
+          <td class="num ben-fte">${r.fte}</td>
+          <td class="num ben-save">${r.aiSave}%</td>
+          <td class="num ben-val">${eurK(r.ben)}</td>
+          <td><span class="ben-pct-cell"><span class="ben-bbar"><span style="width:${r.pct}%"></span></span><span class="ben-pct-lbl">${r.pct}%</span></span></td>
+        </tr>`).join("")+riskRow+
+        `<tr class="ben-total"><td>Total</td><td class="num">${totalFTEs} FTEs</td><td class="num">—</td><td class="num">${eurK(annualBenefit)}</td><td>100%</td></tr></tbody></table>`;
     } else {
       $("benScenRows").innerHTML=`<p style="font-size:12px;color:var(--muted)">Select scenarios to see the function-level breakdown.</p>`;
     }
@@ -2507,12 +2531,13 @@ function renderROI(all,sel,L){
   $("roiKpis").innerHTML=kd.map(k=>`<div class="roi-kpi"><div class="rk-v${k.ok?" rk-pos":""}">${k.v}</div><div class="rk-k">${k.k}</div></div>`).join("");
 
   // Year-by-year table
-  $("roiTable").innerHTML=`<div class="roi-tbl">
-    <div class="roi-th"><span>Year</span><span>Annual benefit</span><span>Annual cost</span><span>Cumulative net</span></div>`+
+  $("roiTable").innerHTML=`<table class="data-table roi-tbl">
+    <thead><tr><th scope="col">Year</th><th scope="col" class="num">Annual benefit</th><th scope="col" class="num">Annual cost</th><th scope="col" class="num">Cumulative net</th></tr></thead>
+    <tbody>`+
     roiRows.slice(1).map((r,i)=>{
       const t=i+1;const pos=r.cum>=0;
-      return `<div class="roi-tr${pos?" roi-pos":""}${t===beYr?" roi-be":""}"><span>Yr ${t}${t===beYr?" ←break-even":""}</span><span>${eurK(r.benefit)}</span><span>${eurK(r.cost)}</span><span class="${pos?"rk-pos":"rk-neg"}">${r.cum>=0?"+":""}${eurK(r.cum)}</span></div>`;
-    }).join("")+`</div>`;
+      return `<tr class="roi-tr${pos?" roi-pos":""}${t===beYr?" roi-be":""}"><td>Yr ${t}${t===beYr?" ←break-even":""}</td><td class="num">${eurK(r.benefit)}</td><td class="num">${eurK(r.cost)}</td><td class="num ${pos?"rk-pos":"rk-neg"}">${r.cum>=0?"+":""}${eurK(r.cum)}</td></tr>`;
+    }).join("")+`</tbody></table>`;
 
   // Benefit drivers
   if($("roiBenSub"))$("roiBenSub").innerHTML=noBenefitData
@@ -2921,7 +2946,7 @@ function drawChart(all,sel){
       `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(130,50,210,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Run</div>`+
       `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(175,100,230,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Tweaks</div>`+
       `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(230,60,160,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Licences</div>`+
-      `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(19,192,138,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Usage</div>`;
+      `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(26,122,82,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Usage</div>`;
 
   } else if(state.view==="amortized"){
     const yrs=[0,1,2,3,4,5,6,7,8,9,10];xs=yrs;
@@ -2958,7 +2983,7 @@ function drawChart(all,sel){
     hint=beYr!=null?`Break-even at Year ${beYr}. After that, cumulative value grows positive.`:"Investment exceeds estimated savings over 10 years — consider reducing build scope or adding high-value scenarios.";
     if(noBenefitData)hint="No scenarios selected — showing 18% productivity proxy. Select scenarios for a data-driven ROI.";
     const leg2=$("chartLegend");if(leg2)leg2.innerHTML=
-      `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(19,192,138,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Cumulative net value</div>`+
+      `<div class="it"><span style="display:inline-block;width:12px;height:12px;background:rgba(26,122,82,0.8);border-radius:2px;margin-right:4px;vertical-align:middle"></span>Cumulative net value</div>`+
       (beYr?`<div class="it" style="color:var(--green)">Break-even Yr ${beYr}</div>`:`<div class="it" style="color:var(--magenta)">No break-even in 10 yrs</div>`);
     // Store ROI data for chart rendering
     cfp._roiRows=roiRows;cfp._beYr=beYr;
@@ -3017,7 +3042,7 @@ function drawChart(all,sel){
       {key:"run",    fill:"rgba(130,50,210,0.50)",  stroke:"#9c5aff"},
       {key:"tweaks", fill:"rgba(175,100,230,0.40)", stroke:"#c084fc"},
       {key:"lic",    fill:"rgba(230,60,160,0.38)",  stroke:"#f472b6"},
-      {key:"usage",  fill:"rgba(19,192,138,0.42)",  stroke:"#13c08a"},
+      {key:"usage",  fill:"rgba(26,122,82,0.42)",  stroke:"#1A7A52"},
     ];
     const stackBase=Array(n).fill(0);
     let stackPaths="";
@@ -3071,21 +3096,21 @@ function drawChart(all,sel){
     const botLine=`${X(n-1).toFixed(1)},${zeroY} ${X(0).toFixed(1)},${zeroY}`;
     const topLine=`${X(0).toFixed(1)},${zeroY} ${X(n-1).toFixed(1)},${zeroY}`;
     const linePath=base.map((v,i)=>(i===0?"M":"L")+X(i).toFixed(1)+","+Y(v).toFixed(1)).join(" ");
-    const dots=base.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3.2" fill="${v>=0?"#13c08a":"#f472b6"}" stroke="#1a0d2e" stroke-width="2"/>`).join("");
+    const dots=base.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3.2" fill="${v>=0?"#1A7A52":"#f472b6"}" stroke="#1a0d2e" stroke-width="2"/>`).join("");
     const hits=base.map((v,i)=>`<circle class="ch-hit" data-i="${i}" cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="20" fill="transparent"/>`).join("");
     // Zero axis
-    const zAxis=`<line x1="${padL}" y1="${zeroY}" x2="${W-padR}" y2="${zeroY}" stroke="rgba(19,192,138,0.45)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
-    const zLabel=`<text x="${padL-10}" y="${(+zeroY+3.5).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(19,192,138,0.7)">0</text>`;
+    const zAxis=`<line x1="${padL}" y1="${zeroY}" x2="${W-padR}" y2="${zeroY}" stroke="rgba(26,122,82,0.45)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+    const zLabel=`<text x="${padL-10}" y="${(+zeroY+3.5).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(26,122,82,0.7)">0</text>`;
     // Break-even marker
     let beMarker="";
     if(beYr!=null&&beYr<=10){
       const beX=X(beYr).toFixed(1);
-      beMarker=`<line x1="${beX}" y1="${padT}" x2="${beX}" y2="${padT+innerH}" stroke="#13c08a" stroke-width="1.5" stroke-dasharray="4 3"/>`+
-        `<text x="${beX}" y="${padT-8}" text-anchor="middle" font-family="Inter" font-size="9" fill="#13c08a" font-weight="700">Break-even</text>`;
+      beMarker=`<line x1="${beX}" y1="${padT}" x2="${beX}" y2="${padT+innerH}" stroke="#1A7A52" stroke-width="1.5" stroke-dasharray="4 3"/>`+
+        `<text x="${beX}" y="${padT-8}" text-anchor="middle" font-family="Inter" font-size="9" fill="#1A7A52" font-weight="700">Break-even</text>`;
     }
     mainContent=zAxis+zLabel+
       `<polygon points="${pts} ${botLine}" fill="rgba(255,45,142,0.15)"/>`+
-      `<polygon points="${pts} ${topLine}" fill="rgba(19,192,138,0.18)"/>`+
+      `<polygon points="${pts} ${topLine}" fill="rgba(26,122,82,0.18)"/>`+
       `<path d="${linePath}" fill="none" stroke="#c061ff" stroke-width="2.5" stroke-linecap="round" filter="url(#glow)"/>`+
       beMarker+dots+`<circle id="chHL" r="6" fill="#c061ff" stroke="#1a0d2e" stroke-width="2.5" opacity="0"/>`+hits;
 
@@ -3102,7 +3127,7 @@ function drawChart(all,sel){
     const baseLen=1400;const anim=state.animate&&!prefersReduced?`style="--len:${baseLen};stroke-dasharray:${baseLen};animation:drawIn .9s cubic-bezier(.4,0,.2,1) forwards"`:"";
     mainContent=`<polygon points="${bandTop} ${bandBot}" fill="#ff2d8e" fill-opacity="0.07"/>`+
       `<path d="${path(worst)}" fill="none" stroke="#ff2d8e" stroke-width="2" opacity="0.85"/>`+
-      `<path d="${path(best)}" fill="none" stroke="#13c08a" stroke-width="2" opacity="0.9"/>`+
+      `<path d="${path(best)}" fill="none" stroke="#1A7A52" stroke-width="2" opacity="0.9"/>`+
       `<path d="${path(base)}" fill="none" stroke="url(#baseGrad)" stroke-width="3" filter="url(#glow)" stroke-linecap="round" ${anim}/>`+
       `<path d="M${areaBot}" fill="url(#areaGrad)"/>`+
       dots+`<circle id="chHL" r="6" fill="#c061ff" stroke="#1a0d2e" stroke-width="2.5" opacity="0"/>`+hits;
@@ -3143,7 +3168,7 @@ function wireChart(){
 }
 
 function renderUC(){
-  const seg=(i,cur)=>`<div class="seg" data-segi="${i}">`+["simple","medium","high"].map(k=>`<button data-tier="${k}" class="${k===cur?'on':''}">${k[0].toUpperCase()}</button>`).join("")+`</div>`;
+  const seg=(i,cur)=>`<div class="seg" data-segi="${i}" role="group" aria-label="Complexity">`+["simple","medium","high"].map(k=>`<button data-tier="${k}" role="radio" aria-checked="${k===cur?'true':'false'}" class="${k===cur?'on':''}">${k[0].toUpperCase()}</button>`).join("")+`</div>`;
   $("ucList").innerHTML=useCases.map((u,i)=>`<div class="uc-row" data-i="${i}"><button class="uc-del" data-del="${i}">×</button><input type="text" data-f="name" data-i="${i}" value="${u.name.replace(/"/g,'&quot;')}"><div class="uc-mini"><div><div class="ml">Cmplx</div>${seg(i,u.tier)}</div><div><div class="ml">/u/yr</div><input type="number" step="1" data-f="perYear" data-i="${i}" value="${Math.round((u.perDay||0)*WDYEAR)}"></div><div><div class="ml">Adopt%</div><input type="number" data-f="adopt" data-i="${i}" value="${u.adopt}"></div></div></div>`).join("");
 }
 
@@ -3171,7 +3196,7 @@ function buildHelp(){
 }
 
 function renderLadder(){
-  $("segLevel").innerHTML=LEVELS.map((L,i)=>`<button type="button" class="rung" data-lv="${L.n}"><span class="rung-lv">L${L.n}</span><span><span class="rung-top"><span class="rung-name">${L.name}</span><span class="rung-tag">${LADDER[i].over}</span></span><span class="rung-cap">${LADDER[i].cap}</span></span></button>`).join("");
+  $("segLevel").innerHTML=LEVELS.map((L,i)=>`<button type="button" class="rung" data-lv="${L.n}" role="radio" aria-checked="false" aria-label="L${L.n} ${L.name}"><span class="rung-lv">L${L.n}</span><span><span class="rung-top"><span class="rung-name">${L.name}</span><span class="rung-tag">${LADDER[i].over}</span></span><span class="rung-cap">${LADDER[i].cap}</span></span></button>`).join("");
 }
 function renderProfileNote(){
   const ind=state.ind;
@@ -3292,8 +3317,8 @@ function setRegion(r){
   applyProfile(false);
 }
 
-function selSeg(c,a,v){[...$(c).children].forEach(b=>b.classList.toggle("on",b.dataset[a]==String(v)));}
-function syncDiscBoxes(){document.querySelectorAll(".boxrow").forEach(row=>{const key=row.dataset.disc;[...row.children].forEach(b=>b.classList.toggle("on",b.dataset.v===state[key]));});}
+function selSeg(c,a,v){[...$(c).children].forEach(b=>{const on=b.dataset[a]==String(v);b.classList.toggle("on",on);if(b.getAttribute("role")==="radio")b.setAttribute("aria-checked",on?"true":"false");});}
+function syncDiscBoxes(){document.querySelectorAll(".boxrow").forEach(row=>{const key=row.dataset.disc;[...row.children].forEach(b=>{const on=b.dataset.v===state[key];b.classList.toggle("on",on);if(b.getAttribute("role")==="radio")b.setAttribute("aria-checked",on?"true":"false");});});}
 function applyBase(){
   Object.assign(state,{level:3,tier:"medium",view:"outlook",detail:false,orgSize:"mid",orgStaff:12000,platformExists:"building",platProgress:30,depts:[...DEPT_DEFAULT],functions:3,baseLevel:"1",scenarios:[...SCEN_DEFAULT],hosting:hostingDefault(state.industry.group,state.region)});
   buildOverride={};
@@ -3308,7 +3333,7 @@ function applyBase(){
   if($("nFollow"))$("nFollow").value=4;
   if($("liveMon")){$("liveMon").value=100;$("liveMonV").textContent="100%";}
   renderLadder();selSeg("segLevel","lv",state.level);selSeg("segTier","tier",state.tier);
-  [...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x.dataset.view===state.view));
+  [...$("chartToggle").children].forEach(x=>{const on=x.dataset.view===state.view;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on?"true":"false");});
   syncDiscBoxes();syncOrgSlider();renderDeptChips();syncPlatSlider();
   renderScenarioChips();applyScenarios();
   applyProfile(true);
@@ -3323,8 +3348,8 @@ function wire(){
   $("subType").addEventListener("change",e=>setSubtype(e.target.value));
   $("region").addEventListener("change",e=>setRegion(e.target.value));
   $("segTier").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.tier=b.dataset.tier;selSeg("segTier","tier",state.tier);recompute();});
-  $("chartToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.view=b.dataset.view;[...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x===b));state.animate=true;recompute();});
-  $("rtabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.tab;[...$("rtabs").children].forEach(x=>x.classList.toggle("on",x===b));const map={breakdown:"tabBreakdown",benefits:"tabBenefits",connect:"tabConnect",perf:"tabPerf",inquiry:"tabInquiry",models:"tabModels"};Object.keys(map).forEach(k=>$(map[k]).style.display=k===t?"":"none");state.animate=true;recompute();if(t==="connect")setTimeout(playRequestFlow,80);if(t==="perf")setTimeout(playJourney,80);if(t==="inquiry")setTimeout(playInquiry,80);});
+  $("chartToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.view=b.dataset.view;[...$("chartToggle").children].forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on?"true":"false");});state.animate=true;recompute();});
+  $("rtabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const t=b.dataset.tab;[...$("rtabs").children].forEach(x=>{const on=x===b;x.classList.toggle("on",on);x.setAttribute("aria-selected",on?"true":"false");});const map={breakdown:"tabBreakdown",benefits:"tabBenefits",connect:"tabConnect",perf:"tabPerf",inquiry:"tabInquiry",models:"tabModels"};Object.keys(map).forEach(k=>$(map[k]).style.display=k===t?"":"none");state.animate=true;recompute();if(t==="connect")setTimeout(playRequestFlow,80);if(t==="perf")setTimeout(playJourney,80);if(t==="inquiry")setTimeout(playInquiry,80);});
   if($("reqReplay"))$("reqReplay").addEventListener("click",playRequestFlow);
   if($("inqReplay"))$("inqReplay").addEventListener("click",playInquiry);
   if($("jrnReplay"))$("jrnReplay").addEventListener("click",playJourney);
@@ -3356,7 +3381,7 @@ function wire(){
   });
   $("addUc").addEventListener("click",()=>{useCases.push({name:"New use case",tier:"medium",perDay:1,adopt:50});renderUC();recompute();});
   $("ucList").addEventListener("input",e=>{const i=+e.target.dataset.i,f=e.target.dataset.f;if(f===undefined)return;if(f==="name")useCases[i].name=e.target.value;else if(f==="perYear")useCases[i].perDay=(parseFloat(e.target.value)||0)/WDYEAR;else useCases[i][f]=parseFloat(e.target.value)||0;recompute();});
-  $("ucList").addEventListener("click",e=>{if(e.target.dataset.del!==undefined){useCases.splice(+e.target.dataset.del,1);renderUC();recompute();return;}const tb=e.target.closest("button[data-tier]");if(tb){const s=tb.closest(".seg");useCases[+s.dataset.segi].tier=tb.dataset.tier;s.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b===tb));recompute();}});
+  $("ucList").addEventListener("click",e=>{if(e.target.dataset.del!==undefined){useCases.splice(+e.target.dataset.del,1);renderUC();recompute();return;}const tb=e.target.closest("button[data-tier]");if(tb){const s=tb.closest(".seg");useCases[+s.dataset.segi].tier=tb.dataset.tier;s.querySelectorAll("button").forEach(b=>{const on=b===tb;b.classList.toggle("on",on);b.setAttribute("aria-checked",on?"true":"false");});recompute();}});
 
   const sl=(id,vid,fmt)=>$(id).addEventListener("input",()=>{$(vid).textContent=fmt($(id).value);recompute();});
   $("users").addEventListener("input",()=>{if($("usersHint"))$("usersHint").textContent="Custom value — re-select a scenario to auto-set";recompute();});
@@ -3382,8 +3407,8 @@ function wire(){
   $("resetBase").addEventListener("click",applyBase);
   document.querySelectorAll(".boxrow").forEach(row=>{
     const key=row.dataset.disc;
-    [...row.children].forEach(b=>b.classList.toggle("on",b.dataset.v===state[key]));
-    row.addEventListener("click",e=>{const b=e.target.closest(".box");if(!b)return;state[key]=b.dataset.v;[...row.children].forEach(x=>x.classList.toggle("on",x===b));if(key==="orgSize")syncOrgSlider();if(key==="platformExists")syncPlatSlider();state.animate=true;recompute();});
+    [...row.children].forEach(b=>{const on=b.dataset.v===state[key];b.classList.toggle("on",on);if(b.getAttribute("role")==="radio")b.setAttribute("aria-checked",on?"true":"false");});
+    row.addEventListener("click",e=>{const b=e.target.closest(".box");if(!b)return;state[key]=b.dataset.v;[...row.children].forEach(x=>{const on=x===b;x.classList.toggle("on",on);if(x.getAttribute("role")==="radio")x.setAttribute("aria-checked",on?"true":"false");});if(key==="orgSize")syncOrgSlider();if(key==="platformExists")syncPlatSlider();state.animate=true;recompute();});
   });
   if($("deptChips"))$("deptChips").addEventListener("click",e=>{const b=e.target.closest("[data-dept]");if(!b||b.disabled)return;toggleDept(b.dataset.dept);});
   $("orgStaff").addEventListener("input",e=>{state.orgStaff=parseFloat(e.target.value)||ORGSIZE[state.orgSize].def;$("orgStaffV").textContent=Math.round(state.orgStaff).toLocaleString("de-DE");syncOrgSlider();state.animate=true;recompute();});
@@ -3453,7 +3478,7 @@ function snapApply(snap){
   // Sync derived UI
   syncOrgSlider();syncPlatSlider();renderDeptChips();
   renderScenarioChips();applyScenarios();
-  [...$("chartToggle").children].forEach(x=>x.classList.toggle("on",x.dataset.view===state.view));
+  [...$("chartToggle").children].forEach(x=>{const on=x.dataset.view===state.view;x.classList.toggle("on",on);x.setAttribute("aria-pressed",on?"true":"false");});
   state.animate=true;recompute();
 }
 
