@@ -113,7 +113,8 @@
   .scope-off{opacity:.35;pointer-events:none;position:relative;}
   .scope-off::after{content:'Not in scope';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.92);padding:2px 8px;border-radius:4px;pointer-events:none;}
 
-  #snapshotPanel{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);}
+  #snapshotPanel{margin-top:6px;padding:14px;background:var(--paper);border:1px solid var(--line-soft);border-radius:10px;}
+  .snap-panel-head{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:10px;font-weight:600;}
   .snap-row{display:flex;gap:6px;align-items:center;margin-bottom:8px;}
   .snap-save-btn{flex:1;padding:7px 10px;background:var(--purple);color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--mono);}
   .snap-save-btn:hover{filter:brightness(1.1);}
@@ -379,20 +380,42 @@
   .seg button.on{background:linear-gradient(135deg,var(--purple),var(--purple-d));color:#fff;font-weight:600;}
   .seg.levels button{padding:10px 2px;font-family:var(--mono);font-size:12px;}
 
-  details.adv{margin-top:8px;border-top:1px solid var(--line-soft);padding-top:16px;}
-  details.adv>summary{cursor:pointer;font-size:12px;color:var(--purple-d);font-family:var(--mono);list-style:none;user-select:none;font-weight:600;letter-spacing:.02em;}
-  details.adv>summary::-webkit-details-marker{display:none;}
-  details.adv>summary:before{content:"+ ";}
-  details.adv[open]>summary:before{content:"– ";}
-  .adv-sec{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);}
-  .adv-sec:first-of-type{border-top:none;margin-top:10px;padding-top:0;}
-  .adv-sec h5{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);margin-bottom:13px;}
-  .adv-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;}
-  .adv-row label{font-size:12px;color:var(--muted);}
-  .adv-row input[type=number],.adv-row select{width:124px;padding:7px 9px;border:1px solid var(--line);border-radius:var(--r);font-family:var(--mono);font-size:12px;background:#fcfbfd;}
-  .adv-slider{margin-bottom:15px;}
-  .check{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;color:var(--ink2);margin-bottom:12px;}
-  .check input{width:16px;height:16px;accent-color:var(--purple);}
+  /* ===== Advanced settings panel ===== */
+  .adv-wrap{margin-top:8px;border-top:1px solid var(--line-soft);padding-top:14px;}
+  .adv-trigger{display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--purple-d);font-family:var(--mono);letter-spacing:.02em;padding:0;width:100%;text-align:left;}
+  .adv-trigger svg{width:14px;height:14px;stroke:var(--purple-d);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;transition:transform .2s;}
+  .adv-trigger[aria-expanded="true"] svg{transform:rotate(180deg);}
+  .adv-panel{display:none;margin-top:16px;}
+  .adv-panel.open{display:block;}
+  .adv-group{border:1px solid var(--line-soft);border-radius:10px;background:#fff;overflow:hidden;margin-bottom:10px;}
+  .adv-group-head{display:flex;align-items:flex-start;gap:10px;padding:12px 14px 11px;background:var(--paper);border-bottom:1px solid var(--line-soft);}
+  .adv-group-icon{width:30px;height:30px;border-radius:7px;background:var(--purple-tint);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .adv-group-icon svg{width:14px;height:14px;stroke:var(--purple-d);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .adv-group-title{font-size:12.5px;font-weight:700;color:var(--ink);font-family:var(--display);line-height:1.2;}
+  .adv-group-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.35;}
+  .adv-group-body{padding:14px;display:flex;flex-direction:column;gap:0;}
+  .adv-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:12px;}
+  .adv-row:last-child{margin-bottom:0;}
+  .adv-label{display:flex;flex-direction:column;gap:3px;flex:1;}
+  .adv-label-text{font-size:12.5px;color:var(--ink2);font-weight:500;}
+  .adv-label-hint{font-size:11px;color:var(--muted);line-height:1.35;}
+  .adv-input{width:118px;padding:7px 9px;border:1px solid var(--line);border-radius:var(--r);font-family:var(--mono);font-size:12px;background:#fcfbfd;color:var(--ink);flex-shrink:0;}
+  .adv-select{width:140px;padding:7px 9px;border:1px solid var(--line);border-radius:var(--r);font-family:var(--mono);font-size:12px;background:#fcfbfd;color:var(--ink);flex-shrink:0;}
+  .adv-input:focus,.adv-select:focus{outline:none;border-color:var(--purple);}
+  .adv-slider-wrap{margin-bottom:14px;}
+  .adv-slider-wrap:last-child{margin-bottom:0;}
+  .adv-slider-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px;}
+  .adv-slider-lbl{display:flex;flex-direction:column;gap:3px;flex:1;}
+  .adv-slider-lbl-text{font-size:12.5px;color:var(--ink2);font-weight:500;}
+  .adv-slider-lbl-hint{font-size:11px;color:var(--muted);line-height:1.35;}
+  .adv-slider-val{font-family:var(--mono);font-size:13px;font-weight:600;flex-shrink:0;padding-top:2px;}
+  .proj-badge{display:inline-flex;align-items:center;font-size:9px;font-family:var(--mono);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);background:rgba(59,130,246,.09);border:1px solid rgba(59,130,246,.22);border-radius:4px;padding:1px 5px;margin-left:6px;vertical-align:middle;}
+  .price-preset{font-size:10px;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-weight:600;}
+  .price-preset[data-v="-40"]{border:1px solid var(--green);background:rgba(26,122,82,.08);color:var(--green);}
+  .price-preset[data-v="-15"]{border:1px solid var(--blue);background:rgba(59,130,246,.08);color:var(--blue);}
+  .price-preset[data-v="12"]{border:1px solid var(--magenta);background:rgba(255,45,142,.08);color:var(--magenta);}
+  .check{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:12.5px;color:var(--ink2);margin-bottom:12px;}
+  .check input{width:15px;height:15px;accent-color:var(--purple);flex-shrink:0;}
   .uc-row{border:1px solid var(--line-soft);border-radius:var(--r);padding:9px;margin-bottom:8px;background:#fbfafd;position:relative;}
   .uc-row input[type=text]{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:5px;font-size:12px;margin-bottom:7px;padding-right:22px;}
   .uc-del{position:absolute;top:8px;right:8px;border:none;background:none;color:var(--faint);cursor:pointer;font-size:15px;}
@@ -896,71 +919,198 @@
 
     <input type="number" id="ucs" value="3" style="display:none">
 
-    <details class="adv">
-      <summary>Step 3 — Advanced calibration</summary>
-      <div class="adv-sec">
-        <h5>Usage &amp; complexity</h5>
-        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="intensity">AI requests per user / day</label><span class="slider-val num" id="intensityV">0.6</span></div><input type="range" id="intensity" min="0.1" max="5" step="0.1" value="0.6"></div>
-        <div id="tierQ" style="margin-bottom:6px"><label class="lbl" style="display:block;margin-bottom:6px">Task complexity</label><div class="seg" id="segTier" role="group" aria-label="Task complexity"><button data-tier="simple" role="radio" aria-checked="false">Simple</button><button data-tier="medium" role="radio" aria-checked="false">Medium</button><button data-tier="high" role="radio" aria-checked="false">High</button></div><div class="q-sub" id="tierNote" style="margin-top:8px"></div></div>
-        <div class="dq-slider" id="platWrap" style="display:none;margin-top:6px"><div class="slider-top"><label class="lbl" id="platLbl" for="platProg">How far along is it?</label><span class="slider-val num" id="platProgV">30%</span></div><input type="range" id="platProg" min="0" max="80" step="5" value="30"></div>
-      </div>
-      <div class="adv-sec">
-        <h5>Dashboards — adjust each</h5>
-        <div id="detailWrap"><label class="check"><input type="checkbox" id="detailToggle"> Size each dashboard individually</label></div>
-        <div id="scenEditNote" class="dq-hint" style="display:none;margin-bottom:8px">Editing the dashboards you selected in step 2 — tweak volume, adoption and complexity per dashboard.</div>
-        <div id="ucDetail" style="display:none"><div id="ucList"></div><button class="addbtn" id="addUc">+ Add use case</button></div>
-      </div>
-      <div class="adv-sec">
-        <h5>Calibration</h5>
-        <div class="adv-row"><label for="model">Model override</label><select id="model"></select></div>
-        <div class="adv-row"><label id="fxLabel" for="eurusd">EUR / USD rate</label><input type="number" id="eurusd" step="0.001" value="1.137"></div>
-        <div class="adv-row"><label id="perUserLabel" for="perUser">Per-user cost €/user/yr <span class="dq-hint">seat licence + IAM + storage + support; mid-range market benchmark = €430</span></label><input type="number" id="perUser" placeholder="430" value="430"></div>
-        <div class="adv-row"><label id="buildLabel" for="buildAbs">Platform build (<span id="buildCur">€</span>) <button type="button" id="buildReset" class="rsetb">estimate</button></label><input type="number" id="buildAbs" step="50000" value="1600000"></div>
-        <div class="adv-row"><label for="intgRate">Integration / system (<span id="intgCur">€</span>) <span class="dq-hint">connector + data mapping per system</span></label><input type="number" id="intgRate" placeholder="35000" value="35000"></div>
-        <div class="adv-row"><label for="ucRate">Use-case build · medium reference (<span id="ucCur">€</span>) <span class="dq-hint">to ~85% coverage; simple ×0.5, high ×1.65</span></label><input type="number" id="ucRate" placeholder="90000" value="90000"></div>
-        <div class="adv-row"><label for="amort">Build amortisation (yrs) <span class="dq-hint">spreads one-off build cost — does not affect recurring run costs (hosting, ops)</span></label><input type="number" id="amort" min="1" max="10" step="1" placeholder="3" value="3"></div>
-        <div class="adv-row"><label for="staffRate">Staff rate (€/day) <span class="dq-hint">assumed analyst day rate — used only for ROI benefit estimate</span></label><input type="number" id="staffRate" placeholder="500" value="500"></div>
-        <div class="adv-row"><label for="riskFindings">Avoided supervisory findings / yr <span class="dq-hint">risk-reduction benefit — one avoided finding typically costs €150K–€500K+ to remediate</span></label><input type="number" id="riskFindings" min="0" step="1" value="1"></div>
-        <div class="adv-row"><label for="riskCostPer">Remediation cost per finding (<span id="riskCur">€</span>) <span class="dq-hint">avg cost to remediate one supervisory finding</span></label><input type="number" id="riskCostPer" step="50000" value="250000"></div>
-        <div class="adv-row"><label for="ucUpkeep">Keep-running upkeep, per dashboard (% of build / yr) <span class="dq-hint">re-tuning, policy refresh — no new features</span></label><input type="number" id="ucUpkeep" placeholder="8" value="8"></div>
-        <div class="adv-row"><label for="ucChanges">Functionality changes, per dashboard / yr <span class="dq-hint">discrete enhancements after launch — count</span></label><input type="number" id="ucChanges" placeholder="2" value="2"></div>
-        <div class="adv-row"><label for="ucChangeCost">Cost per functionality change (% of build) <span class="dq-hint">each change adds capability beyond the day-0 85%</span></label><input type="number" id="ucChangeCost" placeholder="6" value="6"></div>
-        <div class="adv-slider">
-          <div class="slider-top"><span class="lbl">Annual token-price change <span class="dq-hint">chart projection only — shapes 10-yr outlook, not current total</span> <button type="button" class="q-help-btn" id="priceSciBtnA" style="display:inline-flex;margin-left:4px;vertical-align:middle;font-size:10px;padding:1px 5px">?</button></span><span class="slider-val num" id="priceDeltaV" style="color:var(--blue);font-size:14px">-15%</span></div>
-          <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap">
-            <button type="button" class="price-preset" data-v="-40" style="font-size:10px;padding:3px 8px;border:1px solid var(--green);border-radius:5px;background:rgba(26,122,82,.08);color:var(--green);cursor:pointer;font-family:var(--mono)">Deflationary −40%</button>
-            <button type="button" class="price-preset" data-v="-15" style="font-size:10px;padding:3px 8px;border:1px solid var(--blue);border-radius:5px;background:rgba(59,130,246,.08);color:var(--blue);cursor:pointer;font-family:var(--mono)">Base −15%</button>
-            <button type="button" class="price-preset" data-v="12" style="font-size:10px;padding:3px 8px;border:1px solid var(--magenta);border-radius:5px;background:rgba(255,45,142,.08);color:var(--magenta);cursor:pointer;font-family:var(--mono)">Inflationary +12%</button>
+    <div class="adv-wrap">
+      <button type="button" class="adv-trigger" id="advTrigger" aria-expanded="false" onclick="toggleAdv()">
+        <span>Step 3 — Advanced calibration</span>
+        <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="adv-panel" id="advPanel">
+
+        <!-- Group 1: Usage & behaviour -->
+        <div class="adv-group">
+          <div class="adv-group-head">
+            <div class="adv-group-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div><div class="adv-group-title">Usage &amp; behaviour</div><div class="adv-group-desc">How intensively users interact with the AI — affects today's running cost.</div></div>
           </div>
-          <input type="range" class="risk" id="priceDelta" min="-50" max="20" value="-15">
-          <div class="q-help" id="priceSciHelp" style="margin-top:8px;font-size:11px">
-            <b>Deflationary (−40%/yr):</b> Historical pace — GPT-4 Turbo fell ~97% over 18 months (CSET 2024). Driven by hardware efficiency (TSMC 3nm→2nm, ~2× perf/watt), inference optimisation (Flash Attention 3, speculative decoding, MoE routing), and fierce provider competition. Applicable if open-source commoditises frontier capability.<br><br>
-            <b>Base (−15%/yr):</b> Decelerating decline as easy gains diminish. Accounts for sovereign/on-prem setups where token cost is largely fixed compute cost, and regulatory lock-in that limits switching to cheaper providers.<br><br>
-            <b>Inflationary (+12%/yr):</b> Demand-supply shock scenario. Goldman Sachs (2024) and Bernstein estimate $1T+ in AI capex by 2027; IEA projects data-centre electricity demand could double by 2026. NVIDIA GPU lead times and hyperscaler ROI requirements (~25–30% on capex) could push prices up if GPU supply and grid power cannot keep pace with inference demand growth.
+          <div class="adv-group-body">
+            <div class="adv-slider-wrap">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text">AI requests per user / day</span><span class="adv-slider-lbl-hint">Interactions an average user generates in a working day</span></div>
+                <span class="adv-slider-val" id="intensityV">0.6</span>
+              </div>
+              <input type="range" id="intensity" min="0.1" max="5" step="0.1" value="0.6">
+            </div>
+            <div id="tierQ" style="margin-bottom:14px">
+              <div class="adv-slider-lbl" style="margin-bottom:7px"><span class="adv-slider-lbl-text">Task complexity</span><span class="adv-slider-lbl-hint">Simple queries cost a fraction of deep analytical requests</span></div>
+              <div class="seg" id="segTier" role="group" aria-label="Task complexity"><button data-tier="simple" role="radio" aria-checked="false">Simple</button><button data-tier="medium" role="radio" aria-checked="false">Medium</button><button data-tier="high" role="radio" aria-checked="false">High</button></div>
+              <div class="q-sub" id="tierNote" style="margin-top:8px"></div>
+            </div>
+            <div id="platWrap" style="display:none;margin-bottom:14px">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text" id="platLbl">How far along is it?</span></div>
+                <span class="adv-slider-val" id="platProgV">30%</span>
+              </div>
+              <input type="range" id="platProg" min="0" max="80" step="5" value="30">
+            </div>
+            <label class="check"><input type="checkbox" id="smartRoute" checked> Most users resolve in a single AI pass</label>
+            <div class="adv-slider-wrap">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text">Single-pass resolution rate</span><span class="adv-slider-lbl-hint">The rest continue with follow-up questions (cheaper, cached)</span></div>
+                <span class="adv-slider-val" id="warmShareV" style="color:var(--green)">85%</span>
+              </div>
+              <input type="range" id="warmShare" min="0" max="95" step="5" value="85">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Follow-up questions per continuing user</span><span class="adv-label-hint">Only applies to the ~15% who don't resolve in one pass</span></div>
+              <input type="number" class="adv-input" id="nFollow" placeholder="4" value="4">
+            </div>
+            <div class="adv-slider-wrap" style="margin-bottom:0">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text">Live re-assessment intensity</span><span class="adv-slider-lbl-hint">Machine-triggered re-analysis at L4–L5 when risk data changes. 100% = built-in platform rate.</span></div>
+                <span class="adv-slider-val" id="liveMonV">100%</span>
+              </div>
+              <input type="range" id="liveMon" min="0" max="300" step="10" value="100">
+            </div>
           </div>
         </div>
-        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="hcGrowth">Headcount growth / yr <span class="dq-hint">chart projection only — compounds licences + usage each year</span></label><span class="slider-val num" id="hcGrowthV" style="color:var(--blue);font-size:14px">+2%</span></div><input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2"></div>
-        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="intGrowth">Usage growth per user / yr <span class="dq-hint">chart projection only — compounds usage each year</span></label><span class="slider-val num" id="intGrowthV" style="color:var(--magenta);font-size:14px">+6%</span></div><input type="range" class="risk" id="intGrowth" min="0" max="60" value="6"></div>
-      </div>
-      <div class="adv-sec">
-        <h5>How users engage</h5>
-        <label class="check"><input type="checkbox" id="smartRoute" checked> Most users get their answer in one pass</label>
-        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="warmShare">Share who stop after the first pass</label><span class="slider-val num" id="warmShareV" style="color:var(--green);font-size:14px">85%</span></div><input type="range" id="warmShare" min="0" max="95" step="5" value="85"></div>
-        <div class="adv-row"><label for="nFollow">Follow-up questions, for those who continue <span class="dq-hint">cheap, cached — only the ~15% who don't stop</span></label><input type="number" id="nFollow" placeholder="4" value="4"></div>
-      </div>
-      <div class="adv-sec">
-        <h5>Live re-assessment</h5>
-        <div class="dq-hint" style="margin-bottom:8px">From L4, the platform writes back and re-assesses on its own when files or risk change — fresh analysis on the changed data (the framework stays cached). This is machine-triggered volume on top of human questions. 100% = the built-in rate for the level; raise it for a very live environment.</div>
-        <div class="adv-slider"><div class="slider-top"><label class="lbl" for="liveMon">Re-assessment intensity (L4–L5)</label><span class="slider-val num" id="liveMonV" style="font-size:14px">100%</span></div><input type="range" id="liveMon" min="0" max="300" step="10" value="100"></div>
-      </div>
-      <div id="snapshotPanel">
-        <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-family:var(--mono);margin-bottom:8px;font-weight:600">Saved scenarios</div>
-        <div class="snap-row">
-          <button class="snap-save-btn" id="snapSaveBtn">+ Save current settings</button>
+
+        <!-- Group 2: Dashboard sizing -->
+        <div class="adv-group">
+          <div class="adv-group-head">
+            <div class="adv-group-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div>
+            <div><div class="adv-group-title">Dashboard sizing</div><div class="adv-group-desc">Optionally set volume, adoption and complexity per dashboard individually.</div></div>
+          </div>
+          <div class="adv-group-body">
+            <div id="detailWrap"><label class="check" style="margin-bottom:0"><input type="checkbox" id="detailToggle"> Size each dashboard individually</label></div>
+            <div id="scenEditNote" class="adv-label-hint" style="display:none;margin-top:8px">Editing the dashboards you selected in step 2 — tweak volume, adoption and complexity per dashboard.</div>
+            <div id="ucDetail" style="display:none;margin-top:10px"><div id="ucList"></div><button class="addbtn" id="addUc">+ Add use case</button></div>
+          </div>
         </div>
-        <div class="snap-list" id="snapList"></div>
+
+        <!-- Group 3: Financial benchmarks -->
+        <div class="adv-group">
+          <div class="adv-group-head">
+            <div class="adv-group-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div><div class="adv-group-title">Financial benchmarks</div><div class="adv-group-desc">Unit costs and build assumptions — override the defaults if you have client-specific figures.</div></div>
+          </div>
+          <div class="adv-group-body">
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">AI model</span><span class="adv-label-hint">Override the auto-selected model for pricing</span></div>
+              <select class="adv-select" id="model"></select>
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text" id="perUserLabel">Seat cost per user / year</span><span class="adv-label-hint">Licence + IAM + storage + support. Market mid-range: €430</span></div>
+              <input type="number" class="adv-input" id="perUser" placeholder="430" value="430">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text" id="buildLabel">Platform build cost <button type="button" id="buildReset" class="rsetb">estimate</button></span><span class="adv-label-hint">One-off investment to build the AI platform (<span id="buildCur">€</span>)</span></div>
+              <input type="number" class="adv-input" id="buildAbs" step="50000" value="1600000">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Integration cost per system</span><span class="adv-label-hint">Connector + data mapping per connected source (<span id="intgCur">€</span>)</span></div>
+              <input type="number" class="adv-input" id="intgRate" placeholder="35000" value="35000">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Use-case build — medium reference</span><span class="adv-label-hint">To ~85% coverage. Simple ×0.5 · High ×1.65 (<span id="ucCur">€</span>)</span></div>
+              <input type="number" class="adv-input" id="ucRate" placeholder="90000" value="90000">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Build amortisation (years)</span><span class="adv-label-hint">Spreads one-off build cost — does not affect recurring costs</span></div>
+              <input type="number" class="adv-input" id="amort" min="1" max="10" step="1" placeholder="3" value="3">
+            </div>
+            <div class="adv-row" style="margin-bottom:0">
+              <div class="adv-label"><span class="adv-label-text" id="fxLabel">EUR / USD exchange rate</span></div>
+              <input type="number" class="adv-input" id="eurusd" step="0.001" value="1.137">
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 4: Value & ROI -->
+        <div class="adv-group">
+          <div class="adv-group-head">
+            <div class="adv-group-icon"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div><div class="adv-group-title">Value &amp; ROI inputs</div><div class="adv-group-desc">Staff costs and risk figures used to estimate ROI and payback.</div></div>
+          </div>
+          <div class="adv-group-body">
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Analyst day rate</span><span class="adv-label-hint">Used to value time saved in the ROI estimate (€/day)</span></div>
+              <input type="number" class="adv-input" id="staffRate" placeholder="500" value="500">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Avoided supervisory findings / year</span><span class="adv-label-hint">Each avoided finding prevents €150K–€500K+ in remediation costs</span></div>
+              <input type="number" class="adv-input" id="riskFindings" min="0" step="1" value="1">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Remediation cost per finding</span><span class="adv-label-hint">Average cost to close one supervisory finding (<span id="riskCur">€</span>)</span></div>
+              <input type="number" class="adv-input" id="riskCostPer" step="50000" value="250000">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Annual upkeep per dashboard</span><span class="adv-label-hint">Re-tuning and policy refresh — no new features (% of build cost / yr)</span></div>
+              <input type="number" class="adv-input" id="ucUpkeep" placeholder="8" value="8">
+            </div>
+            <div class="adv-row">
+              <div class="adv-label"><span class="adv-label-text">Enhancements per dashboard / year</span><span class="adv-label-hint">Discrete capability additions post-launch</span></div>
+              <input type="number" class="adv-input" id="ucChanges" placeholder="2" value="2">
+            </div>
+            <div class="adv-row" style="margin-bottom:0">
+              <div class="adv-label"><span class="adv-label-text">Cost per enhancement</span><span class="adv-label-hint">Each adds capability beyond day-0 85% coverage (% of build)</span></div>
+              <input type="number" class="adv-input" id="ucChangeCost" placeholder="6" value="6">
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 5: 10-year forecast -->
+        <div class="adv-group">
+          <div class="adv-group-head">
+            <div class="adv-group-icon" style="background:rgba(59,130,246,.1)"><svg viewBox="0 0 24 24" style="stroke:var(--blue)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><div class="adv-group-title">10-year forecast assumptions <span class="proj-badge">Projection only</span></div><div class="adv-group-desc">These shape the 10-year chart — they do not change today's cost estimate.</div></div>
+          </div>
+          <div class="adv-group-body">
+            <div class="adv-slider-wrap">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text">Annual token-price change <button type="button" class="q-help-btn" id="priceSciBtnA" style="display:inline-flex;margin-left:4px;vertical-align:middle;font-size:10px;padding:1px 5px">?</button></span><span class="adv-slider-lbl-hint">AI compute has fallen ~40%/yr historically; sovereign setups are more stable</span></div>
+                <span class="adv-slider-val" id="priceDeltaV" style="color:var(--blue)">-15%</span>
+              </div>
+              <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+                <button type="button" class="price-preset" data-v="-40">Deflationary −40%</button>
+                <button type="button" class="price-preset" data-v="-15">Base −15%</button>
+                <button type="button" class="price-preset" data-v="12">Inflationary +12%</button>
+              </div>
+              <input type="range" class="risk" id="priceDelta" min="-50" max="20" value="-15">
+              <div class="q-help" id="priceSciHelp" style="margin-top:10px">
+                <b>Deflationary (−40%/yr):</b> Historical pace — GPT-4 Turbo fell ~97% over 18 months (CSET 2024). Driven by hardware efficiency (TSMC 3nm→2nm, ~2× perf/watt), inference optimisation (Flash Attention 3, speculative decoding, MoE routing), and fierce provider competition. Applicable if open-source commoditises frontier capability.<br><br>
+                <b>Base (−15%/yr):</b> Decelerating decline as easy gains diminish. Accounts for sovereign/on-prem setups where token cost is largely fixed compute cost, and regulatory lock-in that limits switching to cheaper providers.<br><br>
+                <b>Inflationary (+12%/yr):</b> Demand-supply shock scenario. Goldman Sachs (2024) and Bernstein estimate $1T+ in AI capex by 2027; IEA projects data-centre electricity demand could double by 2026. GPU lead times and hyperscaler ROI requirements (~25–30% on capex) could push prices up if supply and grid power cannot keep pace.
+              </div>
+            </div>
+            <div class="adv-slider-wrap">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text">Headcount growth / year</span><span class="adv-slider-lbl-hint">Compounds licences and usage each year</span></div>
+                <span class="adv-slider-val" id="hcGrowthV" style="color:var(--blue)">+2%</span>
+              </div>
+              <input type="range" class="risk" id="hcGrowth" min="0" max="15" value="2">
+            </div>
+            <div class="adv-slider-wrap" style="margin-bottom:0">
+              <div class="adv-slider-top">
+                <div class="adv-slider-lbl"><span class="adv-slider-lbl-text">Usage growth per user / year</span><span class="adv-slider-lbl-hint">As AI capability improves, users tend to use it more intensively</span></div>
+                <span class="adv-slider-val" id="intGrowthV" style="color:var(--magenta)">+6%</span>
+              </div>
+              <input type="range" class="risk" id="intGrowth" min="0" max="60" value="6">
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved scenarios -->
+        <div id="snapshotPanel">
+          <div class="snap-panel-head">Saved scenarios</div>
+          <div class="snap-row">
+            <button class="snap-save-btn" id="snapSaveBtn">+ Save current settings</button>
+          </div>
+          <div class="snap-list" id="snapList"></div>
+        </div>
+
       </div>
-    </details>
+    </div>
   </div>
 
   <!-- ===== RESULTS ===== -->
@@ -3320,6 +3470,7 @@ function applyBase(){
   syncDerived();renderScenarioGroups();applyScenarios();
   applyProfile(true);
 }
+function toggleAdv(){const t=$("advTrigger"),p=$("advPanel"),open=t.getAttribute("aria-expanded")==="true";t.setAttribute("aria-expanded",open?"false":"true");p.classList.toggle("open",!open);}
 function wire(){
   $("model").innerHTML=MODELS.map(m=>`<option value="${m.id}">${m.name}${m.in?` · $${m.in}/$${m.out}`:''}</option>`).join("");$("model").value="auto";
   $("ic1").innerHTML=svg(IC.user);$("ic2").innerHTML=svg(IC.task);$("ic3").innerHTML=svg(IC.clock);$("ic4").innerHTML=svg(IC.chart);
