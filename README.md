@@ -24,4 +24,4 @@ Everything is contained in **`index.html`** — no build step, no dependencies t
 
 All numbers in this tool are **illustrative planning placeholders**, not measured values. Model benchmarks and prices, routing weights, allocation shares, build and upkeep rates, dashboard-coverage assumptions, hosting infrastructure and governance coefficients must be calibrated against real delivery, chargeback and evaluation data before any client use.
 
-This tool is **not an offer, proposal, quotation or commitment**, and creates no contractual obligation. Brand and product names other than Accenture are placeholders for licensed assets.
+This tool is **not an offer, proposal, quotation or commitment**, and creates no contractual obligation. Brand and product names are placeholders for licensed assets.

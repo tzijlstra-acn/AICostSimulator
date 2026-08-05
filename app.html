@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <script>if(!sessionStorage.getItem('nfr_auth')){location.replace('index.html');}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accenture AI Cost Simulator</title>
+<title>AI Cost Simulator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
@@ -843,7 +843,7 @@
 <div class="bar">
   <canvas id="barCanvas" aria-hidden="true"></canvas>
   <div class="brand">
-    <span class="brand-logo">Accenture</span>
+    <span class="brand-logo">NFR</span>
     <span class="brand-sep"></span>
     <span class="brand-tool">AI Cost Simulator</span>
     <span class="brand-sect">Banking · NFR Practice</span>
@@ -1403,7 +1403,7 @@
 </div>
 
 <div class="page-foot">
-  <b>Disclaimer.</b> This tool is for discussion and indicative planning purposes only. It is <b>not an offer, proposal, quotation, or commitment</b> by Accenture and creates no contractual obligation — nothing here is a price or a guarantee. All outputs are <b>illustrative estimates</b> generated from user inputs and built-in assumptions (model prices and benchmarks, routing, allocation shares, build and upkeep rates, caching and coverage, hosting infrastructure, governance) that must be validated against real requirements and delivery data before any decision. Brand and product names shown are placeholders for licensed assets and do not imply endorsement. © Accenture — internal estimation aid.
+  <b>Disclaimer.</b> This tool is for discussion and indicative planning purposes only. It is <b>not an offer, proposal, quotation, or commitment</b> and creates no contractual obligation — nothing here is a price or a guarantee. All outputs are <b>illustrative estimates</b> generated from user inputs and built-in assumptions (model prices and benchmarks, routing, allocation shares, build and upkeep rates, caching and coverage, hosting infrastructure, governance) that must be validated against real requirements and delivery data before any decision. Brand and product names shown are placeholders for licensed assets and do not imply endorsement.
 </div>
 
 <div id="summaryOverlay" class="sum-overlay" style="display:none">
@@ -1950,7 +1950,7 @@ function compCol(cls,clabel,total,sublabel,lines,note){
     lines.map(([l,v])=>`<div class="comp-line"><span>${l}</span><span class="v">${eurK(v)}</span></div>`).join("")+
     (note?`<div class="comp-note">${note}</div>`:"")+`</div>`;
 }
-/* Indicative delivery team for the platform build — realistic Accenture grades & EUR day rates.
+/* Indicative delivery team for the platform build — illustrative grades & EUR day rates.
    Days derive from each role's share of the platform build divided by its day rate, so subtotals
    track the current build number. Representative of a typical L3 engagement. */
 const BUILD_TEAM=[
@@ -1972,14 +1972,14 @@ function renderBuildTeam(build){
   return `<details class="bteam-dd"><summary>Build team · roles, grades &amp; day rates</summary>
     <div class="bteam">
       <table class="data-table bteam-data">
-        <thead><tr><th scope="col">Role</th><th scope="col">Accenture grade</th><th scope="col" class="num">Day rate</th><th scope="col" class="num">Days</th><th scope="col" class="num">Subtotal</th></tr></thead>
+        <thead><tr><th scope="col">Role</th><th scope="col">Grade</th><th scope="col" class="num">Day rate</th><th scope="col" class="num">Days</th><th scope="col" class="num">Subtotal</th></tr></thead>
         <tbody>
       ${rows.map(r=>`<tr><td class="bteam-role">${r.role}</td><td class="bteam-grade">${r.grade}</td><td class="num">${eur(r.rate)}</td><td class="num">${r.days}</td><td class="num">${eurK(r.subtotal)}</td></tr>`).join("")}
       <tr class="bteam-tot"><td>Total · platform build</td><td></td><td class="num"></td><td class="num">${totDays}</td><td class="num">${eurK(totCost)}</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="bb-note" style="margin:0 12px 12px;border-top:none;padding-top:2px">Indicative delivery team for a typical L3 engagement — grades and day rates are illustrative Accenture blended rates in ${CURK.code}. Days scale with the platform-build figure above (${eurK(build)}); Programme Manager days also scale with the go-live duration. Integration, dashboard build and run/oversight are costed separately in the lines above.</p>
+    <p class="bb-note" style="margin:0 12px 12px;border-top:none;padding-top:2px">Indicative delivery team for a typical L3 engagement — grades and day rates are illustrative blended rates in ${CURK.code}. Days scale with the platform-build figure above (${eurK(build)}); Programme Manager days also scale with the go-live duration. Integration, dashboard build and run/oversight are costed separately in the lines above.</p>
   </details>`;
 }
 function renderBuildBasis(sel,L){
@@ -2109,7 +2109,7 @@ function buildSummary(){
   const row=(k,val)=>`<div class="sum-row"><span class="k">${k}</span><span class="v">${val}</span></div>`;
   const date=new Date().toLocaleDateString(CURK.locale,{year:"numeric",month:"long",day:"numeric"});
   $("summaryBody").innerHTML=`
-    <div class="sum-eyebrow">Accenture · AI Cost Estimate</div>
+    <div class="sum-eyebrow">AI Cost Estimate</div>
     <h2 class="sum-h">${state.ind.label} · ${REGIONS[state.region].label}</h2>
     <div class="sum-sub">${state.sub.label} — illustrative planning estimate, ${date}. Figures are indicative, not a quote.</div>
     <div class="sum-hero">
@@ -2169,7 +2169,7 @@ function buildSummary(){
       <div><div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:2px">In favour</div><ul class="sum-list">${v.pros.map(p=>`<li>${p}</li>`).join("")}</ul></div>
       <div><div style="font-size:11px;font-weight:700;color:#d4574e;margin-bottom:2px">Against</div><ul class="sum-list">${v.cons.map(c=>`<li>${c}</li>`).join("")}</ul></div>
     </div>
-    <div class="sum-foot"><b>Disclaimer.</b> This summary is provided for discussion and indicative planning purposes only. It is <b>not an offer, proposal, quotation, or commitment</b> by Accenture, does not create any contractual obligation, and must not be relied upon as a price. All figures are <b>illustrative estimates</b> based on assumptions — model benchmarks, routing weights, allocation shares, build rates, dashboard upkeep, caching and coverage assumptions, hosting infrastructure and governance coefficients — that must be validated against actual requirements, delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders for licensed assets. Generated by the AI Cost Simulator.</div>`;
+    <div class="sum-foot"><b>Disclaimer.</b> This summary is provided for discussion and indicative planning purposes only. It is <b>not an offer, proposal, quotation, or commitment</b> and does not create any contractual obligation, and must not be relied upon as a price. All figures are <b>illustrative estimates</b> based on assumptions — model benchmarks, routing weights, allocation shares, build rates, dashboard upkeep, caching and coverage assumptions, hosting infrastructure and governance coefficients — that must be validated against actual requirements, delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders for licensed assets. Generated by the AI Cost Simulator.</div>`;
 }
 function openSummary(){buildSummary();$("summaryOverlay").style.display="block";document.body.style.overflow="hidden";}
 function closeSummary(){$("summaryOverlay").style.display="none";document.body.style.overflow="";}
@@ -2852,7 +2852,7 @@ function buildMathSummary(){
     ${r("Intensity growth",num("intGrowth")+"%/yr","usage per user")}
     ${r("Price decline",num("priceDelta")+"%/yr","token prices, applied to usage")}
 
-    <div class="sum-foot"><b>Disclaimer.</b> Every figure above is an <b>illustrative planning estimate</b> derived from assumptions — model benchmarks and list prices, routing weights, token-per-step sizing, caching/coverage, the share who stop after one pass, dashboard build/upkeep rates, hosting infrastructure, allocation shares (1/functions), org and platform factors, and governance coefficients. This is <b>not an offer, proposal, quotation or commitment</b> by Accenture and creates no contractual obligation. Calibrate against actual delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders. Generated by the AI Cost Simulator.</div>`;
+    <div class="sum-foot"><b>Disclaimer.</b> Every figure above is an <b>illustrative planning estimate</b> derived from assumptions — model benchmarks and list prices, routing weights, token-per-step sizing, caching/coverage, the share who stop after one pass, dashboard build/upkeep rates, hosting infrastructure, allocation shares (1/functions), org and platform factors, and governance coefficients. This is <b>not an offer, proposal, quotation or commitment</b> and creates no contractual obligation. Calibrate against actual delivery, chargeback and evaluation data before any decision. Brand and product names are placeholders. Generated by the AI Cost Simulator.</div>`;
 }
 function openMath(){buildMathSummary();$("mathOverlay").style.display="block";document.body.style.overflow="hidden";}
 function closeMath(){$("mathOverlay").style.display="none";document.body.style.overflow="";}
@@ -2918,7 +2918,7 @@ function brandColor(n){n=(n||"").toLowerCase();
   if(n.includes("aleph"))return"#1a1a1a";
   if(n.includes("azure"))return"#0078d4";
   if(n.includes("aws"))return"#ff9900";
-  if(n.includes("switchboard")||n.includes("lifecycle")||n.includes("accenture"))return"#A100FF";
+  if(n.includes("switchboard")||n.includes("lifecycle"))return"#A100FF";
   if(n.includes("elastic"))return"#43c2a6";
   if(n.includes("on-prem")||n.includes("private")||n.includes("teams")||n.includes("web")||n.includes("event")||n.includes("embed")||n.includes("mcp"))return"#6c6480";
   return"#7a14d4";}
