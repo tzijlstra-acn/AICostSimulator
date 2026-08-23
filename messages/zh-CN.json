@@ -1,0 +1,530 @@
+﻿{
+  "common": {
+    "loading": "加载中……",
+    "error": "发生错误",
+    "noResults": "未找到结果",
+    "reset": "恢复默认值",
+    "save": "保存",
+    "cancel": "取消",
+    "export": "导出",
+    "print": "打印",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "prev": "上一步",
+    "search": "搜索",
+    "filter": "筛选",
+    "clearFilters": "清除筛选",
+    "viewAll": "查看全部",
+    "showDetails": "展开详情",
+    "hideDetails": "收起详情",
+    "edit": "编辑",
+    "confirm": "确认",
+    "learnMore": "了解更多",
+    "lastVerified": "上次验证",
+    "source": "来源",
+    "assumption": "假设",
+    "fact": "事实",
+    "model": "模型测算",
+    "recommendation": "建议",
+    "openQuestion": "待验证问题",
+    "disclaimer": "免责声明",
+    "legalNote": "本应用仅用于战略规划，不构成法律意见。相关监管分类、义务及实施时间表应由具备资质的欧盟及英国法律顾问进行核实。",
+    "baselineDate": "基准日期：2026 年 8 月 22 日",
+    "scenario": "情景",
+    "scenarios": {
+      "conservative": "保守情景",
+      "base": "基准情景",
+      "upside": "乐观情景",
+      "custom": "自定义情景"
+    },
+    "viewMode": {
+      "board": "董事会视图",
+      "operator": "运营视图",
+      "compliance": "合规视图",
+      "sales": "销售视图"
+    },
+    "language": {
+      "en": "English",
+      "zhCN": "简体中文",
+      "changeToZhCN": "将语言切换为简体中文",
+      "changeToEn": "切换为英文"
+    }
+  },
+  "nav": {
+    "cockpit": "高管决策中心",
+    "strategy": "战略主张",
+    "market": "市场规模测算",
+    "countries": "国家优先级导航",
+    "portfolio": "产品与收入结构",
+    "useCases": "应用场景图谱",
+    "competition": "竞争格局分析",
+    "regulation": "监管与信任中心",
+    "gtm": "市场进入与商业化",
+    "partners": "合作伙伴生态",
+    "roadmap": "路线图与阶段门槛",
+    "organization": "组织与人才规划",
+    "financials": "财务与销售产能",
+    "risks": "风险清单",
+    "sources": "来源与假设库",
+    "memo": "董事会备忘录",
+    "decisions": "决策日志",
+    "ninetyDays": "90 天战略方案"
+  },
+  "cockpit": {
+    "title": "高管决策中心",
+    "subtitle": "Kimi 欧洲拓展——决策支持系统",
+    "strategicVerdict": "战略结论",
+    "revenueScenarios": "收入情景预测（2027–2030）",
+    "complianceStatus": "合规状态",
+    "workstreamsNeedAttention": "{count} 个合规工作流在欧盟正式发布前需要关注",
+    "viewAllWorkstreams": "查看全部工作流",
+    "priorityCountries": "优先进入市场——2027 年上半年",
+    "strategicPrinciples": "五大战略原则",
+    "immediateDecisions": "当前待决策事项",
+    "owner": "负责人",
+    "recommendation": {
+      "title": "高管建议",
+      "headline": "批准采取分阶段、混合式欧洲市场进入方案，优先面向英国、德国及荷兰的开发者与企业客户。",
+      "subline": "首轮投入应优先验证关键假设，而非追求规模。"
+    },
+    "kpis": {
+      "tam2026": "2026 年可寻址市场（TAM）",
+      "tam2030": "2030 年可寻址市场（TAM）",
+      "sam2030": "2030 年可触达市场（SAM）",
+      "revenue2030": "2030 年基准收入目标",
+      "cagr": "TAM 年均复合增长率（2026–2030）",
+      "launchCountries": "首批进入市场",
+      "regulatoryGates": "监管阶段门槛",
+      "topRisks": "活跃风险项"
+    },
+    "decisions": {
+      "title": "待决策事项",
+      "subtitle": "第一阶段上线前需要董事会或管理层采取行动的事项"
+    },
+    "whyTitle": "为何提出此建议？"
+  },
+  "market": {
+    "title": "市场规模测算",
+    "subtitle": "欧洲 AI 商业支出模型——所有假设均可编辑",
+    "modelNote": "所有数据为基于透明公式模型的内部规划假设，并非外部市场研究或已发布预测报告。",
+    "tam": "可寻址市场总量（TAM）",
+    "sam": "可触达市场（SAM）",
+    "som": "可获得市场（SOM）",
+    "cagr": "年均复合增长率",
+    "tam2026": "2026 年 TAM",
+    "tam2030": "2030 年 TAM",
+    "sam2030": "2030 年 SAM",
+    "samFilterAssumptions": "SAM 筛选假设",
+    "spendPools": "欧盟 AI 支出池",
+    "revenuePath": "收入路径（2027–2030）",
+    "revenueMix": "收入结构",
+    "tamSamSomWaterfall": "TAM → SAM → SOM 瀑布图（2030）",
+    "marketPool": "市场池",
+    "filteredOut": "已筛除",
+    "serviceable": "可触达",
+    "methodologyNote": "方法论说明",
+    "spendPool": "支出类别",
+    "total": "合计",
+    "charts": {
+      "waterfall": {
+        "tam2030": "2030 年 TAM",
+        "samFilter": "→ SAM 筛选",
+        "sam": "SAM",
+        "somFilter": "→ SOM",
+        "som": "SOM（基准）"
+      },
+      "compositionLabels": {
+        "apiCommitted": "API 与承诺用量",
+        "kimiCode": "Kimi 商业版与代码",
+        "privateSovereign": "私有与主权部署",
+        "oemChannel": "OEM 与渠道",
+        "services": "服务与评估"
+      },
+      "revenueMixLabels": {
+        "apiSelfService": "API 自助服务",
+        "apiCommitted": "API 承诺用量",
+        "kimiCode": "Kimi Code（席位）",
+        "kimiBusinessSeat": "Kimi Business（席位）",
+        "managedVpc": "托管 VPC",
+        "sovereign": "主权/私有部署",
+        "oem": "OEM/嵌入式 API",
+        "services": "服务与评估"
+      }
+    },
+    "pools": {
+      "workspace": "工作台与代码席位",
+      "api": "API 与智能体推理",
+      "private": "私有与主权部署",
+      "oem": "OEM 与嵌入式模型",
+      "services": "服务与定制化"
+    },
+    "assumptions": {
+      "title": "核心假设（可编辑）",
+      "workers": "可触达知识工作者人数",
+      "paidPenetration": "付费渗透率",
+      "seatSpend": "每用户年均支出（欧元）",
+      "apiOrgs": "生产环境 API 使用组织数",
+      "apiSpend": "年均 API 支出（欧元）",
+      "privateDeployments": "私有部署数量",
+      "privateACV": "私有部署年均合同金额（欧元）",
+      "oemPartners": "OEM 合作伙伴数量",
+      "oemACV": "OEM 年均合同金额（欧元）",
+      "servicesRate": "服务收入占比",
+      "countryCoverage": "目标国家覆盖率",
+      "productFit": "产品与工作负载契合度",
+      "procurementReach": "监管与采购可达性",
+      "attainableShare": "可获得市场份额",
+      "targetCountryCoverage": "目标国家覆盖率",
+      "productMarketFit": "产品市场契合度",
+      "procurementReachLabel": "采购可达性",
+      "targetCountryDesc": "可寻址市场中9个优先市场的覆盖占比",
+      "productFitDesc": "可触达市场中 Kimi 具备相关产品的占比",
+      "procurementReachDesc": "我们在采购竞争中可以切实争取的比例"
+    }
+  },
+  "countries": {
+    "title": "国家优先级导航",
+    "subtitle": "9个优先市场，覆盖欧盟及欧洲经济区，延伸至21个国家",
+    "scoringNote": "评分为方向性分析师评估，作为可编辑的规划输入，并非经过验证的市场研究。",
+    "columns": {
+      "country": "国家/地区",
+      "score": "优先级评分",
+      "role": "战略定位",
+      "phase": "进入阶段",
+      "entryMode": "进入方式"
+    },
+    "phases": {
+      "2027H1": "2027 年上半年",
+      "2027H2": "2027 年下半年",
+      "2028": "2028 年",
+      "later": "2028 年以后"
+    },
+    "radar": {
+      "score": "优先级评分",
+      "aiReadiness": "AI 就绪度",
+      "marketSize": "市场规模",
+      "workloads": "工作负载",
+      "phasePriority": "进入阶段"
+    },
+    "table": {
+      "title": "国家优先级评分",
+      "sortBy": "排序方式："
+    }
+  },
+  "portfolio": {
+    "title": "产品与收入结构",
+    "subtitle": "商业报价梯次与任务成本计算器",
+    "offerNote": "所有价格区间为需经客户验证的说明性假设。",
+    "calculator": {
+      "title": "任务成本计算器",
+      "model": "模型",
+      "inputTokens": "每次请求输入 Token 数",
+      "outputTokens": "每次请求输出 Token 数",
+      "cachedPct": "缓存输入占比",
+      "requestsPerDay": "每日请求量",
+      "successRate": "任务成功率",
+      "costPerRequest": "每次请求成本",
+      "costPerTask": "单次成功任务成本",
+      "monthlyCost": "月度成本",
+      "annualCost": "年度成本"
+    }
+  },
+  "useCases": {
+    "title": "应用场景图谱",
+    "subtitle": "{prioritised} 个优先场景，跨行业、分层次、多部署模式（{excluded} 个已排除）",
+    "all": "全部",
+    "tier1": "第一层级——立即上线",
+    "tier2": "第二层级——加强治理后上线",
+    "tier3": "第三层级——延后或受限上线",
+    "excluded": "初始阶段不予上线",
+    "excludedTitle": "不予上线——《欧盟人工智能法案》限制",
+    "excludedNote": "以下场景因《欧盟人工智能法案》高风险分类或基本权利顾虑，明确排除在初始上线范围之外。",
+    "tiers": {
+      "t1": "第一层级——立即上线",
+      "t2": "第二层级——加强治理后上线",
+      "t3": "第三层级——延后或受限上线",
+      "excluded": "初始阶段不予上线"
+    }
+  },
+  "competition": {
+    "title": "竞争格局分析",
+    "subtitle": "方向性竞争力评分——分析师评估，可编辑",
+    "scoresNote": "评分为 1–5 分制方向性分析师评估，作为可编辑的规划假设，并非经过验证的基准测试。",
+    "pricing": {
+      "priceWarning": "API 定价频繁变动，请在商业承诺前核实各提供商当前定价页面。"
+    },
+    "dimensions": {
+      "frontierQuality": "前沿模型质量",
+      "agenticCoding": "智能体编程",
+      "longContext": "长上下文与多模态",
+      "taskEconomics": "任务级经济性",
+      "openDeployment": "开放/私有部署",
+      "euHosting": "欧盟数据托管能力",
+      "enterpriseControls": "企业级管控能力",
+      "distribution": "分发与集成",
+      "trustCompliance": "信任与合规",
+      "euPartnerability": "欧盟市场合作潜力"
+    },
+    "chart": {
+      "capabilityRadar": "竞争力雷达图",
+      "selectCompetitors": "选择竞争对手以显示雷达图",
+      "noCompetitorsSelected": "请选择竞争对手以显示雷达图",
+      "heatmapTitle": "竞争力评分热力图（1–5 分制）",
+      "pricingTitle": "API 定价（每百万 Token 美元）",
+      "dimension": "维度"
+    }
+  },
+  "regulation": {
+    "title": "监管与信任中心",
+    "subtitle": "欧盟《人工智能法案》、通用 AI 模型监管（GPAI）、数据保护、NIS2 与信任架构",
+    "disclaimer": "本应用仅用于战略规划，不构成法律意见。相关监管分类、义务及实施时间表应由具备资质的欧盟及英国法律顾问进行核实。",
+    "complianceStatusTitle": "合规状态",
+    "done": "已完成",
+    "inProgress": "进行中",
+    "pending": "待处理",
+    "blocked": "受阻",
+    "all": "全部",
+    "timeline": { "title": "监管时间线" },
+    "workstreams": {
+      "title": "合规工作流",
+      "statuses": {
+        "pending": "待处理",
+        "inProgress": "进行中",
+        "done": "已完成",
+        "blocked": "受阻"
+      }
+    },
+    "stageGates": {
+      "title": "阶段门槛",
+      "gateA": "门槛 A——欧盟 API 正式发布",
+      "gateB": "门槛 B——企业客户全面上线",
+      "gateC": "门槛 C——受监管垂直行业",
+      "gateD": "门槛 D——主权部署声明",
+      "gateE": "门槛 E——K3 私有部署"
+    }
+  },
+  "gtm": {
+    "title": "市场进入与商业化",
+    "subtitle": "10 个市场进入方式与交互式试点方案构建器",
+    "tabMotions": "GTM 推进方式",
+    "tabPilot": "试点方案构建器",
+    "buildPilot": "构建试点方案",
+    "pilot": {
+      "title": "试点方案构建器",
+      "subtitle": "配置 6–8 周生产环境试点",
+      "customer": "客户名称",
+      "country": "国家/地区",
+      "workflow": "待试验工作流",
+      "model": "Kimi 模型",
+      "duration": "周期（周）",
+      "budget": "预算（欧元）",
+      "generate": "生成试点方案"
+    }
+  },
+  "partners": {
+    "title": "合作伙伴生态",
+    "subtitle": "目标合作伙伴地图，涵盖云服务商、电信运营商、系统集成商、ISV、学术机构及经销商",
+    "disclaimer": "合作伙伴名单仅供规划参考，不代表任何已建立的合作关系。"
+  },
+  "roadmap": {
+    "title": "路线图与阶段门槛",
+    "subtitle": "五阶段实施计划：2026 年 9 月至 2030 年",
+    "exitGate": "阶段完成标准",
+    "objective": "阶段目标"
+  },
+  "organization": {
+    "title": "组织与人才规划",
+    "subtitle": "招聘计划与能力缺口分析"
+  },
+  "financials": {
+    "title": "收入、销售产能与投资模型",
+    "subtitle": "可编辑财务模型——所有利润率数值均为规划假设",
+    "costs": {
+      "note": "毛利率仅为规划假设，并非既定事实，所有成本数值均可编辑调整。"
+    }
+  },
+  "risks": {
+    "title": "风险清单",
+    "subtitle": "12 项主要风险，严重程度均可编辑",
+    "severities": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "critical": "严重"
+    },
+    "chart": {
+      "title": "风险矩阵（可能性 × 严重程度）",
+      "likelihood": "可能性",
+      "severity": "严重程度",
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "critical": "严重"
+    }
+  },
+  "sources": {
+    "title": "来源与假设库",
+    "subtitle": "{count} 个参考来源（S1–S{count}）",
+    "confidenceLabel": "可信度",
+    "retrievedLabel": "获取时间",
+    "originalLabel": "原文",
+    "translationLabel": "中文译文",
+    "onlyEnglish": "该来源仅提供英文版本"
+  },
+  "memo": {
+    "title": "董事会备忘录",
+    "subtitle": "可打印的高管决策文件",
+    "exportJson": "JSON 格式导出",
+    "print": "打印",
+    "languageSelector": {
+      "label": "语言",
+      "en": "English",
+      "zhCN": "简体中文",
+      "bilingual": "双语 Bilingual"
+    },
+    "sections": {
+      "decision": "待决策事项",
+      "recommendation": "高管建议",
+      "market": "市场机遇",
+      "countries": "国家进入顺序",
+      "revenue": "财务情景",
+      "competition": "竞争分析",
+      "regulation": "监管准备度",
+      "roadmap": "实施路线图",
+      "risks": "主要风险",
+      "decisionsLog": "决策日志",
+      "assumptions": "核心假设",
+      "decisionRequired": "待决策事项",
+      "marketOpportunity": "市场机遇",
+      "countrySequence": "国家进入顺序",
+      "regulatoryReadiness": "监管准备度",
+      "financials": "财务情景",
+      "decisions90": "未来 90 天待决策事项",
+      "sources": "来源引用"
+    },
+    "exportOptions": {
+      "english": "英文导出",
+      "chinese": "简体中文导出",
+      "bilingual": "双语导出",
+      "json": "JSON 格式导出",
+      "print": "打印"
+    }
+  },
+  "decisions": {
+    "title": "决策日志",
+    "subtitle": "追踪并记录所有战略决策",
+    "add": "添加决策",
+    "addDecision": "添加决策",
+    "emptyState": "尚无已记录的决策，请添加第一项决策以开始追踪。",
+    "status": {
+      "proposed": "已提议",
+      "underReview": "审议中",
+      "approved": "已批准",
+      "rejected": "已否决",
+      "deferred": "已推迟",
+      "superseded": "已废止"
+    },
+    "statuses": {
+      "proposed": "已提议",
+      "underReview": "审议中",
+      "approved": "已批准",
+      "rejected": "已否决",
+      "deferred": "已推迟",
+      "superseded": "已废止"
+    },
+    "translationStatuses": {
+      "notTranslated": "未翻译",
+      "draft": "草稿",
+      "reviewed": "已审阅",
+      "approved": "已批准"
+    },
+    "languageNote": "用户输入内容以原始语言保存，翻译版本须经人工审核方可标记为已批准。"
+  },
+  "commandPalette": {
+    "placeholder": "搜索页面、国家、风险、竞争对手……",
+    "actions": {
+      "goToCockpit": "前往高管决策中心",
+      "changeScenario": "切换情景",
+      "openEvidence": "打开证据面板",
+      "switchToCompliance": "切换至合规视图",
+      "switchToBoard": "切换至董事会视图",
+      "switchToSales": "切换至销售视图",
+      "switchToOperator": "切换至运营视图",
+      "generateBrief": "生成两页高管简报",
+      "exportMemo": "导出董事会备忘录",
+      "toggleLanguage": "切换语言"
+    }
+  },
+  "keyboard": {
+    "title": "键盘快捷键"
+  },
+  "glossary": {
+    "title": "战略术语表",
+    "subtitle": "双语受控术语，确保沟通一致性"
+  },
+  "strategy": {
+    "title": "战略主张",
+    "subtitle": "核心论点、战略原则与战略逻辑"
+  },
+  "mapLayers": {
+    "priority": "战略优先级",
+    "score": "国家吸引力评分",
+    "wave": "进入波次",
+    "regulation": "监管复杂度",
+    "revenue": "收入潜力"
+  },
+  "countryPage": {
+    "openProfile": "打开国家完整档案",
+    "addToComparison": "加入比较",
+    "backToMap": "返回地图",
+    "prevCountry": "上一个国家",
+    "nextCountry": "下一个国家",
+    "tabs": {
+      "executive": "高管摘要",
+      "market": "市场与行业",
+      "useCases": "应用场景",
+      "commercial": "产品与商务",
+      "regulation": "监管与信任",
+      "economics": "经济测算",
+      "roadmap": "路线图与团队",
+      "evidence": "证据与来源"
+    },
+    "whyNow": "为何是现在",
+    "rightToWin": "制胜基础",
+    "mainBlocker": "主要阻断项",
+    "whatWouldChange": "哪些因素会改变我们的建议？",
+    "decisionRequired": "待决策事项"
+  },
+  "comparison": {
+    "title": "国家比较",
+    "addCountry": "添加国家",
+    "removeCountry": "移除",
+    "export": "导出比较"
+  },
+  "ninetyDays": {
+    "title": "前 90 天战略行动方案",
+    "subtitle": "本方案详述入职 Moonshot AI 欧洲业务拓展负责人一职后，前 90 天的具体行动规划。"
+  },
+  "sequence": {
+    "title": "进入顺序模拟器",
+    "subtitle": "拖拽重排国家。模拟器将显示不同进入顺序下的累计收入与首市场风险。",
+    "firstRisk": "首市场风险",
+    "timeToTarget": "预计达到 €5000 万 ARR 所需时间",
+    "scenarioLabel": "方案名称",
+    "reset": "重置为推荐顺序",
+    "saveToLog": "保存至决策日志",
+    "dragHint": "拖动以重排"
+  }
+,
+  "intro": {
+    "headline": "如何从零构建 Kimi 欧洲市场 API 营收",
+    "byline": "由 Thomas Zijlstra 编制的互动战略分析报告——为 Moonshot AI 招聘面试特别准备，2026 年 8 月",
+    "question": "您能带来多少营收？您将如何拓展欧洲市场？",
+    "questionSource": "Moonshot AI HR 面试",
+    "thesis": "以英国开发者市场为突破口，以荷兰作为运营枢纽，通过德国企业客户实现规模化——并构建美国超大规模云服务商和中国竞争对手均无法复制的欧盟信任架构。",
+    "viewCV": "查看简历",
+    "enterStrategy": "进入战略分析",
+    "aboutAnalysis": "关于本分析",
+    "disclaimer": "本分析系作者独立准备的战略提案，不代表 Moonshot AI 官方立场。"
+  }}

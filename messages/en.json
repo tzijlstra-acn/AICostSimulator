@@ -1,0 +1,530 @@
+﻿{
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "noResults": "No results found",
+    "reset": "Reset to defaults",
+    "save": "Save",
+    "cancel": "Cancel",
+    "export": "Export",
+    "print": "Print",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "prev": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "clearFilters": "Clear filters",
+    "viewAll": "View all",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "learnMore": "Learn more",
+    "lastVerified": "Last verified",
+    "source": "Source",
+    "assumption": "ASSUMPTION",
+    "fact": "FACT",
+    "model": "MODEL",
+    "recommendation": "RECOMMENDATION",
+    "openQuestion": "OPEN QUESTION",
+    "disclaimer": "Disclaimer",
+    "legalNote": "This application is a strategic planning tool and does not constitute legal advice. Regulatory classifications, obligations, and implementation timelines must be validated by qualified EU and UK counsel.",
+    "baselineDate": "Baseline date: 22 August 2026",
+    "scenario": "Scenario",
+    "scenarios": {
+      "conservative": "Conservative",
+      "base": "Base",
+      "upside": "Upside",
+      "custom": "Custom"
+    },
+    "viewMode": {
+      "board": "Board Mode",
+      "operator": "Operator Mode",
+      "compliance": "Compliance Mode",
+      "sales": "Sales Mode"
+    },
+    "language": {
+      "en": "English",
+      "zhCN": "简体中文",
+      "changeToZhCN": "Change language to Simplified Chinese",
+      "changeToEn": "Change language to English"
+    }
+  },
+  "nav": {
+    "cockpit": "Executive Cockpit",
+    "strategy": "Strategic Thesis",
+    "market": "Market Sizing Lab",
+    "countries": "Country Navigator",
+    "portfolio": "Product & Revenue",
+    "useCases": "Use-Case Atlas",
+    "competition": "Competition Arena",
+    "regulation": "Regulatory & Trust",
+    "gtm": "Go-to-Market",
+    "partners": "Partner Ecosystem",
+    "roadmap": "Roadmap & Gates",
+    "organization": "Organization",
+    "financials": "Financials",
+    "risks": "Risk Register",
+    "sources": "Source Library",
+    "memo": "Board Memo",
+    "decisions": "Decision Log",
+    "ninetyDays": "90-Day Thesis"
+  },
+  "cockpit": {
+    "title": "Executive Decision Room",
+    "subtitle": "Kimi Europe Expansion — Decision System",
+    "strategicVerdict": "Strategic Verdict",
+    "revenueScenarios": "Revenue Scenarios 2027–2030",
+    "complianceStatus": "Compliance Status",
+    "workstreamsNeedAttention": "{count} workstreams need attention before EU GA",
+    "viewAllWorkstreams": "View all workstreams",
+    "priorityCountries": "Priority Countries — 2027H1 Launch",
+    "strategicPrinciples": "5 Strategic Principles",
+    "immediateDecisions": "Immediate Decisions Required",
+    "owner": "Owner",
+    "recommendation": {
+      "title": "Strategic Recommendation",
+      "headline": "Authorize a stage-gated hybrid European market entry for Kimi, beginning with developer and enterprise workloads in the United Kingdom, Germany, and the Netherlands.",
+      "subline": "The first investment tranche should buy evidence, not scale."
+    },
+    "kpis": {
+      "tam2026": "2026 Market (TAM)",
+      "tam2030": "2030 Market (TAM)",
+      "sam2030": "2030 Serviceable Market",
+      "revenue2030": "2030 Base Revenue Target",
+      "cagr": "TAM CAGR (2026–2030)",
+      "launchCountries": "Initial Launch Markets",
+      "regulatoryGates": "Regulatory Gates",
+      "topRisks": "Active Risks"
+    },
+    "decisions": {
+      "title": "Decisions Required Now",
+      "subtitle": "Items requiring board or leadership action before Phase 1 launch"
+    },
+    "whyTitle": "Why This Recommendation?"
+  },
+  "market": {
+    "title": "Market Sizing Lab",
+    "subtitle": "European AI commercial spend — all assumptions editable",
+    "modelNote": "All figures are internal planning assumptions derived from a transparent formula model, not external forecasts.",
+    "tam": "Total Addressable Market (TAM)",
+    "sam": "Serviceable Addressable Market (SAM)",
+    "som": "Serviceable Obtainable Market (SOM)",
+    "cagr": "CAGR",
+    "tam2026": "2026 TAM",
+    "tam2030": "2030 TAM",
+    "sam2030": "2030 SAM",
+    "samFilterAssumptions": "SAM Filter Assumptions",
+    "spendPools": "EU AI Spend Pools",
+    "revenuePath": "Revenue Path 2027–2030",
+    "revenueMix": "Revenue Mix",
+    "tamSamSomWaterfall": "TAM → SAM → SOM Waterfall (2030)",
+    "marketPool": "Market pool",
+    "filteredOut": "Filtered out",
+    "serviceable": "Serviceable",
+    "methodologyNote": "Methodology note",
+    "spendPool": "Spend Pool",
+    "total": "Total",
+    "charts": {
+      "waterfall": {
+        "tam2030": "2030 TAM",
+        "samFilter": "→ SAM filter",
+        "sam": "SAM",
+        "somFilter": "→ SOM",
+        "som": "SOM (base)"
+      },
+      "compositionLabels": {
+        "apiCommitted": "API & committed consumption",
+        "kimiCode": "Kimi Business & Code",
+        "privateSovereign": "Private & sovereign",
+        "oemChannel": "OEM & channel",
+        "services": "Services & evaluation"
+      },
+      "revenueMixLabels": {
+        "apiSelfService": "API Self-Service",
+        "apiCommitted": "API Committed Consumption",
+        "kimiCode": "Kimi Code (seat)",
+        "kimiBusinessSeat": "Kimi Business (seat)",
+        "managedVpc": "Managed VPC",
+        "sovereign": "Sovereign / Private",
+        "oem": "OEM / Embedded API",
+        "services": "Services & Evaluation"
+      }
+    },
+    "pools": {
+      "workspace": "Workspace & Coding Seats",
+      "api": "API & Agent Inference",
+      "private": "Private & Sovereign Deployments",
+      "oem": "OEM & Embedded Models",
+      "services": "Services & Customization"
+    },
+    "assumptions": {
+      "title": "Editable Assumptions",
+      "workers": "Addressable knowledge workers",
+      "paidPenetration": "Paid penetration",
+      "seatSpend": "Annual seat spend (€)",
+      "apiOrgs": "Production API organizations",
+      "apiSpend": "Annual API spend (€)",
+      "privateDeployments": "Private deployments",
+      "privateACV": "Private annual contract (€)",
+      "oemPartners": "OEM partners",
+      "oemACV": "OEM annual contract (€)",
+      "servicesRate": "Services rate",
+      "countryCoverage": "Target-country coverage",
+      "productFit": "Product & workload fit",
+      "procurementReach": "Regulatory & procurement reach",
+      "attainableShare": "Attainable share",
+      "targetCountryCoverage": "Target Country Coverage",
+      "productMarketFit": "Product-Market Fit",
+      "procurementReachLabel": "Procurement Reach",
+      "targetCountryDesc": "% of TAM addressable across 9 priority markets",
+      "productFitDesc": "% of SAM where Kimi has relevant products",
+      "procurementReachDesc": "% we can realistically win in procurement"
+    }
+  },
+  "countries": {
+    "title": "Country Navigator",
+    "subtitle": "9 priority markets across the EU and EEA, with extended coverage of 21 countries",
+    "scoringNote": "Scores are directional analyst assessments and are editable planning inputs.",
+    "columns": {
+      "country": "Country",
+      "score": "Score",
+      "role": "Strategic Role",
+      "phase": "Launch Phase",
+      "entryMode": "Entry Mode"
+    },
+    "phases": {
+      "2027H1": "H1 2027",
+      "2027H2": "H2 2027",
+      "2028": "2028",
+      "later": "2028+"
+    },
+    "radar": {
+      "score": "Score",
+      "aiReadiness": "AI Readiness",
+      "marketSize": "Market Size",
+      "workloads": "Workloads",
+      "phasePriority": "Phase Priority"
+    },
+    "table": {
+      "title": "Country Scoring",
+      "sortBy": "Sort by:"
+    }
+  },
+  "portfolio": {
+    "title": "Product & Revenue Stack",
+    "subtitle": "Commercial offer ladder and task-cost calculator",
+    "offerNote": "All price ranges are illustrative assumptions requiring customer validation.",
+    "calculator": {
+      "title": "Task-Cost Calculator",
+      "model": "Model",
+      "inputTokens": "Input tokens per request",
+      "outputTokens": "Output tokens per request",
+      "cachedPct": "Cached-input %",
+      "requestsPerDay": "Requests per day",
+      "successRate": "Successful-task rate",
+      "costPerRequest": "Cost per request",
+      "costPerTask": "Cost per completed task",
+      "monthlyCost": "Monthly cost",
+      "annualCost": "Annual cost"
+    }
+  },
+  "useCases": {
+    "title": "Use-Case Atlas",
+    "subtitle": "{prioritised} prioritised use cases across sectors, tiers, and deployment modes ({excluded} excluded)",
+    "all": "All",
+    "tier1": "Tier 1 — Launch immediately",
+    "tier2": "Tier 2 — Launch with stronger governance",
+    "tier3": "Tier 3 — Later or restricted",
+    "excluded": "Do Not Launch Initially",
+    "excludedTitle": "Do Not Launch — AI Act Restrictions",
+    "excludedNote": "These use cases are explicitly excluded from initial launch due to AI Act high-risk classification or fundamental-rights concerns.",
+    "tiers": {
+      "t1": "Tier 1 — Launch immediately",
+      "t2": "Tier 2 — Launch with stronger governance",
+      "t3": "Tier 3 — Later or restricted",
+      "excluded": "Do Not Launch Initially"
+    }
+  },
+  "competition": {
+    "title": "Competition Arena",
+    "subtitle": "Directional capability scores — analyst assessments, editable",
+    "scoresNote": "Scores are directional analyst assessments on a 1–5 scale. Editable planning assumptions, not validated benchmarks.",
+    "pricing": {
+      "priceWarning": "API prices change frequently. Verify against the provider's current pricing page before commercial commitments."
+    },
+    "dimensions": {
+      "frontierQuality": "Frontier quality",
+      "agenticCoding": "Agentic coding",
+      "longContext": "Long context & multimodal",
+      "taskEconomics": "Task economics",
+      "openDeployment": "Open/private deployment",
+      "euHosting": "EU hosting readiness",
+      "enterpriseControls": "Enterprise controls",
+      "distribution": "Distribution & integrations",
+      "trustCompliance": "Trust & compliance",
+      "euPartnerability": "EU brand & partnerability"
+    },
+    "chart": {
+      "capabilityRadar": "Capability Radar",
+      "selectCompetitors": "Select competitors for radar",
+      "noCompetitorsSelected": "Select competitors above to display radar",
+      "heatmapTitle": "Capability Score Heatmap (1–5 scale)",
+      "pricingTitle": "API Pricing ($ per million tokens)",
+      "dimension": "Dimension"
+    }
+  },
+  "regulation": {
+    "title": "Regulatory & Trust Center",
+    "subtitle": "EU AI Act, GPAI, data protection, NIS2, and trust architecture",
+    "disclaimer": "This application is a strategic planning tool and does not constitute legal advice. Regulatory classifications, obligations, and implementation timelines must be validated by qualified EU and UK counsel.",
+    "complianceStatusTitle": "Compliance Status",
+    "done": "Done",
+    "inProgress": "In Progress",
+    "pending": "Pending",
+    "blocked": "Blocked",
+    "all": "All",
+    "timeline": { "title": "Regulatory Timeline" },
+    "workstreams": {
+      "title": "Compliance Workstreams",
+      "statuses": {
+        "pending": "Pending",
+        "inProgress": "In progress",
+        "done": "Done",
+        "blocked": "Blocked"
+      }
+    },
+    "stageGates": {
+      "title": "Stage Gates",
+      "gateA": "Gate A — EU GA",
+      "gateB": "Gate B — Enterprise launch",
+      "gateC": "Gate C — Regulated verticals",
+      "gateD": "Gate D — Sovereignty claim",
+      "gateE": "Gate E — Private K3"
+    }
+  },
+  "gtm": {
+    "title": "Go-to-Market Playbooks",
+    "subtitle": "10 GTM motions and an interactive pilot builder",
+    "tabMotions": "GTM Motions",
+    "tabPilot": "Pilot Builder",
+    "buildPilot": "Build a Pilot",
+    "pilot": {
+      "title": "Pilot Builder",
+      "subtitle": "Configure a 6–8 week production pilot",
+      "customer": "Customer name",
+      "country": "Country",
+      "workflow": "Workflow to pilot",
+      "model": "Kimi model",
+      "duration": "Duration (weeks)",
+      "budget": "Budget (€)",
+      "generate": "Generate pilot plan"
+    }
+  },
+  "partners": {
+    "title": "Partner Ecosystem",
+    "subtitle": "Target partner map across cloud, telco, SI, ISV, academic, and reseller categories",
+    "disclaimer": "Partner records are illustrative planning targets. No existing partnership is implied."
+  },
+  "roadmap": {
+    "title": "Roadmap & Stage Gates",
+    "subtitle": "5-phase plan from September 2026 through 2030",
+    "exitGate": "Exit gate",
+    "objective": "Phase objective"
+  },
+  "organization": {
+    "title": "Organization & Skills Builder",
+    "subtitle": "Hiring plan and capability gaps"
+  },
+  "financials": {
+    "title": "Revenue, Sales Capacity & Investment",
+    "subtitle": "Editable financial model — all margin values are planning assumptions",
+    "costs": {
+      "note": "Gross margin is not seeded as a fact. All cost values are editable planning assumptions."
+    }
+  },
+  "risks": {
+    "title": "Risk Register",
+    "subtitle": "12 principal risks with editable severity",
+    "severities": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "chart": {
+      "title": "Risk Matrix (Likelihood × Severity)",
+      "likelihood": "Likelihood",
+      "severity": "Severity",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    }
+  },
+  "sources": {
+    "title": "Source Library",
+    "subtitle": "{count} seeded sources — S1 to S{count}",
+    "confidenceLabel": "confidence",
+    "retrievedLabel": "Retrieved",
+    "originalLabel": "Original",
+    "translationLabel": "Chinese translation (中文译文)",
+    "onlyEnglish": "Source available in English only"
+  },
+  "memo": {
+    "title": "Board Memo",
+    "subtitle": "Print-ready executive decision document",
+    "exportJson": "Export JSON",
+    "print": "Print",
+    "languageSelector": {
+      "label": "Language",
+      "en": "English",
+      "zhCN": "简体中文",
+      "bilingual": "双语 Bilingual"
+    },
+    "sections": {
+      "decision": "Decision Required",
+      "recommendation": "Executive Recommendation",
+      "market": "Market Opportunity",
+      "countries": "Country Sequence",
+      "revenue": "Financial Scenarios",
+      "competition": "Competition",
+      "regulation": "Regulatory Readiness",
+      "roadmap": "Roadmap",
+      "risks": "Principal Risks",
+      "decisionsLog": "Decision Log",
+      "assumptions": "Key Assumptions",
+      "decisionRequired": "Decision Required",
+      "marketOpportunity": "Market Opportunity",
+      "countrySequence": "Country Sequence",
+      "regulatoryReadiness": "Regulatory Readiness",
+      "financials": "Financial Scenarios",
+      "decisions90": "Decisions for the Next 90 Days",
+      "sources": "Source References"
+    },
+    "exportOptions": {
+      "english": "Export in English",
+      "chinese": "Export in Chinese",
+      "bilingual": "Export bilingual",
+      "json": "Export as JSON",
+      "print": "Print"
+    }
+  },
+  "decisions": {
+    "title": "Decision Log",
+    "subtitle": "Track and log all strategic decisions",
+    "add": "Add decision",
+    "addDecision": "Add decision",
+    "emptyState": "No decisions logged yet. Add the first decision to start tracking.",
+    "status": {
+      "proposed": "Proposed",
+      "underReview": "Under review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "deferred": "Deferred",
+      "superseded": "Superseded"
+    },
+    "statuses": {
+      "proposed": "Proposed",
+      "underReview": "Under review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "deferred": "Deferred",
+      "superseded": "Superseded"
+    },
+    "translationStatuses": {
+      "notTranslated": "Not translated",
+      "draft": "Draft",
+      "reviewed": "Reviewed",
+      "approved": "Approved"
+    },
+    "languageNote": "User-entered content is preserved in the original language. Do not mark translations as approved without human review."
+  },
+  "commandPalette": {
+    "placeholder": "Search pages, countries, risks, competitors…",
+    "actions": {
+      "goToCockpit": "Go to Executive Decision Room",
+      "changeScenario": "Change scenario",
+      "openEvidence": "Open evidence drawer",
+      "switchToCompliance": "Switch to Compliance Mode",
+      "switchToBoard": "Switch to Board Mode",
+      "switchToSales": "Switch to Sales Mode",
+      "switchToOperator": "Switch to Operator Mode",
+      "generateBrief": "Generate two-page brief",
+      "exportMemo": "Export board memo",
+      "toggleLanguage": "Switch language"
+    }
+  },
+  "keyboard": {
+    "title": "Keyboard Shortcuts"
+  },
+  "glossary": {
+    "title": "Strategic Glossary",
+    "subtitle": "Controlled bilingual terminology"
+  },
+  "strategy": {
+    "title": "Strategic Thesis",
+    "subtitle": "Core thesis, principles, and strategic logic"
+  },
+  "mapLayers": {
+    "priority": "Strategic Priority",
+    "score": "Country Attractiveness",
+    "wave": "Launch Wave",
+    "regulation": "Regulatory Complexity",
+    "revenue": "Revenue Potential"
+  },
+  "countryPage": {
+    "openProfile": "Open full country profile",
+    "addToComparison": "Add to comparison",
+    "backToMap": "Back to map",
+    "prevCountry": "Previous country",
+    "nextCountry": "Next country",
+    "tabs": {
+      "executive": "Executive Summary",
+      "market": "Market & Industries",
+      "useCases": "Use Cases",
+      "commercial": "Product & Commercial",
+      "regulation": "Regulation & Trust",
+      "economics": "Economics",
+      "roadmap": "Roadmap & Team",
+      "evidence": "Evidence & Sources"
+    },
+    "whyNow": "Why now",
+    "rightToWin": "Right to win",
+    "mainBlocker": "Main blocker",
+    "whatWouldChange": "What would change our recommendation?",
+    "decisionRequired": "Decision required"
+  },
+  "comparison": {
+    "title": "Country Comparison",
+    "addCountry": "Add country",
+    "removeCountry": "Remove",
+    "export": "Export comparison"
+  },
+  "ninetyDays": {
+    "title": "Your 90-Day Thesis",
+    "subtitle": "This is how I would spend my first 90 days as Moonshot AI's EU Business Builder."
+  },
+  "sequence": {
+    "title": "Entry Sequence Simulator",
+    "subtitle": "Drag to reorder countries. The simulator shows cumulative revenue and first-market risk for any sequence.",
+    "firstRisk": "First market risk",
+    "timeToTarget": "Time to €50M ARR (est.)",
+    "scenarioLabel": "Scenario name",
+    "reset": "Reset to recommended",
+    "saveToLog": "Save to Decision Log",
+    "dragHint": "Drag to reorder"
+  }
+,
+  "intro": {
+    "headline": "How I would build Kimi's European API revenue — from zero.",
+    "byline": "An interactive strategy analysis by Thomas Zijlstra — prepared for Moonshot AI, August 2026",
+    "question": "How much revenue could you bring in, and how would you navigate the European market?",
+    "questionSource": "Moonshot AI HR interview",
+    "thesis": "Start with UK developers, anchor in the Netherlands, scale through German enterprise — and build an EU trust architecture that no US hyperscaler or Chinese competitor can match.",
+    "viewCV": "View CV",
+    "enterStrategy": "Enter the strategy",
+    "aboutAnalysis": "About this analysis",
+    "disclaimer": "This analysis does not represent Moonshot AI internal views. Prepared independently for interview purposes."
+  }}

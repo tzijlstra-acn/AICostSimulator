@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Lunar command center theme */
+    --background: 220 35% 5%;
+    --foreground: 220 30% 93%;
+    --card: 222 38% 8%;
+    --card-foreground: 220 30% 93%;
+    --popover: 222 38% 9%;
+    --popover-foreground: 220 30% 93%;
+    --primary: 199 100% 50%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 222 30% 14%;
+    --secondary-foreground: 220 30% 93%;
+    --muted: 222 30% 14%;
+    --muted-foreground: 220 16% 55%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 220 30% 93%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 28% 18%;
+    --input: 222 30% 14%;
+    --ring: 199 100% 50%;
+    --radius: 0.5rem;
+    --chart-1: 199 100% 50%;
+    --chart-2: 262 83% 65%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 160 84% 39%;
+    --chart-5: 0 84% 60%;
+
+    /* Custom lunar tokens */
+    --lunar-bg: #070b14;
+    --lunar-surface: #0d1420;
+    --lunar-elevated: #131c2e;
+    --lunar-panel: #1a2438;
+    --lunar-border-subtle: rgba(100, 140, 200, 0.08);
+    --lunar-border-strong: rgba(100, 140, 200, 0.18);
+    --lunar-text-primary: #e8eef8;
+    --lunar-text-secondary: #7a90b0;
+    --lunar-text-muted: #4a5a7a;
+    --lunar-cyan: #00d4ff;
+    --lunar-violet: #a855f7;
+    --lunar-amber: #f59e0b;
+    --lunar-red: #ef4444;
+    --lunar-green: #10b981;
+    --lunar-cyan-glow: rgba(0, 212, 255, 0.06);
+  }
+}
+
+/* Light mode overrides */
+html.light {
+  --lunar-bg: #f0f4fa;
+  --lunar-surface: #ffffff;
+  --lunar-elevated: #f8fafc;
+  --lunar-panel: #eef2f8;
+  --lunar-border-subtle: rgba(100, 140, 200, 0.15);
+  --lunar-border-strong: rgba(100, 140, 200, 0.3);
+  --lunar-text-primary: #0f172a;
+  --lunar-text-secondary: #334155;
+  --lunar-text-muted: #64748b;
+  --lunar-cyan: #0284c7;
+  --lunar-violet: #7c3aed;
+  --lunar-amber: #d97706;
+  --lunar-red: #dc2626;
+  --lunar-green: #059669;
+  --lunar-cyan-glow: rgba(2, 132, 199, 0.06);
+}
+
+html.light body {
+  background-color: var(--lunar-bg);
+  color: var(--lunar-text-primary);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    background-color: var(--lunar-bg);
+    color: var(--lunar-text-primary);
+    font-family: Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Subtle dot-grid texture at 2% opacity */
+    background-image: radial-gradient(circle, rgba(100, 140, 200, 0.025) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Skip navigation for accessibility */
+  .skip-nav {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded;
+    background: var(--lunar-cyan);
+    color: #000;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--lunar-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--lunar-border-strong);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 212, 255, 0.45);
+  }
+}
+
+@layer components {
+  .lunar-card {
+    background: var(--lunar-surface);
+    border: 1px solid var(--lunar-border-subtle);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .lunar-card-active {
+    background: var(--lunar-surface);
+    border: 1px solid var(--lunar-cyan-glow);
+    border-color: rgba(0, 212, 255, 0.25);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.08), inset 0 0 20px rgba(0, 212, 255, 0.03);
+  }
+
+  .lunar-panel {
+    background: var(--lunar-panel);
+    border: 1px solid var(--lunar-border-subtle);
+    border-radius: 0.75rem;
+  }
+
+  .stat-number {
+    font-size: 1.875rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--lunar-text-primary);
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--lunar-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-fact {
+    @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono font-medium;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--lunar-cyan);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+  }
+
+  .badge-model {
+    @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono font-medium;
+    background: rgba(168, 85, 247, 0.1);
+    color: var(--lunar-violet);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+  }
+
+  .badge-assumption {
+    @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono font-medium cursor-pointer;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--lunar-amber);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  .badge-recommendation {
+    @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono font-medium;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--lunar-green);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+
+  .badge-open-question {
+    @apply inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono font-medium;
+    background: rgba(74, 90, 122, 0.3);
+    color: var(--lunar-text-secondary);
+    border: 1px solid var(--lunar-border-subtle);
+  }
+
+  /* Crescent logo mark */
+  .kimi-mark {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: inset -8px 0 0 2px var(--lunar-cyan);
+    transform: rotate(-20deg);
+    flex-shrink: 0;
+  }
+
+  .section-header {
+    @apply text-xs font-semibold uppercase tracking-widest;
+    color: var(--lunar-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors;
+    color: var(--lunar-text-secondary);
+  }
+
+  .nav-item:hover {
+    background: rgba(100, 140, 200, 0.08);
+    color: var(--lunar-text-primary);
+  }
+
+  .nav-item.active {
+    background: rgba(0, 212, 255, 0.08);
+    color: var(--lunar-cyan);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+  }
+
+  /* Status badges */
+  .status-pending {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+    background: rgba(74, 90, 122, 0.3);
+    color: var(--lunar-text-secondary);
+  }
+
+  .status-in-progress {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--lunar-amber);
+  }
+
+  .status-done {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--lunar-green);
+  }
+
+  .status-blocked {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--lunar-red);
+  }
+}
+
+@layer utilities {
+  .text-cyan { color: var(--lunar-cyan); }
+  .text-violet { color: var(--lunar-violet); }
+  .text-lunar-primary { color: var(--lunar-text-primary); }
+  .text-lunar-secondary { color: var(--lunar-text-secondary); }
+  .text-lunar-muted { color: var(--lunar-text-muted); }
+  .bg-lunar-base { background: var(--lunar-bg); }
+  .bg-lunar-surface { background: var(--lunar-surface); }
+  .bg-lunar-elevated { background: var(--lunar-elevated); }
+  .bg-lunar-panel { background: var(--lunar-panel); }
+  .border-subtle { border-color: var(--lunar-border-subtle); }
+  .border-strong { border-color: var(--lunar-border-strong); }
+}
+
+/* ── Animation keyframes ──────────────────────────────────────────── */
+
+/* CV button persistent glow pulse */
+@keyframes cv-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4), 0 0 6px rgba(0, 212, 255, 0.1); }
+  50%       { box-shadow: 0 0 0 5px rgba(0, 212, 255, 0), 0 0 12px rgba(0, 212, 255, 0.25); }
+}
+.cv-pulse-btn {
+  animation: cv-glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* Intro headline shimmer */
+@keyframes headline-shimmer {
+  0%, 100% { text-shadow: 0 0 40px rgba(0, 212, 255, 0); }
+  50%       { text-shadow: 0 0 60px rgba(0, 212, 255, 0.13), 0 0 20px rgba(0, 212, 255, 0.06); }
+}
+.headline-glow-anim {
+  animation: headline-shimmer 5s ease-in-out infinite;
+}
+
+/* Hero bottom border flow */
+@keyframes border-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.hero-animated-border {
+  position: relative;
+}
+.hero-animated-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #00d4ff 30%, #a855f7 70%, transparent 100%);
+  background-size: 200% 100%;
+  animation: border-flow 5s linear infinite;
+}
+
+/* CTA button glow pulse */
+@keyframes cta-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.5), 0 4px 14px rgba(0, 212, 255, 0.2); }
+  50%       { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0), 0 4px 22px rgba(0, 212, 255, 0.4); }
+}
+.cta-pulse-btn {
+  animation: cta-glow 3s ease-in-out infinite;
+}
+
+/* Nav card hover glow (uses --card-glow CSS var set inline) */
+.nav-card-glow {
+  transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.nav-card-glow:hover {
+  box-shadow: 0 0 22px var(--card-glow, rgba(0, 212, 255, 0.15));
+  transform: translateY(-2px);
+}
+
+/* Sidebar personal nav item — subtle cyan tint when not active */
+.nav-item-personal {
+  color: rgba(0, 212, 255, 0.65) !important;
+}
+.nav-item-personal:hover {
+  color: var(--lunar-cyan) !important;
+  background: rgba(0, 212, 255, 0.07) !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print styles for /memo */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
+  .print-only { display: block !important; }
+  .lunar-card, .lunar-panel { border: 1px solid #ccc; background: white; }
+}
