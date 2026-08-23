@@ -310,6 +310,8 @@
     "tabMotions": "GTM Motions",
     "tabPilot": "Pilot Builder",
     "buildPilot": "Build a Pilot",
+    "pilotSummary": "Pilot Summary",
+    "defaultMethodology": "Default methodology applied. Adjust inputs to refine the pilot plan.",
     "pilot": {
       "title": "Pilot Builder",
       "subtitle": "Configure a 6–8 week production pilot",

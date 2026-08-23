@@ -1,8 +1,3 @@
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
-
-export default createMiddleware(routing);
-
-export const config = {
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
-};
+// Middleware is disabled for static export (GitHub Pages).
+// Locale routing is handled via path prefix (/en/, /zh-CN/) generated at build time.
+export {};

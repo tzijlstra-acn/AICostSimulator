@@ -4,7 +4,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppShell } from "@/components/layout/AppShell";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -15,6 +15,10 @@ const notoSansSC = Noto_Sans_SC({
   variable: "--font-noto",
   preload: false,
 });
+
+export function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'zh-CN' }];
+}
 
 export const metadata: Metadata = {
   title: "Moonshot AI · Kimi Europe Expansion OS",
@@ -35,6 +39,9 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as "en" | "zh-CN")) {
     notFound();
   }
+
+  // Set locale from path so next-intl doesn't need to read headers (required for static export)
+  setRequestLocale(locale);
 
   // Load messages for this locale
   const messages = await getMessages();

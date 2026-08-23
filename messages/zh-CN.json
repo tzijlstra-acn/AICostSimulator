@@ -310,6 +310,8 @@
     "tabMotions": "GTM 推进方式",
     "tabPilot": "试点方案构建器",
     "buildPilot": "构建试点方案",
+    "pilotSummary": "试点摘要",
+    "defaultMethodology": "已应用默认方法论。请调整输入参数以优化试点方案。",
     "pilot": {
       "title": "试点方案构建器",
       "subtitle": "配置 6–8 周生产环境试点",
