@@ -3,6 +3,7 @@ import { Inter, Noto_Sans_SC } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppShell } from "@/components/layout/AppShell";
+import { LocaleBadgeLabelsProvider } from "@/components/layout/LocaleBadgeLabelsProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -48,18 +49,20 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem={false}
-      >
-        <div className={`${inter.variable} ${notoSansSC.variable}`} lang={locale}>
-          <a href="#main-content" className="skip-nav">
-            Skip to main content
-          </a>
-          <AppShell>{children}</AppShell>
-        </div>
-      </ThemeProvider>
+      <LocaleBadgeLabelsProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+        >
+          <div className={`${inter.variable} ${notoSansSC.variable}`} lang={locale}>
+            <a href="#main-content" className="skip-nav">
+              Skip to main content
+            </a>
+            <AppShell>{children}</AppShell>
+          </div>
+        </ThemeProvider>
+      </LocaleBadgeLabelsProvider>
     </NextIntlClientProvider>
   );
 }

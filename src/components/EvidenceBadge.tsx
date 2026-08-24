@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { getSource } from "@/data/sources";
-import { useTranslations } from "next-intl";
 
 type EvidenceType =
   | "FACT"
@@ -27,7 +26,38 @@ const TYPE_CLASSES: Record<EvidenceType, string> = {
   "OPEN QUESTION": "badge-open-question",
 };
 
-const TYPE_TO_KEY: Record<EvidenceType, string> = {
+// English defaults — used when no BadgeLabelsProvider is in the tree (e.g., non-locale pages)
+export const DEFAULT_BADGE_LABELS = {
+  fact: "FACT",
+  model: "MODEL",
+  assumption: "ASSUMPTION",
+  recommendation: "RECOMMENDATION",
+  openQuestion: "OPEN QUESTION",
+} as const;
+
+type BadgeLabels = typeof DEFAULT_BADGE_LABELS;
+
+const BadgeLabelsContext = createContext<BadgeLabels>(DEFAULT_BADGE_LABELS);
+
+/**
+ * Provide translated badge labels inside a NextIntlClientProvider tree.
+ * Wrap [locale]/layout children with this so EvidenceBadge picks up translations.
+ */
+export function BadgeLabelsProvider({
+  labels,
+  children,
+}: {
+  labels: BadgeLabels;
+  children: React.ReactNode;
+}) {
+  return (
+    <BadgeLabelsContext.Provider value={labels}>
+      {children}
+    </BadgeLabelsContext.Provider>
+  );
+}
+
+const TYPE_TO_KEY: Record<EvidenceType, keyof BadgeLabels> = {
   FACT: "fact",
   MODEL: "model",
   ASSUMPTION: "assumption",
@@ -44,8 +74,8 @@ export function EvidenceBadge({
 }: EvidenceBadgeProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const source = sourceId ? getSource(sourceId) : undefined;
-  const tCommon = useTranslations("common");
-  const label = tCommon(TYPE_TO_KEY[type] as Parameters<typeof tCommon>[0]);
+  const labels = useContext(BadgeLabelsContext);
+  const label = labels[TYPE_TO_KEY[type]];
 
   return (
     <span className="relative inline-block">
