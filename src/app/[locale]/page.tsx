@@ -94,7 +94,7 @@ export default function CockpitPage() {
     textStyle: { color: '#7a90b0' },
     tooltip: { trigger: "axis", backgroundColor: '#0d1420', borderColor: 'rgba(100,140,200,0.15)', textStyle: { color: '#e8eef8' } },
     legend: {
-      data: ["Conservative", "Base", "Upside"],
+      data: [tCommon("scenarios.conservative"), tCommon("scenarios.base"), tCommon("scenarios.upside")],
       textStyle: { color: '#7a90b0', fontSize: 11 },
       bottom: 0,
     },
@@ -118,7 +118,7 @@ export default function CockpitPage() {
     },
     series: [
       {
-        name: "Conservative",
+        name: tCommon("scenarios.conservative"),
         type: "line",
         smooth: true,
         data: Object.values(REVENUE_SCENARIOS.conservative.path),
@@ -127,7 +127,7 @@ export default function CockpitPage() {
         areaStyle: { color: "rgba(122,144,176,0.05)" },
       },
       {
-        name: "Base",
+        name: tCommon("scenarios.base"),
         type: "line",
         smooth: true,
         data: Object.values(REVENUE_SCENARIOS.base.path),
@@ -136,7 +136,7 @@ export default function CockpitPage() {
         areaStyle: { color: "rgba(0,212,255,0.07)" },
       },
       {
-        name: "Upside",
+        name: tCommon("scenarios.upside"),
         type: "line",
         smooth: true,
         data: Object.values(REVENUE_SCENARIOS.upside.path),
@@ -160,13 +160,13 @@ export default function CockpitPage() {
       >
         <div className="flex-1">
           <div className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: 'var(--lunar-cyan)', opacity: 0.8 }}>
-            A personal strategy deep-dive
+            {t("personalBanner.label")}
           </div>
           <div className="text-sm font-bold mb-1" style={{ color: 'var(--lunar-text-primary)' }}>
             Thomas Zijlstra → Moonshot AI · August 2026
           </div>
           <div className="text-xs leading-relaxed" style={{ color: 'var(--lunar-text-secondary)' }}>
-            You asked how much revenue I could bring in and how I&apos;d navigate Europe. I took that seriously — this is my answer.
+            {t("personalBanner.body")}
           </div>
         </div>
       </div>
@@ -174,12 +174,12 @@ export default function CockpitPage() {
       {/* View Mode Banner */}
       {viewMode !== 'board' && (
         <div className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm"
-          style={{ background: `${VIEW_MODE_CONTEXT[viewMode].color}10`, border: `1px solid ${VIEW_MODE_CONTEXT[viewMode].color}30` }}>
-          <span className="font-semibold text-xs" style={{ color: VIEW_MODE_CONTEXT[viewMode].color }}>
-            {VIEW_MODE_CONTEXT[viewMode].label}
+          style={{ background: `${VIEW_MODE_COLORS[viewMode]}10`, border: `1px solid ${VIEW_MODE_COLORS[viewMode]}30` }}>
+          <span className="font-semibold text-xs" style={{ color: VIEW_MODE_COLORS[viewMode] }}>
+            {tCommon(`viewMode.${viewMode}`)}
           </span>
           <span className="text-xs" style={{ color: 'var(--lunar-text-secondary)' }}>
-            {VIEW_MODE_CONTEXT[viewMode].desc}
+            {t(`viewModeDesc.${viewMode}`)}
           </span>
         </div>
       )}
@@ -208,7 +208,7 @@ export default function CockpitPage() {
           >
             {t("strategicVerdict")}
           </div>
-          <div className="text-xs mb-2" style={{ color: 'var(--lunar-text-muted)' }}>My strategic recommendation:</div>
+          <div className="text-xs mb-2" style={{ color: 'var(--lunar-text-muted)' }}>{t("myRecommendation")}</div>
           <div
             className="text-2xl font-bold leading-snug"
             style={{
@@ -232,23 +232,23 @@ export default function CockpitPage() {
       {/* Strategic View Callout */}
       <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
         <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--lunar-cyan)" }}>
-          My Strategic View
+          {t("strategicView.title")}
         </div>
         <p className="text-sm italic mb-4" style={{ color: "var(--lunar-text-secondary)" }}>
-          &ldquo;This is not a slide deck — it is a live, testable strategy with explicit kill criteria. Three sequenced hypotheses, each with a proof metric and an exit condition. If I am wrong about any of them, the model self-corrects before we burn resources.&rdquo;
+          &ldquo;{t("strategicView.note")}&rdquo;
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="space-y-1">
-            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>H1: UK Developer Beachhead</div>
-            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Outside EU AI Act jurisdiction in 2026, highest developer density in Europe, English-language — fastest path to first commercial signal and a reference customer.</p>
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>{t("strategicView.h1Label")}</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{t("strategicView.h1Body")}</p>
           </div>
           <div className="space-y-1">
-            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>H2: EU Compliance as Revenue Accelerator</div>
-            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Every US hyperscaler is still adjusting to the AI Act. Being first with a published compliance architecture turns a regulatory burden into a commercial filter that competitors cannot match until 2028.</p>
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>{t("strategicView.h2Label")}</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{t("strategicView.h2Body")}</p>
           </div>
           <div className="space-y-1">
-            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>H3: SI Ecosystem Lock-In</div>
-            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Three SI partnerships generate more pipeline than a 10-person direct sales team. SIs need a non-US AI option to offer clients — Kimi is the credible answer.</p>
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>{t("strategicView.h3Label")}</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{t("strategicView.h3Body")}</p>
           </div>
         </div>
       </div>
@@ -257,9 +257,9 @@ export default function CockpitPage() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Link href="/market" className="hover:ring-1 hover:ring-cyan-400/30 transition-all cursor-pointer rounded-xl block">
           <StatCard
-            label="2030 EU TAM"
+            label={t("kpis.euTam2030")}
             value={`€${TAM_2030_BASE.toFixed(1)}B`}
-            sub="Total addressable market — 5 spend pools"
+            sub={t("kpis.tam2030Sub")}
             evidenceType="MODEL"
             formula="workspace + api + private + oem + services"
             color="var(--lunar-cyan)"
@@ -267,7 +267,7 @@ export default function CockpitPage() {
         </Link>
         <Link href="/countries" className="hover:ring-1 hover:ring-cyan-400/30 transition-all cursor-pointer rounded-xl block">
           <StatCard
-            label="2030 EU SAM"
+            label={t("kpis.euSam2030")}
             value={`€${sam.toFixed(1)}B`}
             sub={`TAM × ${marketAssumptions.targetCountryPct}% × ${marketAssumptions.productFitPct}% × ${marketAssumptions.procurementReachPct}%`}
             evidenceType="MODEL"
@@ -287,7 +287,7 @@ export default function CockpitPage() {
         </Link>
         <Link href="/roadmap" className="hover:ring-1 hover:ring-cyan-400/30 transition-all cursor-pointer rounded-xl block">
           <StatCard
-            label="Market Share (base 2030)"
+            label={t("kpis.marketShare2030")}
             value="4.1%"
             sub="Of €13.3B SAM — base scenario"
             evidenceType="ASSUMPTION"
@@ -383,7 +383,7 @@ export default function CockpitPage() {
               {t("priorityCountries")}
             </h2>
             <Link href="/countries" className="text-xs" style={{ color: "var(--lunar-cyan)" }}>
-              9 priority markets →
+              {t("priorityMarketsLink")}
             </Link>
           </div>
           <div className="space-y-3">
@@ -460,14 +460,14 @@ export default function CockpitPage() {
         <div className="flex items-center justify-between mb-3">
           <div>
             <h2 className="text-sm font-semibold" style={{ color: "var(--lunar-text-primary)" }}>
-              European Market Strategy
+              {t("europeMapTitle")}
             </h2>
             <p className="text-xs mt-1" style={{ color: "var(--lunar-text-secondary)" }}>
-              The UK should create developer demand, Germany should establish enterprise credibility, and the Netherlands should coordinate the European operating model.
+              {t("europeMapDesc")}
             </p>
           </div>
           <Link href="/countries" className="text-xs flex items-center gap-1" style={{ color: "var(--lunar-cyan)" }}>
-            Open Country Navigator <ArrowRight size={12} />
+            {t("openCountryNavigator")} <ArrowRight size={12} />
           </Link>
         </div>
         <div className="w-full">
@@ -495,7 +495,7 @@ export default function CockpitPage() {
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-1">
               <h2 className="text-sm font-semibold" style={{ color: "var(--lunar-text-primary)" }}>
-                Competitive Position
+                {t("competitivePosition")}
               </h2>
               <EvidenceBadge type="RECOMMENDATION" reasoning="Strategic positioning judgment — not a validated external benchmark." />
             </div>
@@ -525,7 +525,7 @@ export default function CockpitPage() {
         >
           <AlertTriangle size={13} style={{ color: "var(--lunar-amber)", flexShrink: 0, marginTop: 1 }} aria-hidden="true" />
           <div>
-            <span className="font-bold" style={{ color: "var(--lunar-amber)" }}>What is NOT our moat: </span>
+            <span className="font-bold" style={{ color: "var(--lunar-amber)" }}>{t("notMoat")} </span>
             <span style={{ color: "var(--lunar-text-secondary)" }}>{COMPETITIVE_MOAT.notMoat}</span>
           </div>
         </div>
@@ -535,7 +535,7 @@ export default function CockpitPage() {
         >
           <HelpCircle size={13} style={{ color: "#a855f7", flexShrink: 0, marginTop: 1 }} aria-hidden="true" />
           <div>
-            <span className="font-bold" style={{ color: "#a855f7" }}>Open question: </span>
+            <span className="font-bold" style={{ color: "#a855f7" }}>{t("openQuestionLabel")} </span>
             <span style={{ color: "var(--lunar-text-secondary)" }}>{COMPETITIVE_MOAT.openQuestion}</span>
           </div>
         </div>

@@ -1,3 +1,6 @@
+import { NextIntlClientProvider } from "next-intl";
+import enMessages from "../../messages/en.json";
+
 export default function RootLayout({
   children,
 }: {
@@ -6,7 +9,10 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning>
       <body suppressHydrationWarning>
-        {children}
+        {/* Fallback provider for non-locale pages — locale layout overrides this with its own provider */}
+        <NextIntlClientProvider locale="en" messages={enMessages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
