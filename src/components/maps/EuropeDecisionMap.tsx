@@ -210,7 +210,8 @@ export function EuropeDecisionMap({
         <ZoomableGroup
           {...({ center: focus?.center ?? [0, 0], zoom: focus?.zoom ?? 1, minZoom: 0.8, maxZoom: 10 } as any)}
         >
-          <Geographies geography={europeGeoJson as Parameters<typeof Geographies>[0]['geography']}>
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          <Geographies geography={europeGeoJson as any}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const iso2 = (geo.properties.ISO_A2 && geo.properties.ISO_A2 !== '-99')
