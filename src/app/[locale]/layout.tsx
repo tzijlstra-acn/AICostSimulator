@@ -5,9 +5,13 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppShell } from "@/components/layout/AppShell";
 import { LocaleBadgeLabelsProvider } from "@/components/layout/LocaleBadgeLabelsProvider";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import enMessages from "../../../messages/en.json";
+import zhMessages from "../../../messages/zh-CN.json";
+
+const MESSAGES: Record<string, object> = { en: enMessages, "zh-CN": zhMessages };
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const notoSansSC = Noto_Sans_SC({
@@ -44,11 +48,8 @@ export default async function LocaleLayout({
   // Set locale from path so next-intl doesn't need to read headers (required for static export)
   setRequestLocale(locale);
 
-  // Load messages for this locale
-  const messages = await getMessages();
-
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={MESSAGES[locale] ?? enMessages}>
       <LocaleBadgeLabelsProvider>
         <ThemeProvider
           attribute="class"
