@@ -21,6 +21,8 @@ const notoSansSC = Noto_Sans_SC({
   preload: false,
 });
 
+export const dynamic = 'force-static';
+
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'zh-CN' }];
 }

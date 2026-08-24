@@ -3,6 +3,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import CountryProfileClient from './CountryProfileClient';
 
+export const dynamic = 'force-static';
+
 export function generateStaticParams() {
   const slugs = Object.keys(SLUG_TO_ISO2);
   return routing.locales.flatMap((locale) =>
