@@ -113,43 +113,28 @@ export default function CompetitionPage() {
       </div>
 
       {/* Executive Summary */}
-      <div
-        className="p-5 rounded-xl"
-        style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}
-      >
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
         <div className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "var(--lunar-cyan)" }}>
-          Key Takeaways & Positioning Actions
+          {t("execSummary.title")}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {[
-            {
-              headline: "Context is the differentiator",
-              body: "Kimi's 1M-token context window leads the market — up to 8× larger than GPT-4o. Document-heavy industries (legal, financial services, pharma) cannot be served by models with smaller windows. This is the single most defensible technical claim.",
-              color: "var(--lunar-cyan)",
-              action: "Open all enterprise sales calls with a live 1M-token context demonstration.",
-            },
-            {
-              headline: "EU compliance is a commercial moat",
-              body: "Kimi leads on EU Hosting and Trust/Compliance. While every US hyperscaler is still adjusting to the AI Act, this is the only enterprise-grade API with a native EU compliance architecture — a window that narrows by 2028 as competitors catch up.",
-              color: "#a855f7",
-              action: "Publish the EU AI Act self-assessment publicly before any US competitor does.",
-            },
-            {
-              headline: "Distribution gap is the critical risk",
-              body: "Distribution scores 2.8 — the weakest dimension. Without SI partnerships and cloud marketplace listings, a superior product risks being invisible to enterprise buyers who discover AI tools through trusted integrators, not direct outreach.",
-              color: "var(--lunar-amber)",
-              action: "Lock in 2 SI partnerships before scaling any direct sales motion.",
-            },
-          ].map((item) => (
-            <div key={item.headline} className="space-y-1.5">
-              <div className="text-sm font-bold" style={{ color: item.color }}>{item.headline}</div>
-              <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{item.body}</p>
-              <div className="text-xs font-medium mt-1 pt-1" style={{ color: "var(--lunar-text-muted)", borderTop: "1px solid var(--lunar-border-subtle)" }}>
-                <span className="font-semibold" style={{ color: item.color }}>Action: </span>
-                {item.action}
+          {([
+            { idx: 0, color: "var(--lunar-cyan)" },
+            { idx: 1, color: "#a855f7" },
+            { idx: 2, color: "var(--lunar-amber)" },
+          ] as const).map(({ idx, color }) => {
+            const item = t.raw(`execSummary.items.${idx}`) as { headline: string; body: string; action: string };
+            return (
+              <div key={idx} className="space-y-1.5">
+                <div className="text-sm font-bold" style={{ color }}>{item.headline}</div>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{item.body}</p>
+                <div className="text-xs font-medium mt-1 pt-1" style={{ color: "var(--lunar-text-muted)", borderTop: "1px solid var(--lunar-border-subtle)" }}>
+                  <span className="font-semibold" style={{ color }}>{t("execSummary.actionLabel")} </span>
+                  {item.action}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
