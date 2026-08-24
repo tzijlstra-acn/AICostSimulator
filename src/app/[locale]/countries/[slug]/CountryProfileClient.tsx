@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 
 const SCORE_BREAKDOWN: Record<string, [number, number, number, number]> = {
@@ -43,18 +43,9 @@ const EuropeDecisionMap = dynamic(
   { ssr: false }
 );
 
-const TABS = [
-  { id: 'executive', label: 'Executive Summary' },
-  { id: 'market', label: 'Market & Industries' },
-  { id: 'usecases', label: 'Use Cases' },
-  { id: 'commercial', label: 'Product & Commercial' },
-  { id: 'regulation', label: 'Regulation & Trust' },
-  { id: 'economics', label: 'Economics' },
-  { id: 'roadmap', label: 'Roadmap & Team' },
-  { id: 'evidence', label: 'Evidence & Sources' },
-] as const;
+const TAB_IDS = ['executive', 'market', 'usecases', 'commercial', 'regulation', 'economics', 'roadmap', 'evidence'] as const;
 
-type TabId = typeof TABS[number]['id'];
+type TabId = typeof TAB_IDS[number];
 
 // Ordered list of slugs for prev/next navigation
 const SLUG_ORDER = [
@@ -66,8 +57,21 @@ export default function CountryPage() {
   const params = useParams();
   const slug = params.slug as string;
   const locale = useLocale();
+  const tCountry = useTranslations('countryPage');
   const [activeTab, setActiveTab] = useState<TabId>('executive');
   const [scoreExpanded, setScoreExpanded] = useState(false);
+
+  // Tab labels derived from translations
+  const TABS = useMemo(() => [
+    { id: 'executive' as const, label: tCountry('tabs.executive') },
+    { id: 'market' as const, label: tCountry('tabs.market') },
+    { id: 'usecases' as const, label: tCountry('tabs.useCases') },
+    { id: 'commercial' as const, label: tCountry('tabs.commercial') },
+    { id: 'regulation' as const, label: tCountry('tabs.regulation') },
+    { id: 'economics' as const, label: tCountry('tabs.economics') },
+    { id: 'roadmap' as const, label: tCountry('tabs.roadmap') },
+    { id: 'evidence' as const, label: tCountry('tabs.evidence') },
+  ], [tCountry]);
 
   const iso2 = SLUG_TO_ISO2[slug];
   if (!iso2) {
@@ -107,7 +111,7 @@ export default function CountryPage() {
       <nav className="flex items-center gap-2 text-xs" style={{ color: 'var(--lunar-text-muted)' }} aria-label="Breadcrumb">
         <Link href={`/countries`} className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
           <Map size={12} />
-          Country Navigator
+          {tCountry('breadcrumb')}
         </Link>
         <ChevronRight size={12} />
         <span style={{ color: 'var(--lunar-text-primary)' }}>{names.en}</span>
@@ -170,7 +174,7 @@ export default function CountryPage() {
             style={{ background: 'rgba(0,212,255,0.1)', color: 'var(--lunar-cyan)', border: '1px solid rgba(0,212,255,0.2)' }}
           >
             <ArrowLeft size={12} />
-            Back to map
+            {tCountry('backToCountries')}
           </Link>
         </div>
       </div>
@@ -215,7 +219,7 @@ export default function CountryPage() {
             {/* KPI strip */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="lunar-card text-center">
-                <div className="stat-label mb-1">Attractiveness score</div>
+                <div className="stat-label mb-1">{tCountry('attractivenessScore')}</div>
                 <div className="text-3xl font-mono font-bold" style={{ color: 'var(--lunar-cyan)' }}>{detail.score}<span className="text-base font-normal" style={{ color: 'var(--lunar-text-muted)' }}>/100</span></div>
                 <button
                   onClick={() => setScoreExpanded(!scoreExpanded)}
@@ -223,7 +227,7 @@ export default function CountryPage() {
                   style={{ color: 'var(--lunar-cyan)' }}
                   aria-expanded={scoreExpanded}
                 >
-                  {scoreExpanded ? 'Hide breakdown ↑' : 'Explain →'}
+                  {scoreExpanded ? tCountry('hideBreakdown') : tCountry('explain')}
                 </button>
               </div>
               <div className="lunar-card text-center">

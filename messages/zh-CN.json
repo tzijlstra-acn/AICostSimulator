@@ -210,7 +210,23 @@
     "table": {
       "title": "国家优先级评分",
       "sortBy": "排序方式："
-    }
+    },
+    "mapLayerLabel": "地图图层",
+    "waveFilterLabel": "进入波次筛选",
+    "allWaves": "全部波次",
+    "compareCountries": "比较国家",
+    "sequenceSimulator": "进入顺序模拟器",
+    "extendedCoverage": "扩展覆盖国家",
+    "extendedCoverageDesc": "详细市场分析仅适用于9个优先市场。该国家作为生态背景被纳入跟踪，暂无完整战略档案。",
+    "comparePriorityMarkets": "改为比较优先市场",
+    "waveLabel": "进入波次",
+    "revenuePotentialBase": "收入潜力（基准情景）",
+    "by2030": "至2030年",
+    "mainBlocker": "主要阻断项",
+    "openFullProfile": "查看完整档案",
+    "addToComparison": "加入比较",
+    "topRankedCountries": "排名最高的国家",
+    "clickMapHint": "点击地图上的国家以查看其档案"
   },
   "portfolio": {
     "title": "产品与收入结构",
@@ -333,6 +349,9 @@
     "buildPilot": "构建试点方案",
     "pilotSummary": "试点摘要",
     "defaultMethodology": "已应用默认方法论。请调整输入参数以优化试点方案。",
+    "target": "目标客群",
+    "channels": "销售渠道",
+    "kpis": "关键指标",
     "pilot": {
       "title": "试点方案构建器",
       "subtitle": "配置 6–8 周生产环境试点",
@@ -342,13 +361,42 @@
       "model": "Kimi 模型",
       "duration": "周期（周）",
       "budget": "预算（欧元）",
-      "generate": "生成试点方案"
+      "generate": "生成试点方案",
+      "industry": "行业",
+      "currentBaseline": "当前基准指标",
+      "humanReviewers": "人工审核人员（角色与人数）",
+      "productionDecisionDate": "生产决策日期",
+      "kimiModelLabel": "Kimi 模型",
+      "dataSensitivity": "数据敏感级别",
+      "dataSensitivityPublic": "公开",
+      "dataSensitivityInternal": "内部",
+      "dataSensitivityConfidential": "保密",
+      "dataSensitivityRestricted": "受限",
+      "weeksUnit": "周",
+      "costEstimate": "成本预估",
+      "budgetPerWeek": "每周预算",
+      "inputTokenBudget": "输入 Token 预算（70%）",
+      "outputTokenBudget": "输出 Token 预算（30%）",
+      "customerLabel": "客户",
+      "countryLabel": "国家/地区",
+      "modelLabel": "模型",
+      "durationLabel": "周期",
+      "budgetLabel": "预算",
+      "dataSensitivityLabel": "数据敏感级别"
     }
   },
   "partners": {
     "title": "合作伙伴生态",
     "subtitle": "目标合作伙伴地图，涵盖云服务商、电信运营商、系统集成商、ISV、学术机构及经销商",
-    "disclaimer": "合作伙伴名单仅供规划参考，不代表任何已建立的合作关系。"
+    "disclaimer": "合作伙伴名单仅供规划参考，不代表任何已建立的合作关系。",
+    "all": "全部",
+    "fit": "契合度",
+    "geography": "覆盖地区",
+    "model": "商业模式",
+    "infra": "基础设施",
+    "regulated": "受监管行业",
+    "owner": "负责人",
+    "nextAction": "下一步行动"
   },
   "roadmap": {
     "title": "路线图与阶段门槛",
@@ -462,7 +510,23 @@
       "reviewed": "已审阅",
       "approved": "已批准"
     },
-    "languageNote": "用户输入内容以原始语言保存，翻译版本须经人工审核方可标记为已批准。"
+    "languageNote": "用户输入内容以原始语言保存，翻译版本须经人工审核方可标记为已批准。",
+    "newDecision": "新建决策",
+    "editDecision": "编辑决策",
+    "decisionLabel": "决策内容",
+    "decisionPlaceholder": "已做出或拟议的决策是什么？",
+    "statusLabel": "状态",
+    "ownerLabel": "负责人",
+    "ownerPlaceholder": "谁负责此决策？",
+    "rationaleLabel": "决策依据",
+    "rationalePlaceholder": "为什么做出此决策？",
+    "evidenceLabel": "证据 / 来源",
+    "evidencePlaceholder": "链接、来源ID、文件",
+    "update": "更新",
+    "saveDecision": "保存决策",
+    "ownerPrefix": "负责人",
+    "rationalePrefix": "决策依据",
+    "evidencePrefix": "证据"
   },
   "commandPalette": {
     "placeholder": "搜索页面、国家、风险、竞争对手……",
@@ -488,7 +552,19 @@
   },
   "strategy": {
     "title": "战略主张",
-    "subtitle": "核心论点、战略原则与战略逻辑"
+    "subtitle": "核心论点、战略原则与战略逻辑",
+    "narrativesTitle": "面向不同受众的战略叙事",
+    "boardNarrative": "董事会叙事",
+    "enterpriseBuyer": "企业买家",
+    "developerCommunity": "开发者社区",
+    "deadline": "截止日期",
+    "navLinks": {
+      "marketSizing": "市场规模测算",
+      "countryNavigator": "国家优先级导航",
+      "regulatoryRoadmap": "监管路线图",
+      "phaseRoadmap": "阶段路线图",
+      "riskRegister": "风险清单"
+    }
   },
   "mapLayers": {
     "priority": "战略优先级",
@@ -517,7 +593,12 @@
     "rightToWin": "制胜基础",
     "mainBlocker": "主要阻断项",
     "whatWouldChange": "哪些因素会改变我们的建议？",
-    "decisionRequired": "待决策事项"
+    "decisionRequired": "待决策事项",
+    "breadcrumb": "国家优先级导航",
+    "attractivenessScore": "吸引力评分",
+    "hideBreakdown": "收起拆分 ↑",
+    "explain": "查看拆分 →",
+    "backToCountries": "返回地图"
   },
   "comparison": {
     "title": "国家比较",

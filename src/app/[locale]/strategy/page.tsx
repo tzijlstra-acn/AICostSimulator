@@ -93,22 +93,22 @@ export default function StrategyPage() {
 
       {/* Narrative cards by audience */}
       <div>
-        <h2 className="section-header mb-4">Strategic Narratives by Audience</h2>
+        <h2 className="section-header mb-4">{t("narrativesTitle")}</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="lunar-card">
-            <div className="stat-label mb-2" style={{ color: "var(--lunar-violet)" }}>Board Narrative</div>
+            <div className="stat-label mb-2" style={{ color: "var(--lunar-violet)" }}>{t("boardNarrative")}</div>
             <p className="text-sm" style={{ color: "var(--lunar-text-secondary)" }}>
               {STRATEGIC_NARRATIVES.forBoard}
             </p>
           </div>
           <div className="lunar-card">
-            <div className="stat-label mb-2" style={{ color: "var(--lunar-cyan)" }}>Enterprise Buyer</div>
+            <div className="stat-label mb-2" style={{ color: "var(--lunar-cyan)" }}>{t("enterpriseBuyer")}</div>
             <p className="text-sm" style={{ color: "var(--lunar-text-secondary)" }}>
               {STRATEGIC_NARRATIVES.forEnterpriseBuyer}
             </p>
           </div>
           <div className="lunar-card">
-            <div className="stat-label mb-2" style={{ color: "var(--lunar-green)" }}>Developer Community</div>
+            <div className="stat-label mb-2" style={{ color: "var(--lunar-green)" }}>{t("developerCommunity")}</div>
             <p className="text-sm" style={{ color: "var(--lunar-text-secondary)" }}>
               {STRATEGIC_NARRATIVES.forDeveloper}
             </p>
@@ -142,7 +142,7 @@ export default function StrategyPage() {
                   {d.decision}
                 </div>
                 <div className="flex items-center gap-4 mt-1 text-xs" style={{ color: "var(--lunar-text-muted)" }}>
-                  <span>Deadline: {d.deadline}</span>
+                  <span>{t("deadline")}: {d.deadline}</span>
                   <span>{tCockpit("owner")}: {d.owner}</span>
                 </div>
                 <div className="text-xs mt-1" style={{ color: "var(--lunar-red)" }}>
@@ -157,11 +157,11 @@ export default function StrategyPage() {
       {/* Navigation links */}
       <div className="flex gap-3 flex-wrap">
         {[
-          { href: "/market" as const, label: "Market Sizing" },
-          { href: "/countries" as const, label: "Country Navigator" },
-          { href: "/regulation" as const, label: "Regulatory Roadmap" },
-          { href: "/roadmap" as const, label: "Phase Roadmap" },
-          { href: "/risks" as const, label: "Risk Register" },
+          { href: "/market" as const, label: t("navLinks.marketSizing") },
+          { href: "/countries" as const, label: t("navLinks.countryNavigator") },
+          { href: "/regulation" as const, label: t("navLinks.regulatoryRoadmap") },
+          { href: "/roadmap" as const, label: t("navLinks.phaseRoadmap") },
+          { href: "/risks" as const, label: t("navLinks.riskRegister") },
         ].map((link) => (
           <Link
             key={link.href}

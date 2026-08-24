@@ -150,7 +150,7 @@ export default function PartnersPage() {
             }}
             aria-pressed={filterCat === cat}
           >
-            {cat === "all" ? "All" : CATEGORY_LABELS[cat as PartnerCategory]}
+            {cat === "all" ? t("all") : CATEGORY_LABELS[cat as PartnerCategory]}
           </button>
         ))}
       </div>
@@ -185,18 +185,18 @@ export default function PartnersPage() {
                   className="text-xs"
                   style={{ color: STRATEGIC_FIT_COLORS[partner.strategicFit] }}
                 >
-                  {partner.strategicFit} fit
+                  {partner.strategicFit} {t("fit")}
                 </span>
               </div>
             </div>
 
             <div className="space-y-1.5 text-xs" style={{ color: "var(--lunar-text-secondary)" }}>
               <div>
-                <span className="font-medium" style={{ color: "var(--lunar-text-muted)" }}>Geography:</span>{" "}
+                <span className="font-medium" style={{ color: "var(--lunar-text-muted)" }}>{t("geography")}:</span>{" "}
                 {partner.geography.join(", ")}
               </div>
               <div>
-                <span className="font-medium" style={{ color: "var(--lunar-text-muted)" }}>Model:</span>{" "}
+                <span className="font-medium" style={{ color: "var(--lunar-text-muted)" }}>{t("model")}:</span>{" "}
                 {partner.commercialModel}
               </div>
               {partner.notes && (
@@ -213,17 +213,17 @@ export default function PartnersPage() {
               <div className="flex gap-2">
                 {partner.infrastructureCapability && (
                   <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: "rgba(0,212,255,0.1)", color: "var(--lunar-cyan)" }}>
-                    Infra
+                    {t("infra")}
                   </span>
                 )}
                 {partner.regulatedIndustryReach && (
                   <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: "rgba(168,85,247,0.1)", color: "var(--lunar-violet)" }}>
-                    Regulated
+                    {t("regulated")}
                   </span>
                 )}
               </div>
               <div className="text-xs" style={{ color: "var(--lunar-text-muted)" }}>
-                Owner: {partner.owner}
+                {t("owner")}: {partner.owner}
               </div>
             </div>
 
@@ -232,7 +232,7 @@ export default function PartnersPage() {
                 className="mt-2 text-xs px-2 py-1.5 rounded"
                 style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)", color: "var(--lunar-amber)" }}
               >
-                Next: {partner.nextAction}
+                {t("nextAction")}: {partner.nextAction}
               </div>
             )}
           </div>

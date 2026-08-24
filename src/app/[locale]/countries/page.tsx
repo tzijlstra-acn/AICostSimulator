@@ -27,6 +27,7 @@ function CountriesPageInner() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useTranslations('countries');
+  const tMapLayers = useTranslations('mapLayers');
 
   const rawCountryParam = searchParams.get('country');
   const [selectedISO2, setSelectedISO2] = useState<string | null>(
@@ -98,7 +99,7 @@ function CountriesPageInner() {
         <div className="flex flex-col gap-3">
           {/* Layer selector */}
           <div className="lunar-card p-3">
-            <div className="stat-label mb-2">Map Layer</div>
+            <div className="stat-label mb-2">{t('mapLayerLabel')}</div>
             <div className="flex flex-col gap-1">
               {(['priority', 'wave', 'score', 'regulation'] as const).map(l => (
                 <button
@@ -112,10 +113,7 @@ function CountriesPageInner() {
                   }}
                   aria-pressed={activeLayer === l}
                 >
-                  {l === 'priority' ? 'Strategic Priority' :
-                   l === 'wave' ? 'Launch Wave' :
-                   l === 'score' ? 'Country Attractiveness' :
-                   'Regulatory Complexity'}
+                  {tMapLayers(l as 'priority' | 'wave' | 'score' | 'regulation')}
                 </button>
               ))}
             </div>
@@ -123,7 +121,7 @@ function CountriesPageInner() {
 
           {/* Wave filter */}
           <div className="lunar-card p-3">
-            <div className="stat-label mb-2">Wave Filter</div>
+            <div className="stat-label mb-2">{t('waveFilterLabel')}</div>
             <div className="flex flex-col gap-1">
               {(['all', '2027H1', '2027H2', '2028', 'later'] as const).map(w => (
                 <button
@@ -137,7 +135,7 @@ function CountriesPageInner() {
                   }}
                   aria-pressed={waveFilter === w}
                 >
-                  {w === 'all' ? 'All waves' : PHASE_LABELS[w as keyof typeof PHASE_LABELS] || w}
+                  {w === 'all' ? t('allWaves') : PHASE_LABELS[w as keyof typeof PHASE_LABELS] || w}
                 </button>
               ))}
             </div>
@@ -150,7 +148,7 @@ function CountriesPageInner() {
             style={{ color: 'var(--lunar-cyan)', border: '1px solid rgba(0,212,255,0.2)' }}
           >
             <Plus size={12} />
-            Compare countries
+            {t('compareCountries')}
           </Link>
 
           {/* Sequence simulator link */}
@@ -160,7 +158,7 @@ function CountriesPageInner() {
             style={{ color: 'var(--lunar-violet)', border: '1px solid rgba(168,85,247,0.2)' }}
           >
             <Shuffle size={12} />
-            Sequence simulator
+            {t('sequenceSimulator')}
           </Link>
         </div>
 
@@ -204,10 +202,10 @@ function CountriesPageInner() {
                 style={{ background: 'rgba(0,212,255,0.04)', border: '1px solid rgba(0,212,255,0.12)' }}
               >
                 <div className="font-semibold mb-1" style={{ color: 'var(--lunar-cyan)' }}>
-                  Extended coverage country
+                  {t('extendedCoverage')}
                 </div>
                 <div style={{ color: 'var(--lunar-text-secondary)' }}>
-                  Detailed market analysis is available for the 9 priority markets. This country is tracked for ecosystem context but does not yet have a full strategy profile.
+                  {t('extendedCoverageDesc')}
                 </div>
               </div>
               <Link
@@ -216,7 +214,7 @@ function CountriesPageInner() {
                 style={{ background: 'var(--lunar-elevated)', color: 'var(--lunar-text-muted)', border: '1px solid var(--lunar-border-subtle)' }}
               >
                 <Plus size={12} />
-                Compare priority markets instead
+                {t('comparePriorityMarkets')}
               </Link>
             </div>
           ) : selectedDetail && selectedNames ? (
@@ -251,22 +249,22 @@ function CountriesPageInner() {
                 }}
               >
                 <EvidenceBadge type="RECOMMENDATION" className="inline mr-1" />
-                Wave: {selectedDetail.wave}
+                {t('waveLabel')}: {selectedDetail.wave}
               </div>
 
               <div className="space-y-2 text-xs">
                 <div>
-                  <div className="stat-label">Strategic Role</div>
+                  <div className="stat-label">{t('columns.role')}</div>
                   <div style={{ color: 'var(--lunar-text-primary)' }}>{selectedDetail.role}</div>
                 </div>
                 <div>
-                  <div className="stat-label">Revenue Potential (Base)</div>
+                  <div className="stat-label">{t('revenuePotentialBase')}</div>
                   <div style={{ color: 'var(--lunar-green)' }}>
-                    €{selectedDetail.revenuePotentialM.base}M by 2030
+                    €{selectedDetail.revenuePotentialM.base}M {t('by2030')}
                   </div>
                 </div>
                 <div>
-                  <div className="stat-label">Main Blocker</div>
+                  <div className="stat-label">{t('mainBlocker')}</div>
                   <div style={{ color: 'var(--lunar-amber)' }}>{selectedDetail.mainBlocker.slice(0, 80)}...</div>
                 </div>
               </div>
@@ -279,7 +277,7 @@ function CountriesPageInner() {
                     style={{ background: 'rgba(0,212,255,0.1)', color: 'var(--lunar-cyan)', border: '1px solid rgba(0,212,255,0.2)' }}
                   >
                     <ExternalLink size={12} />
-                    Open full profile
+                    {t('openFullProfile')}
                   </Link>
                 )}
                 <Link
@@ -288,14 +286,14 @@ function CountriesPageInner() {
                   style={{ background: 'var(--lunar-elevated)', color: 'var(--lunar-text-muted)', border: '1px solid var(--lunar-border-subtle)' }}
                 >
                   <Plus size={12} />
-                  Add to comparison
+                  {t('addToComparison')}
                 </Link>
               </div>
             </div>
           ) : (
             /* Top 3 when nothing selected */
             <div className="lunar-card flex-1">
-              <div className="stat-label mb-3">Top Ranked Countries</div>
+              <div className="stat-label mb-3">{t('topRankedCountries')}</div>
               <div className="space-y-3">
                 {top3.map((c, idx) => {
                   const iso2 = COUNTRY_ID_TO_ISO2[c.id] ?? c.id.toUpperCase();
@@ -330,7 +328,7 @@ function CountriesPageInner() {
                 })}
               </div>
               <div className="mt-3 text-xs" style={{ color: 'var(--lunar-text-muted)' }}>
-                Click a country on the map to see its profile
+                {t('clickMapHint')}
               </div>
             </div>
           )}
@@ -344,10 +342,10 @@ function CountriesPageInner() {
           style={{ borderColor: 'var(--lunar-border-subtle)' }}
         >
           <span className="text-sm font-semibold" style={{ color: 'var(--lunar-text-primary)' }}>
-            Country Scoring Table
+            {t('table.title')}
           </span>
           <div className="flex items-center gap-2">
-            <span className="text-xs" style={{ color: 'var(--lunar-text-muted)' }}>Sort by:</span>
+            <span className="text-xs" style={{ color: 'var(--lunar-text-muted)' }}>{t('table.sortBy')}</span>
             {(['score', 'phase', 'name'] as const).map(s => (
               <button
                 key={s}

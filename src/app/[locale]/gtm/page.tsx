@@ -94,16 +94,16 @@ export default function GTMPage() {
                   </p>
                   <div className="flex gap-4 text-xs">
                     <div>
-                      <span className="stat-label">Target</span>
+                      <span className="stat-label">{t("target")}</span>
                       <div style={{ color: "var(--lunar-text-secondary)" }}>{motion.targetSegment}</div>
                     </div>
                     <div>
-                      <span className="stat-label">Channels</span>
+                      <span className="stat-label">{t("channels")}</span>
                       <div style={{ color: "var(--lunar-text-secondary)" }}>{motion.channels.join(", ")}</div>
                     </div>
                   </div>
                   <div className="mt-2">
-                    <span className="stat-label">KPIs</span>
+                    <span className="stat-label">{t("kpis")}</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {motion.kpis.map((kpi) => (
                         <span
@@ -133,18 +133,18 @@ export default function GTMPage() {
             </h2>
             <div className="space-y-4">
               {[
-                { key: "customer" as const, label: "Customer Name", type: "text" },
-                { key: "country" as const, label: "Country", type: "text" },
-                { key: "industry" as const, label: "Industry", type: "text" },
-                { key: "workflow" as const, label: "Workflow Being Piloted", type: "text" },
-                { key: "currentBaseline" as const, label: "Current Baseline Metric", type: "text" },
-                { key: "humanReviewers" as const, label: "Human Reviewers (role + count)", type: "text" },
-                { key: "productionDecisionDate" as const, label: "Production Decision Date", type: "text" },
+                { key: "customer" as const, label: t("pilot.customer") },
+                { key: "country" as const, label: t("pilot.country") },
+                { key: "industry" as const, label: t("pilot.industry") },
+                { key: "workflow" as const, label: t("pilot.workflow") },
+                { key: "currentBaseline" as const, label: t("pilot.currentBaseline") },
+                { key: "humanReviewers" as const, label: t("pilot.humanReviewers") },
+                { key: "productionDecisionDate" as const, label: t("pilot.productionDecisionDate") },
               ].map((field) => (
                 <div key={field.key}>
                   <label className="stat-label mb-1 block">{field.label}</label>
                   <input
-                    type={field.type}
+                    type="text"
                     value={pilot[field.key]}
                     onChange={(e) => setPilot({ ...pilot, [field.key]: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg text-sm"
@@ -159,7 +159,7 @@ export default function GTMPage() {
               ))}
 
               <div>
-                <label className="stat-label mb-1 block">Kimi Model</label>
+                <label className="stat-label mb-1 block">{t("pilot.kimiModelLabel")}</label>
                 <select
                   value={pilot.kimiModel}
                   onChange={(e) => setPilot({ ...pilot, kimiModel: e.target.value })}
@@ -173,23 +173,23 @@ export default function GTMPage() {
               </div>
 
               <div>
-                <label className="stat-label mb-1 block">Data Sensitivity</label>
+                <label className="stat-label mb-1 block">{t("pilot.dataSensitivity")}</label>
                 <select
                   value={pilot.dataSensitivity}
                   onChange={(e) => setPilot({ ...pilot, dataSensitivity: e.target.value as PilotSpec["dataSensitivity"] })}
                   className="w-full px-3 py-2 rounded-lg text-sm"
                   style={{ background: "var(--lunar-elevated)", border: "1px solid var(--lunar-border-subtle)", color: "var(--lunar-text-primary)" }}
                 >
-                  <option value="public">Public</option>
-                  <option value="internal">Internal</option>
-                  <option value="confidential">Confidential</option>
-                  <option value="restricted">Restricted</option>
+                  <option value="public">{t("pilot.dataSensitivityPublic")}</option>
+                  <option value="internal">{t("pilot.dataSensitivityInternal")}</option>
+                  <option value="confidential">{t("pilot.dataSensitivityConfidential")}</option>
+                  <option value="restricted">{t("pilot.dataSensitivityRestricted")}</option>
                 </select>
               </div>
 
               <div>
                 <div className="flex justify-between mb-1">
-                  <label className="stat-label">Duration (weeks)</label>
+                  <label className="stat-label">{t("pilot.duration")}</label>
                   <span className="text-xs font-mono" style={{ color: "var(--lunar-cyan)" }}>{pilot.durationWeeks}</span>
                 </div>
                 <input
@@ -205,7 +205,7 @@ export default function GTMPage() {
 
               <div>
                 <div className="flex justify-between mb-1">
-                  <label className="stat-label">Budget (€)</label>
+                  <label className="stat-label">{t("pilot.budget")}</label>
                   <span className="text-xs font-mono" style={{ color: "var(--lunar-cyan)" }}>€{pilot.budget.toLocaleString()}</span>
                 </div>
                 <input
@@ -235,27 +235,27 @@ export default function GTMPage() {
               <h3 className="stat-label mb-3">{t("pilotSummary")}</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Customer</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.customerLabel")}</span>
                   <span style={{ color: "var(--lunar-text-primary)" }}>{pilot.customer || "—"}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Country</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.countryLabel")}</span>
                   <span style={{ color: "var(--lunar-text-primary)" }}>{pilot.country || "—"}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Model</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.modelLabel")}</span>
                   <span style={{ color: "var(--lunar-cyan)" }}>{pilot.kimiModel}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Duration</span>
-                  <span style={{ color: "var(--lunar-text-primary)" }}>{pilot.durationWeeks} weeks</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.durationLabel")}</span>
+                  <span style={{ color: "var(--lunar-text-primary)" }}>{pilot.durationWeeks} {t("pilot.weeksUnit")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Budget</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.budgetLabel")}</span>
                   <span style={{ color: "var(--lunar-text-primary)" }}>€{pilot.budget.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Data sensitivity</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.dataSensitivityLabel")}</span>
                   <span
                     style={{
                       color: pilot.dataSensitivity === "restricted" ? "var(--lunar-red)" : pilot.dataSensitivity === "confidential" ? "var(--lunar-amber)" : "var(--lunar-green)",
@@ -272,18 +272,18 @@ export default function GTMPage() {
                 style={{ borderTop: "1px solid var(--lunar-border-subtle)" }}
               >
                 <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--lunar-cyan)" }}>
-                  Cost estimate
+                  {t("pilot.costEstimate")}
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Budget / week</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.budgetPerWeek")}</span>
                   <span style={{ color: "var(--lunar-text-primary)" }}>€{budgetPerWeek.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Input token budget (70%)</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.inputTokenBudget")}</span>
                   <span style={{ color: "var(--lunar-text-primary)" }}>{(inputTokenBudget / 1_000_000).toFixed(1)}M tokens</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span style={{ color: "var(--lunar-text-muted)" }}>Output token budget (30%)</span>
+                  <span style={{ color: "var(--lunar-text-muted)" }}>{t("pilot.outputTokenBudget")}</span>
                   <span style={{ color: "var(--lunar-text-primary)" }}>{(outputTokenBudget / 1_000_000).toFixed(1)}M tokens</span>
                 </div>
                 {selectedModel && (

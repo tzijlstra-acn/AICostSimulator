@@ -210,7 +210,23 @@
     "table": {
       "title": "Country Scoring",
       "sortBy": "Sort by:"
-    }
+    },
+    "mapLayerLabel": "Map Layer",
+    "waveFilterLabel": "Wave Filter",
+    "allWaves": "All waves",
+    "compareCountries": "Compare countries",
+    "sequenceSimulator": "Sequence simulator",
+    "extendedCoverage": "Extended coverage country",
+    "extendedCoverageDesc": "Detailed market analysis is available for the 9 priority markets. This country is tracked for ecosystem context but does not yet have a full strategy profile.",
+    "comparePriorityMarkets": "Compare priority markets instead",
+    "waveLabel": "Wave",
+    "revenuePotentialBase": "Revenue Potential (Base)",
+    "by2030": "by 2030",
+    "mainBlocker": "Main Blocker",
+    "openFullProfile": "Open full profile",
+    "addToComparison": "Add to comparison",
+    "topRankedCountries": "Top Ranked Countries",
+    "clickMapHint": "Click a country on the map to see its profile"
   },
   "portfolio": {
     "title": "Product & Revenue Stack",
@@ -333,6 +349,9 @@
     "buildPilot": "Build a Pilot",
     "pilotSummary": "Pilot Summary",
     "defaultMethodology": "Default methodology applied. Adjust inputs to refine the pilot plan.",
+    "target": "Target",
+    "channels": "Channels",
+    "kpis": "KPIs",
     "pilot": {
       "title": "Pilot Builder",
       "subtitle": "Configure a 6–8 week production pilot",
@@ -342,13 +361,42 @@
       "model": "Kimi model",
       "duration": "Duration (weeks)",
       "budget": "Budget (€)",
-      "generate": "Generate pilot plan"
+      "generate": "Generate pilot plan",
+      "industry": "Industry",
+      "currentBaseline": "Current Baseline Metric",
+      "humanReviewers": "Human Reviewers (role + count)",
+      "productionDecisionDate": "Production Decision Date",
+      "kimiModelLabel": "Kimi Model",
+      "dataSensitivity": "Data Sensitivity",
+      "dataSensitivityPublic": "Public",
+      "dataSensitivityInternal": "Internal",
+      "dataSensitivityConfidential": "Confidential",
+      "dataSensitivityRestricted": "Restricted",
+      "weeksUnit": "weeks",
+      "costEstimate": "Cost estimate",
+      "budgetPerWeek": "Budget / week",
+      "inputTokenBudget": "Input token budget (70%)",
+      "outputTokenBudget": "Output token budget (30%)",
+      "customerLabel": "Customer",
+      "countryLabel": "Country",
+      "modelLabel": "Model",
+      "durationLabel": "Duration",
+      "budgetLabel": "Budget",
+      "dataSensitivityLabel": "Data sensitivity"
     }
   },
   "partners": {
     "title": "Partner Ecosystem",
     "subtitle": "Target partner map across cloud, telco, SI, ISV, academic, and reseller categories",
-    "disclaimer": "Partner records are illustrative planning targets. No existing partnership is implied."
+    "disclaimer": "Partner records are illustrative planning targets. No existing partnership is implied.",
+    "all": "All",
+    "fit": "fit",
+    "geography": "Geography",
+    "model": "Model",
+    "infra": "Infra",
+    "regulated": "Regulated",
+    "owner": "Owner",
+    "nextAction": "Next"
   },
   "roadmap": {
     "title": "Roadmap & Stage Gates",
@@ -462,7 +510,23 @@
       "reviewed": "Reviewed",
       "approved": "Approved"
     },
-    "languageNote": "User-entered content is preserved in the original language. Do not mark translations as approved without human review."
+    "languageNote": "User-entered content is preserved in the original language. Do not mark translations as approved without human review.",
+    "newDecision": "New Decision",
+    "editDecision": "Edit Decision",
+    "decisionLabel": "Decision",
+    "decisionPlaceholder": "What decision was made or is proposed?",
+    "statusLabel": "Status",
+    "ownerLabel": "Owner",
+    "ownerPlaceholder": "Who owns this decision?",
+    "rationaleLabel": "Rationale",
+    "rationalePlaceholder": "Why was this decision made?",
+    "evidenceLabel": "Evidence / Source",
+    "evidencePlaceholder": "Links, source IDs, documents",
+    "update": "Update",
+    "saveDecision": "Save Decision",
+    "ownerPrefix": "Owner",
+    "rationalePrefix": "Rationale",
+    "evidencePrefix": "Evidence"
   },
   "commandPalette": {
     "placeholder": "Search pages, countries, risks, competitors…",
@@ -488,7 +552,19 @@
   },
   "strategy": {
     "title": "Strategic Thesis",
-    "subtitle": "Core thesis, principles, and strategic logic"
+    "subtitle": "Core thesis, principles, and strategic logic",
+    "narrativesTitle": "Strategic Narratives by Audience",
+    "boardNarrative": "Board Narrative",
+    "enterpriseBuyer": "Enterprise Buyer",
+    "developerCommunity": "Developer Community",
+    "deadline": "Deadline",
+    "navLinks": {
+      "marketSizing": "Market Sizing",
+      "countryNavigator": "Country Navigator",
+      "regulatoryRoadmap": "Regulatory Roadmap",
+      "phaseRoadmap": "Phase Roadmap",
+      "riskRegister": "Risk Register"
+    }
   },
   "mapLayers": {
     "priority": "Strategic Priority",
@@ -517,7 +593,12 @@
     "rightToWin": "Right to win",
     "mainBlocker": "Main blocker",
     "whatWouldChange": "What would change our recommendation?",
-    "decisionRequired": "Decision required"
+    "decisionRequired": "Decision required",
+    "breadcrumb": "Country Navigator",
+    "attractivenessScore": "Attractiveness score",
+    "hideBreakdown": "Hide breakdown ↑",
+    "explain": "Explain →",
+    "backToCountries": "Back to map"
   },
   "comparison": {
     "title": "Country Comparison",

@@ -84,25 +84,25 @@ export default function DecisionsPage() {
       {showForm && (
         <div className="lunar-card" style={{ border: "1px solid rgba(0,212,255,0.2)" }}>
           <h2 className="text-sm font-semibold mb-4" style={{ color: "var(--lunar-text-primary)" }}>
-            {editId ? "Edit Decision" : "New Decision"}
+            {editId ? t("editDecision") : t("newDecision")}
           </h2>
           <div className="space-y-3">
             <div>
-              <label className="stat-label mb-1 block">Decision *</label>
+              <label className="stat-label mb-1 block">{t("decisionLabel")} *</label>
               <textarea
                 value={form.text}
                 onChange={(e) => setForm({ ...form, text: e.target.value })}
                 rows={2}
                 className="w-full px-3 py-2 rounded-lg text-sm resize-none"
                 style={{ background: "var(--lunar-elevated)", border: "1px solid var(--lunar-border-subtle)", color: "var(--lunar-text-primary)" }}
-                aria-label="Decision text"
+                aria-label={t("decisionLabel")}
                 aria-required="true"
-                placeholder="What decision was made or is proposed?"
+                placeholder={t("decisionPlaceholder")}
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="stat-label mb-1 block">Status</label>
+                <label className="stat-label mb-1 block">{t("statusLabel")}</label>
                 <select
                   value={form.status}
                   onChange={(e) => setForm({ ...form, status: e.target.value as Decision["status"] })}
@@ -115,40 +115,40 @@ export default function DecisionsPage() {
                 </select>
               </div>
               <div>
-                <label className="stat-label mb-1 block">Owner</label>
+                <label className="stat-label mb-1 block">{t("ownerLabel")}</label>
                 <input
                   type="text"
                   value={form.owner}
                   onChange={(e) => setForm({ ...form, owner: e.target.value })}
                   className="w-full px-3 py-2 rounded-lg text-sm"
                   style={{ background: "var(--lunar-elevated)", border: "1px solid var(--lunar-border-subtle)", color: "var(--lunar-text-primary)" }}
-                  placeholder="Who owns this decision?"
-                  aria-label="Decision owner"
+                  placeholder={t("ownerPlaceholder")}
+                  aria-label={t("ownerLabel")}
                 />
               </div>
             </div>
             <div>
-              <label className="stat-label mb-1 block">Rationale</label>
+              <label className="stat-label mb-1 block">{t("rationaleLabel")}</label>
               <textarea
                 value={form.rationale}
                 onChange={(e) => setForm({ ...form, rationale: e.target.value })}
                 rows={2}
                 className="w-full px-3 py-2 rounded-lg text-sm resize-none"
                 style={{ background: "var(--lunar-elevated)", border: "1px solid var(--lunar-border-subtle)", color: "var(--lunar-text-primary)" }}
-                aria-label="Decision rationale"
-                placeholder="Why was this decision made?"
+                aria-label={t("rationaleLabel")}
+                placeholder={t("rationalePlaceholder")}
               />
             </div>
             <div>
-              <label className="stat-label mb-1 block">Evidence / Source</label>
+              <label className="stat-label mb-1 block">{t("evidenceLabel")}</label>
               <input
                 type="text"
                 value={form.evidence}
                 onChange={(e) => setForm({ ...form, evidence: e.target.value })}
                 className="w-full px-3 py-2 rounded-lg text-sm"
                 style={{ background: "var(--lunar-elevated)", border: "1px solid var(--lunar-border-subtle)", color: "var(--lunar-text-primary)" }}
-                placeholder="Links, source IDs, documents"
-                aria-label="Evidence or source"
+                placeholder={t("evidencePlaceholder")}
+                aria-label={t("evidenceLabel")}
               />
             </div>
             <div className="flex gap-2">
@@ -158,7 +158,7 @@ export default function DecisionsPage() {
                 style={{ background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.3)", color: "var(--lunar-green)" }}
               >
                 <Check size={14} aria-hidden="true" />
-                {editId ? "Update" : "Save Decision"}
+                {editId ? t("update") : t("saveDecision")}
               </button>
               <button
                 onClick={() => { setShowForm(false); setEditId(null); }}
@@ -200,7 +200,7 @@ export default function DecisionsPage() {
                       <span className="text-xs" style={{ color: "var(--lunar-text-muted)" }}>{d.date}</span>
                     )}
                     {d.owner && (
-                      <span className="text-xs" style={{ color: "var(--lunar-text-muted)" }}>Owner: {d.owner}</span>
+                      <span className="text-xs" style={{ color: "var(--lunar-text-muted)" }}>{t("ownerPrefix")}: {d.owner}</span>
                     )}
                   </div>
                   <div className="text-sm font-medium" style={{ color: "var(--lunar-text-primary)" }}>
@@ -208,12 +208,12 @@ export default function DecisionsPage() {
                   </div>
                   {d.rationale && (
                     <div className="text-xs mt-1" style={{ color: "var(--lunar-text-secondary)" }}>
-                      <span style={{ color: "var(--lunar-text-muted)" }}>Rationale:</span> {d.rationale}
+                      <span style={{ color: "var(--lunar-text-muted)" }}>{t("rationalePrefix")}:</span> {d.rationale}
                     </div>
                   )}
                   {d.evidence && (
                     <div className="text-xs mt-1" style={{ color: "var(--lunar-cyan)" }}>
-                      Evidence: {d.evidence}
+                      {t("evidencePrefix")}: {d.evidence}
                     </div>
                   )}
                 </div>
