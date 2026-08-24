@@ -138,7 +138,7 @@ export const COUNTRIES: Country[] = [
     score: 75,
     role: "Digitally advanced expansion cluster",
     entryMode: "Regional partner-led",
-    launchPhase: "2028",
+    launchPhase: "2027H2",
     workloads: [
       "Telecom & digital services",
       "Clean tech & energy",

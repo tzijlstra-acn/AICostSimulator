@@ -6,16 +6,12 @@ import { EvidenceBadge } from "@/components/EvidenceBadge";
 import {
   Trophy,
   Target,
-  CheckCircle2,
-  Lightbulb,
-  HelpCircle,
   AlertTriangle,
   AlertCircle,
   Users,
   TrendingUp,
   Flag,
 } from "lucide-react";
-import React from "react";
 
 interface ActionItem {
   text: string;
@@ -183,28 +179,11 @@ const PHASE_HYPOTHESIS: Record<number, { label: string; killCriteria: string }> 
   },
 };
 
-const BADGE_ICONS: Record<ActionItem["badgeType"], React.ElementType> = {
-  FACT: CheckCircle2,
-  ASSUMPTION: AlertCircle,
-  RECOMMENDATION: Lightbulb,
-  "OPEN QUESTION": HelpCircle,
-};
-
 const BADGE_COLORS: Record<ActionItem["badgeType"], string> = {
   FACT: "#10b981",
   ASSUMPTION: "#f59e0b",
   RECOMMENDATION: "#00d4ff",
   "OPEN QUESTION": "#a855f7",
-};
-
-const BADGE_TYPE_MAP: Record<
-  ActionItem["badgeType"],
-  "FACT" | "MODEL" | "ASSUMPTION" | "RECOMMENDATION" | "OPEN QUESTION"
-> = {
-  FACT: "FACT",
-  ASSUMPTION: "ASSUMPTION",
-  RECOMMENDATION: "RECOMMENDATION",
-  "OPEN QUESTION": "OPEN QUESTION",
 };
 
 export default function NinetyDaysPage() {
@@ -403,264 +382,123 @@ export default function NinetyDaysPage() {
         })}
       </div>
 
-      {/* Phase cards with timeline spine */}
-      <div className="relative">
-        {/* Vertical spine — desktop only */}
-        <div
-          className="absolute left-5 top-8 bottom-8 hidden md:block"
-          style={{
-            width: '2px',
-            background: "linear-gradient(180deg, #00d4ff 0%, #a855f7 50%, #10b981 100%)",
-            boxShadow: '0 0 8px rgba(0, 212, 255, 0.25)',
-          }}
-        />
-
-        <div className="space-y-6">
-          {PHASES.map((phase) => {
-            return (
-              <div key={phase.number} className="flex gap-0 md:gap-6">
-                {/* Timeline node — desktop only */}
-                <div className="hidden md:flex flex-col items-center flex-shrink-0 w-10 pt-5 z-10">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center font-bold font-mono text-sm border-2"
-                    style={{
-                      background: "var(--lunar-bg)",
-                      borderColor: phase.accentColor,
-                      color: phase.accentColor,
-                    }}
-                  >
-                    {phase.dayNumber}
-                  </div>
-                </div>
-
-                {/* Phase card */}
-                <div
-                  className="flex-1 lunar-card"
-                  style={{ borderLeft: `4px solid ${phase.accentColor}` }}
+      {/* Phase cards — 3-column management grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {PHASES.map((phase) => (
+          <div
+            key={phase.number}
+            className="lunar-card flex flex-col"
+            style={{ borderTop: `3px solid ${phase.accentColor}` }}
+          >
+            {/* Phase header */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <span
+                  className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm font-mono flex-shrink-0"
+                  style={{
+                    background: `${phase.accentColor}18`,
+                    color: phase.accentColor,
+                    border: `2px solid ${phase.accentColor}40`,
+                  }}
                 >
-                  {/* Phase header */}
-                  <div className="flex items-start justify-between mb-5 gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2.5 mb-3">
-                        <span
-                          className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-lg font-mono flex-shrink-0"
-                          style={{
-                            background: `${phase.accentColor}18`,
-                            color: phase.accentColor,
-                            border: `2px solid ${phase.accentColor}55`,
-                            boxShadow: `0 0 10px ${phase.accentColor}25`,
-                          }}
-                        >
-                          {phase.number}
-                        </span>
-                        <span
-                          className="text-xs font-mono px-3 py-1 rounded-full font-bold"
-                          style={{
-                            background: `${phase.accentColor}12`,
-                            color: phase.accentColor,
-                            border: `1px solid ${phase.accentColor}28`,
-                          }}
-                        >
-                          {phase.days}
-                        </span>
-                      </div>
-                      <h2
-                        className="font-bold leading-snug mb-2"
-                        style={{
-                          color: "var(--lunar-text-primary)",
-                          fontSize: "1.125rem",
-                        }}
-                      >
-                        {phase.name}
-                      </h2>
-                      <p
-                        className="leading-relaxed font-medium"
-                        style={{
-                          color: "var(--lunar-text-secondary)",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        {phase.mission}
-                      </p>
-                    </div>
-                    {/* Ghost day counter */}
-                    <div
-                      className="text-6xl font-bold font-mono flex-shrink-0 leading-none hidden lg:block select-none"
-                      style={{ color: `${phase.accentColor}20` }}
-                    >
-                      {phase.dayNumber}
-                    </div>
-                  </div>
-
-                  {/* Action items grid — 2 cols desktop, 1 mobile */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
-                    {phase.actions.map((action, idx) => {
-                      const Icon = BADGE_ICONS[action.badgeType];
-                      const iconColor = BADGE_COLORS[action.badgeType];
-                      return (
-                        <div
-                          key={idx}
-                          className="p-3 rounded-lg"
-                          style={{
-                            background: "var(--lunar-elevated)",
-                            border: "1px solid var(--lunar-border-subtle)",
-                          }}
-                        >
-                          <div className="flex items-start gap-2">
-                            <Icon
-                              size={14}
-                              style={{
-                                color: iconColor,
-                                flexShrink: 0,
-                                marginTop: 2,
-                              }}
-                            />
-                            <div className="flex-1 min-w-0">
-                              <EvidenceBadge
-                                type={BADGE_TYPE_MAP[action.badgeType]}
-                                className="mb-1.5"
-                              />
-                              <p
-                                className="text-xs leading-relaxed"
-                                style={{ color: "var(--lunar-text-secondary)" }}
-                              >
-                                {action.text}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Deliverable box */}
-                  <div
-                    className="flex items-start gap-3 p-3 rounded-lg mb-3"
-                    style={{
-                      background: "rgba(16,185,129,0.08)",
-                      border: "1px solid rgba(16,185,129,0.25)",
-                    }}
-                  >
-                    <Target
-                      size={16}
-                      style={{
-                        color: "var(--lunar-green)",
-                        flexShrink: 0,
-                        marginTop: 1,
-                      }}
-                    />
-                    <div>
-                      <div
-                        className="text-xs font-bold uppercase tracking-wide mb-0.5"
-                        style={{ color: "var(--lunar-green)" }}
-                      >
-                        Key Deliverable
-                      </div>
-                      <p
-                        className="text-xs leading-relaxed"
-                        style={{ color: "var(--lunar-text-secondary)" }}
-                      >
-                        {phase.deliverable}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Risk box */}
-                  <div
-                    className="flex items-start gap-3 p-3 rounded-lg mb-4"
-                    style={{
-                      background: "rgba(245,158,11,0.07)",
-                      border: "1px solid rgba(245,158,11,0.2)",
-                    }}
-                  >
-                    <AlertTriangle
-                      size={16}
-                      style={{
-                        color: "var(--lunar-amber)",
-                        flexShrink: 0,
-                        marginTop: 1,
-                      }}
-                    />
-                    <div>
-                      <div
-                        className="text-xs font-bold uppercase tracking-wide mb-0.5"
-                        style={{ color: "var(--lunar-amber)" }}
-                      >
-                        Risk to Avoid
-                      </div>
-                      <p
-                        className="text-xs leading-relaxed"
-                        style={{ color: "var(--lunar-text-secondary)" }}
-                      >
-                        {phase.risk}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Hypothesis label */}
-                  {PHASE_HYPOTHESIS[phase.number] && (
-                    <>
-                      <div
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg mb-2"
-                        style={{
-                          background: `${phase.accentColor}0a`,
-                          border: `1px solid ${phase.accentColor}20`,
-                        }}
-                      >
-                        <span
-                          className="text-xs font-mono font-bold px-1 rounded"
-                          style={{ background: `${phase.accentColor}18`, color: phase.accentColor }}
-                        >
-                          HYP
-                        </span>
-                        <span className="text-xs" style={{ color: 'var(--lunar-text-muted)' }}>
-                          {PHASE_HYPOTHESIS[phase.number].label}
-                        </span>
-                      </div>
-                      {/* Kill criteria */}
-                      <div
-                        className="flex items-start gap-3 p-3 rounded-lg mb-4"
-                        style={{
-                          background: 'rgba(239,68,68,0.06)',
-                          border: '1px solid rgba(239,68,68,0.2)',
-                        }}
-                      >
-                        <AlertCircle
-                          size={14}
-                          style={{ color: '#ef4444', flexShrink: 0, marginTop: 2 }}
-                        />
-                        <div>
-                          <div
-                            className="text-xs font-bold uppercase tracking-wide mb-0.5"
-                            style={{ color: '#ef4444' }}
-                          >
-                            Exit Criteria
-                          </div>
-                          <p className="text-xs leading-relaxed" style={{ color: 'var(--lunar-text-secondary)' }}>
-                            {PHASE_HYPOTHESIS[phase.number].killCriteria}
-                          </p>
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {/* Add to Decision Log */}
-                  <button
-                    onClick={() => handleAddToLog(phase)}
-                    className="w-full py-2 rounded-lg text-xs font-medium transition-colors"
-                    style={{
-                      background: `${phase.accentColor}12`,
-                      color: phase.accentColor,
-                      border: `1px solid ${phase.accentColor}30`,
-                    }}
-                  >
-                    Add Phase {phase.number} to Decision Log
-                  </button>
-                </div>
+                  {phase.number}
+                </span>
+                <span
+                  className="text-xs font-mono px-2 py-0.5 rounded-full"
+                  style={{
+                    background: `${phase.accentColor}10`,
+                    color: phase.accentColor,
+                    border: `1px solid ${phase.accentColor}25`,
+                  }}
+                >
+                  {phase.days}
+                </span>
               </div>
-            );
-          })}
-        </div>
+              <h2 className="font-bold text-base mb-1.5" style={{ color: "var(--lunar-text-primary)" }}>
+                {phase.name}
+              </h2>
+              <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>
+                {phase.mission}
+              </p>
+            </div>
+
+            {/* Hypothesis label */}
+            {PHASE_HYPOTHESIS[phase.number] && (
+              <div
+                className="flex items-start gap-1.5 mb-3 text-xs"
+                style={{ color: "var(--lunar-text-muted)" }}
+              >
+                <span
+                  className="font-mono px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5"
+                  style={{ background: `${phase.accentColor}18`, color: phase.accentColor, fontSize: "0.65rem" }}
+                >
+                  HYP
+                </span>
+                <span>{PHASE_HYPOTHESIS[phase.number].label}</span>
+              </div>
+            )}
+
+            {/* Action items — simple colour-coded list */}
+            <ul className="space-y-2 mb-5 flex-1">
+              {phase.actions.map((action, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5"
+                    style={{ background: BADGE_COLORS[action.badgeType] }}
+                  />
+                  <span className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>
+                    {action.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Deliverable + Risk — side by side */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <div className="p-2.5 rounded-lg" style={{ background: "rgba(16,185,129,0.07)", border: "1px solid rgba(16,185,129,0.18)" }}>
+                <div className="flex items-center gap-1 mb-1">
+                  <Target size={11} style={{ color: "var(--lunar-green)" }} />
+                  <span className="text-xs font-bold uppercase tracking-wide" style={{ color: "var(--lunar-green)", fontSize: "0.6rem" }}>Delivers</span>
+                </div>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{phase.deliverable}</p>
+              </div>
+              <div className="p-2.5 rounded-lg" style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)" }}>
+                <div className="flex items-center gap-1 mb-1">
+                  <AlertTriangle size={11} style={{ color: "var(--lunar-amber)" }} />
+                  <span className="text-xs font-bold uppercase tracking-wide" style={{ color: "var(--lunar-amber)", fontSize: "0.6rem" }}>Watch out</span>
+                </div>
+                <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{phase.risk}</p>
+              </div>
+            </div>
+
+            {/* Exit criteria — slim */}
+            {PHASE_HYPOTHESIS[phase.number] && (
+              <div
+                className="px-2.5 py-2 rounded-lg mb-3 flex items-start gap-1.5"
+                style={{ background: "rgba(239,68,68,0.05)", border: "1px solid rgba(239,68,68,0.15)" }}
+              >
+                <AlertCircle size={11} style={{ color: "#ef4444", flexShrink: 0, marginTop: 2 }} />
+                <span className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-muted)" }}>
+                  <span className="font-semibold" style={{ color: "#ef4444" }}>Exit: </span>
+                  {PHASE_HYPOTHESIS[phase.number].killCriteria}
+                </span>
+              </div>
+            )}
+
+            {/* Add to Decision Log */}
+            <button
+              onClick={() => handleAddToLog(phase)}
+              className="w-full py-2 rounded-lg text-xs font-medium transition-colors"
+              style={{
+                background: `${phase.accentColor}12`,
+                color: phase.accentColor,
+                border: `1px solid ${phase.accentColor}30`,
+              }}
+            >
+              Add Phase {phase.number} to Decision Log
+            </button>
+          </div>
+        ))}
       </div>
 
       {/* North Star CTA */}

@@ -23,15 +23,25 @@ const LOGO_CATEGORY_COLORS: Record<string, string> = {
   reseller: '#4a5a7a',
 };
 
-const CDN_LOGO_MAP: Record<string, string> = {
-  'aws.png': 'aws',
-  'microsoft.png': 'microsoft-azure',
-  'google.png': 'google-cloud',
-  'sap.png': 'sap',
-  'github.png': 'github',
-  'snowflake.png': 'snowflake',
+const GILBARBARA = 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@main/logos';
+const SIMPLE_ICONS = 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons';
+const WIKIMEDIA = 'https://upload.wikimedia.org/wikipedia/commons/thumb';
+
+// Maps logoFile → direct logo URL. Falls back to letter avatar if missing or on error.
+const PARTNER_LOGO_URLS: Record<string, string> = {
+  'aws.png': `${GILBARBARA}/aws.svg`,
+  'microsoft.png': `${GILBARBARA}/microsoft-azure.svg`,
+  'google.png': `${GILBARBARA}/google-cloud.svg`,
+  'sap.png': `${GILBARBARA}/sap.svg`,
+  'github.png': `${GILBARBARA}/github.svg`,
+  'snowflake.png': `${GILBARBARA}/snowflake.svg`,
+  'capgemini.png': `${WIKIMEDIA}/9/9b/Capgemini_Logo.svg/200px-Capgemini_Logo.svg.png`,
+  'deloitte.png': `${WIKIMEDIA}/5/56/Deloitte.svg/200px-Deloitte.svg.png`,
+  'atos.png': `${WIKIMEDIA}/f/f4/Atos_logo.svg/200px-Atos_logo.svg.png`,
+  'telekom.png': `${SIMPLE_ICONS}/deutschetelekom.svg`,
+  'bt.png': `${SIMPLE_ICONS}/bt.svg`,
+  'infosys.png': `${SIMPLE_ICONS}/infosys.svg`,
 };
-const CDN_BASE = 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@main/logos';
 
 function PartnerLogo({ name, category, logoFile }: { name: string; category: string; logoFile?: string }) {
   const [imgError, setImgError] = useState(false);
@@ -42,8 +52,7 @@ function PartnerLogo({ name, category, logoFile }: { name: string; category: str
     .map((w) => w[0]?.toUpperCase() ?? '')
     .join('');
 
-  const cdnSlug = logoFile ? CDN_LOGO_MAP[logoFile] : undefined;
-  const logoSrc = cdnSlug ? `${CDN_BASE}/${cdnSlug}.svg` : undefined;
+  const logoSrc = logoFile ? PARTNER_LOGO_URLS[logoFile] : undefined;
 
   if (logoSrc && !imgError) {
     return (

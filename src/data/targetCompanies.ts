@@ -17,6 +17,9 @@ export const TARGET_COMPANIES: Record<string, TargetCompany[]> = {
     { name: 'BAE Systems', domain: 'baesystems.com', sector: 'Defence', why: 'Defence procurement documentation — non-US AI provider preferred for sovereign reasons.', tier: 'B' },
     { name: 'Sage Group', domain: 'sage.com', sector: 'SME Software', why: 'Embedded AI in SME accounting — high volume, lower complexity Kimi API integration opportunity.', tier: 'B' },
     { name: 'Arm Holdings', domain: 'arm.com', sector: 'Semiconductor', why: 'Developer community hub — Kimi Code partnership or design-partner opportunity.', tier: 'B' },
+    { name: 'University of Cambridge', domain: 'cam.ac.uk', sector: 'Research & Higher Education', why: 'Top research university — grant writing, literature analysis, research automation at scale. Pay via institutional API contracts.', tier: 'B' },
+    { name: 'Imperial College London', domain: 'imperial.ac.uk', sector: 'Research & Higher Education', why: 'STEM research powerhouse — coding assistance, paper analysis, lab documentation. Natural early adopter.', tier: 'B' },
+    { name: 'University College London', domain: 'ucl.ac.uk', sector: 'Research & Higher Education', why: 'Large research base with strong industry links — AI adoption among fastest in UK academia.', tier: 'B' },
   ],
   DE: [
     { name: 'SAP', domain: 'sap.com', sector: 'Enterprise Software', why: 'SAP embedded AI (Joule) — OEM or ISV integration path for Kimi into 400K+ enterprise customers.', tier: 'A' },
@@ -38,6 +41,8 @@ export const TARGET_COMPANIES: Record<string, TargetCompany[]> = {
     { name: 'ABN AMRO', domain: 'abnamro.com', sector: 'Financial Services', why: 'NL retail bank under ECB AI governance rules — EU-native AI compliance is a procurement requirement.', tier: 'B' },
     { name: 'Shell', domain: 'shell.com', sector: 'Energy', why: 'Energy sector documentation and regulatory filings — global operations but EU data boundary required.', tier: 'B' },
     { name: 'NXP Semiconductors', domain: 'nxp.com', sector: 'Semiconductor', why: 'Developer tools and embedded AI — Kimi Code API for engineering automation.', tier: 'B' },
+    { name: 'TU Delft', domain: 'tudelft.nl', sector: 'Research & Higher Education', why: 'Top European engineering university — research documentation, simulation analysis. Institutional API access model scales well.', tier: 'B' },
+    { name: 'University of Amsterdam', domain: 'uva.nl', sector: 'Research & Higher Education', why: 'Strong AI/NLP research group — potential design partner for multilingual European use cases.', tier: 'B' },
   ],
   FR: [
     { name: 'BNP Paribas', domain: 'bnpparibas.com', sector: 'Financial Services', why: 'Largest EU bank by assets — enterprise AI procurement under DORA and EU AI Act.', tier: 'A' },
@@ -56,6 +61,8 @@ export const TARGET_COMPANIES: Record<string, TargetCompany[]> = {
     { name: 'Zurich Insurance', domain: 'zurich.com', sector: 'Insurance', why: 'Global insurance — claims and policy analysis; EU + Swiss data residency.', tier: 'B' },
     { name: 'ABB', domain: 'abb.com', sector: 'Industrial Automation', why: 'Industrial AI for robotics and grid — embedded inference use case.', tier: 'B' },
     { name: 'Nestlé', domain: 'nestle.com', sector: 'Consumer Goods', why: 'Content generation and supply chain documentation at scale — multilingual Kimi advantage.', tier: 'B' },
+    { name: 'ETH Zurich', domain: 'ethz.ch', sector: 'Research & Higher Education', why: 'World-top technical university — AI research, scientific document analysis. Strong paying capacity; institutional contracts common.', tier: 'B' },
+    { name: 'EPFL', domain: 'epfl.ch', sector: 'Research & Higher Education', why: 'Francophone Swiss research powerhouse with active AI lab — early adopter profile, multilingual advantage.', tier: 'B' },
   ],
   SE: [
     { name: 'Ericsson', domain: 'ericsson.com', sector: 'Telecom Equipment', why: 'Telecom AI — embedded inference in network infrastructure; non-US AI provider preference.', tier: 'A' },
@@ -64,6 +71,7 @@ export const TARGET_COMPANIES: Record<string, TargetCompany[]> = {
     { name: 'H&M Group', domain: 'hmgroup.com', sector: 'Retail', why: 'Fashion retail — content generation, product descriptions, customer service AI at scale.', tier: 'B' },
     { name: 'Spotify', domain: 'spotify.com', sector: 'Consumer Tech', why: 'Developer-first company — Kimi Code API design partner candidate; Swedish AI Act alignment.', tier: 'B' },
     { name: 'Atlas Copco', domain: 'atlascopco.com', sector: 'Industrial', why: 'Industrial equipment documentation and technical support AI — long-context use case.', tier: 'B' },
+    { name: 'KTH Royal Institute', domain: 'kth.se', sector: 'Research & Higher Education', why: 'Leading Nordic technical university — AI-assisted research, code generation. Institutional buyer with EU data residency needs.', tier: 'B' },
   ],
   ES: [
     { name: 'Santander', domain: 'santander.com', sector: 'Financial Services', why: 'Largest Spanish bank — EU AI Act compliance buyer; pan-European footprint.', tier: 'A' },

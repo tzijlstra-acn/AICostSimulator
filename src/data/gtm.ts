@@ -82,12 +82,12 @@ export const GTM_MOTIONS = [
     id: "research_academic",
     name: "Research & Academic Programme",
     description:
-      "Subsidised or free API credits for EU universities and research institutions. Builds goodwill, generates publications, and seeds future commercial talent.",
+      "EU universities are paying customers, not just goodwill targets. Institutional API licensing (£5–50K/year per university) covers research automation, grant writing, and student-facing tools. Top universities (ETH Zurich, Cambridge, TU Delft) have budget and strict EU data residency requirements — a natural Kimi fit. Subsidised starter credits seed adoption; institutional contracts follow.",
     priority: "supporting",
     phase: "Phase 1",
-    targetSegment: "EU universities, research institutes, think tanks",
-    channels: ["Academic portal", "Research grant programme", "Conference sponsorships"],
-    kpis: ["Active research institutions", "Publications citing Kimi", "Student-to-commercial conversion"],
+    targetSegment: "EU universities, research institutes, think tanks — institutional buyers with EU data residency needs",
+    channels: ["Academic licensing portal", "Research IT departments", "Conference sponsorships", "CTO/CIO direct outreach"],
+    kpis: ["Paid institutional licenses", "Active research institutions", "Publications citing Kimi", "Student-to-commercial conversion"],
   },
   {
     id: "open_source",
