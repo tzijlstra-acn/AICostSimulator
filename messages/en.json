@@ -273,6 +273,27 @@
       "heatmapTitle": "Capability Score Heatmap (1–5 scale)",
       "pricingTitle": "API Pricing ($ per million tokens)",
       "dimension": "Dimension"
+    },
+    "execSummary": {
+      "title": "Key Takeaways & Positioning Actions",
+      "actionLabel": "Action:",
+      "items": [
+        {
+          "headline": "Context is the differentiator",
+          "body": "Kimi's 1M-token context window leads the market — up to 8× larger than GPT-4o. Document-heavy industries (legal, financial services, pharma) cannot be served by models with smaller windows. This is the single most defensible technical claim.",
+          "action": "Open all enterprise sales calls with a live 1M-token context demonstration."
+        },
+        {
+          "headline": "EU compliance is a commercial moat",
+          "body": "Kimi leads on EU Hosting and Trust/Compliance. While every US hyperscaler is still adjusting to the AI Act, this is the only enterprise-grade API with a native EU compliance architecture — a window that narrows by 2028 as competitors catch up.",
+          "action": "Publish the EU AI Act self-assessment publicly before any US competitor does."
+        },
+        {
+          "headline": "Distribution gap is the critical risk",
+          "body": "Distribution scores 2.8 — the weakest dimension. Without SI partnerships and cloud marketplace listings, a superior product risks being invisible to enterprise buyers who discover AI tools through trusted integrators, not direct outreach.",
+          "action": "Lock in 2 SI partnerships before scaling any direct sales motion."
+        }
+      ]
     }
   },
   "regulation": {
@@ -506,7 +527,78 @@
   },
   "ninetyDays": {
     "title": "Your 90-Day Thesis",
-    "subtitle": "This is how I would spend my first 90 days as Moonshot AI's EU Business Builder."
+    "subtitle": "This is how I would spend my first 90 days as Moonshot AI's EU Business Builder.",
+    "rationaleLabel": "My strategic rationale",
+    "rationale": "The sequence is deliberate. The first 30 days are dedicated to internal listening — a credible European strategy cannot be written without first understanding Moonshot AI's actual constraints, relationships, and priorities. Phase 2 flows directly from Phase 1's stakeholder map: the LOI targets emerge from the listening tour, not from assumptions. Phase 3's board presentation carries weight only if it rests on real signed commitments — not modelled projections. Every phase gate is a genuine go/no-go checkpoint.",
+    "stats": {
+      "decisions": "binding decisions",
+      "decisionsSub": "Key decisions to make in 90 days",
+      "lois": "signed LOIs",
+      "loisSub": "Design-partner commitments target",
+      "board": "board presentation",
+      "boardSub": "The strategic deliverable"
+    },
+    "addToLog": "Add Phase {num} to Decision Log",
+    "hypLabel": "HYP",
+    "delivers": "Delivers",
+    "watchOut": "Watch out",
+    "exitLabel": "Exit",
+    "northStar": {
+      "title": "The North Star for Day 90",
+      "body": "By Day 90, Moonshot AI has a committed European expansion plan, signed design partners, a legal entity architecture, and a board-approved investment case. The first Kimi EU customer conversation has happened.",
+      "cta": "Save this plan to my Decision Log"
+    },
+    "footer": "RECOMMENDATION items are commitments the strategy lead is making. ASSUMPTION items require validation before committing resources. OPEN QUESTION items must be resolved before the phase ends. FACT items are verified external facts about the regulatory or market environment.",
+    "phases": {
+      "1": {
+        "name": "Listen, Map, and Build Trust",
+        "days": "Days 1–30",
+        "mission": "Develop a ground-truth view of the European opportunity before proposing any strategy.",
+        "action1": "Meet the top 3 internal teams (Product, Engineering, Legal) within week 1 — understand current EU state",
+        "action2": "Map all existing EU relationships, MoUs, data-processing agreements, and cloud contracts",
+        "action3": "Identify 5–10 potential European enterprise design partners willing to run a confidential pilot by Q3 2027",
+        "action4": "Attend 1 major EU AI or enterprise tech event (VivaTech, Web Summit, or equivalent) to build network",
+        "action5": "Complete a personal listening tour — 20 conversations with EU prospects, analysts, and ecosystem stakeholders",
+        "action6": "Review the AI Act implementation status and identify which Annex III use cases Kimi likely hits",
+        "action7": "Does Moonshot AI have an existing EU legal entity, or is one needed before any commercial activity?",
+        "deliverable": "Stakeholder map + EU readiness gap assessment (internal memo, 10 pages)",
+        "risk": "Announcing strategy before understanding internal constraints and partner landscape",
+        "hyp": "Hypothesis discovery: Are H1/H2/H3 viable at all? The listening tour is the experiment.",
+        "killCriteria": "If zero of 20 listening-tour conversations produce any buying signal, the EU market timing hypothesis is wrong — recommend delaying 12 months and revisiting."
+      },
+      "2": {
+        "name": "Validate, Decide, and Build the Machine",
+        "days": "Days 31–60",
+        "mission": "Validate the market entry thesis against real buyer intent and make the first binding decisions.",
+        "action1": "Lock in the primary market entry mode for the UK and Germany — direct-led vs partner-led requires a committed decision, not a hedge",
+        "action2": "Run the first 3 design-partner workshops — get signed LOIs or walk away",
+        "action3": "Draft and socialise the Legal Entity Architecture: UK Ltd + Netherlands BV + trust framework",
+        "action4": "Hire the first 3 EU team members: VP Legal/Compliance, Head of Enterprise Sales, Solutions Engineer",
+        "action5": "Establish the EU Pricing Committee with CFO involvement — pricing must be committed before any public commercial announcement",
+        "action6": "Submit the EU AI Act Article 6 self-assessment for the product categories you plan to sell",
+        "action7": "Is a third-party EU audit of Kimi's training data provenance required before enterprise go-to-market?",
+        "deliverable": "Signed design-partner LOIs (at least 2) + legal entity decision approved by CEO",
+        "risk": "Scaling sales motion before compliance architecture is confirmed",
+        "hyp": "Testing H1 — do UK developers pay? Testing H2 — do EU enterprises cite compliance as a driver?",
+        "killCriteria": "If H1 produces fewer than 3 paying developer teams after 30 qualified conversations, exit the UK beachhead and redirect resources to NL enterprise via H2."
+      },
+      "3": {
+        "name": "Anchor the Position and Declare",
+        "days": "Days 61–90",
+        "mission": "Translate the work of the first 60 days into a committed, board-ready European market plan.",
+        "action1": "Present a board-ready European expansion business case — investment ask, phased revenue model, headcount plan",
+        "action2": "Publish a developer-facing EU roadmap (what regions, what compliance posture, what SLAs)",
+        "action3": "Announce first EU design partnership publicly (with partner consent) — builds credibility and triggers inbound",
+        "action4": "Establish a monthly EU Executive Review with CEO — keep Europe visible at the top",
+        "action5": "Complete GDPR DPA templates and EU-standard data processing addenda — pre-negotiated versions ready for sales",
+        "action6": "Close first paid pilot (even at nominal price) — real commercial signal outweighs 100 LOIs",
+        "action7": "Which EU AI governance frameworks (EU AI Office, ISO 42001) will Moonshot AI seek formal certification for?",
+        "deliverable": "Board presentation approved + first public EU announcement + first paid pilot signed",
+        "risk": "Over-committing to a country or partner before having operational capacity to deliver",
+        "hyp": "Scaling: Apply learnings from H1/H2. Kill what failed; double down on what shows signal.",
+        "killCriteria": "If the board case cannot be supported by real LOIs — only modelled projections — delay the board presentation. It will not survive scrutiny."
+      }
+    }
   },
   "sequence": {
     "title": "Entry Sequence Simulator",
