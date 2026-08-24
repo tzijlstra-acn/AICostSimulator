@@ -1,27 +1,28 @@
-# NFR AI Cost Estimator
+# Kimi EU Strategy OS
 
-An interactive, single-file presentation tool that estimates the cost of a **shared enterprise AI platform** serving Non-Financial Risk (NFR) and adjacent functions, for DACH banking, insurance, healthcare and telecom clients.
+An interactive strategy dashboard built as part of a job application to Moonshot AI — demonstrating hypothesis-driven market analysis for Kimi's European expansion.
 
-It is built for non-technical executives: it walks from a few inputs to an all-in annual cost, shows what drives it, models the 18-month gains vs. cost, and lets the user play with model routing and assumptions.
+Built with Next.js 15, next-intl (EN/ZH), and ECharts. Deployed via GitHub Pages.
 
-## Use it
+## What it covers
 
-Everything is contained in **`index.html`** — no build step, no dependencies to install. The only external resource is the Google Fonts CDN, so an internet connection is needed for the intended typography (it still works without it).
+- **Cockpit** — strategic thesis, revenue model, key hypotheses (H1/H2/H3) with kill criteria
+- **Country Navigator** — interactive Europe map with market priority, launch wave, and regulatory complexity layers; per-country deep-dive with target accounts
+- **Competition Arena** — radar chart and capability heatmap across 10 dimensions vs. OpenAI, Anthropic, Gemini, Mistral, Llama
+- **Go-to-Market** — 10 GTM motions with pilot builder
+- **Partner Ecosystem** — SI, cloud, and technology partner landscape
+- **90-Day Thesis** — phased action plan with deliverables, risks, and exit criteria per phase
+- **Decision Log** — structured log of strategic decisions and assumptions
 
-- **Locally:** open `index.html` in a browser, or run any static server (e.g. `python3 -m http.server`) and open the page.
-- **GitHub Pages:** push this repo, then enable Pages under *Settings → Pages → Build and deployment → Deploy from a branch* (root of `main`). Because the file is named `index.html`, it is served at the root URL automatically.
+## Run locally
 
-## What's inside
+```bash
+npm install
+npm run dev
+```
 
-- Industry / region / currency selection (DACH; EUR & CHF)
-- Shared-platform cost allocation across adjacent departments (each unlocks its scenarios and changes NFR's share)
-- Scenario picker with per-scenario dashboard specs and compute reasoning
-- Vendor-neutral, benchmark-driven model routing across hosting modes (cloud / EU-sovereign / on-prem)
-- "What drives it", "18-month gains", "One question" and "Models & math" views, with animated explainers
-- PDF exports: a client summary and a full methodology / calculation breakdown
+Open [http://localhost:3000](http://localhost:3000).
 
-## Important
+## Notes
 
-All numbers in this tool are **illustrative planning placeholders**, not measured values. Model benchmarks and prices, routing weights, allocation shares, build and upkeep rates, dashboard-coverage assumptions, hosting infrastructure and governance coefficients must be calibrated against real delivery, chargeback and evaluation data before any client use.
-
-This tool is **not an offer, proposal, quotation or commitment**, and creates no contractual obligation. Brand and product names are placeholders for licensed assets.
+All numbers are directional analyst assessments, not independently verified benchmarks. This is a strategic framework for discussion, not a forecast or commercial commitment.
