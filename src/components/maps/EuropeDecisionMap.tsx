@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import europeGeoJson from '../../../public/maps/europe.geojson';
+import europeGeoJson from '@/data/europe.geo.json';
 
 // Fallback ISO-2 lookup for countries whose Natural Earth ISO_A2 field is '-99'
 const NAME_TO_ISO2: Record<string, string> = {
