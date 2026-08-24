@@ -176,7 +176,7 @@ function SequencePageInner() {
     <div className="space-y-4 max-w-[1400px] mx-auto">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs" style={{ color: 'var(--lunar-text-muted)' }} aria-label="Breadcrumb">
-        <Link href={`/${locale}/countries`} className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
+        <Link href={`/countries`} className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
           <Map size={12} />
           Countries
         </Link>
@@ -198,7 +198,7 @@ function SequencePageInner() {
           </p>
         </div>
         <Link
-          href={`/${locale}/countries`}
+          href={`/countries`}
           className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs flex-shrink-0"
           style={{ background: 'rgba(0,212,255,0.1)', color: 'var(--lunar-cyan)', border: '1px solid rgba(0,212,255,0.2)' }}
         >

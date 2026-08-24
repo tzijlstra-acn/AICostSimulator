@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ExternalLink, ArrowRight, BarChart2, Globe, Calendar, Route, Shield, Swords, ChevronRight, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
+import { ArrowRight, BarChart2, Globe, Calendar, Route, Shield, Swords, ChevronRight, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
 import { COMMERCIALIZATION_HYPOTHESES } from '@/data/strategy';
 
 export default function IntroPage() {
@@ -119,20 +119,6 @@ export default function IntroPage() {
                   Enter the strategy
                   <ArrowRight size={18} />
                 </Link>
-                <a
-                  href="https://tzijlstra-acn.github.io/CV/cv.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-xl font-semibold text-sm transition-all hover:opacity-80"
-                  style={{
-                    background: 'rgba(0,212,255,0.08)',
-                    border: '1px solid rgba(0,212,255,0.25)',
-                    color: 'var(--lunar-cyan)',
-                  }}
-                >
-                  <ExternalLink size={14} />
-                  View CV
-                </a>
               </div>
             </div>
 
@@ -385,15 +371,6 @@ export default function IntroPage() {
         <div className="mt-12 pt-6 flex items-center justify-between text-xs" style={{ color: 'var(--lunar-text-muted)', borderTop: '1px solid var(--lunar-border-subtle)' }}>
           <div>Thomas Zijlstra · EU Business Builder · August 2026</div>
           <div className="flex items-center gap-4">
-            <a
-              href="https://tzijlstra-acn.github.io/CV/cv.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 hover:opacity-70 transition-opacity"
-              style={{ color: 'var(--lunar-cyan)' }}
-            >
-              <ExternalLink size={11} /> CV
-            </a>
             <Link href={`/${locale}/`} className="hover:opacity-70 transition-opacity" style={{ color: 'var(--lunar-cyan)' }}>
               Enter strategy →
             </Link>

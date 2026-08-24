@@ -132,7 +132,7 @@ function ComparePageInner() {
     <div className="space-y-6 max-w-[1400px] mx-auto">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <Link href={`/${locale}/countries`} className="p-1 rounded hover:opacity-70 transition-opacity" style={{ color: 'var(--lunar-text-muted)' }}>
+        <Link href={`/countries`} className="p-1 rounded hover:opacity-70 transition-opacity" style={{ color: 'var(--lunar-text-muted)' }}>
           <ChevronLeft size={16} />
         </Link>
         <div>
@@ -293,7 +293,7 @@ function ComparePageInner() {
               return (
                 <Link
                   key={iso2}
-                  href={`/${locale}/countries/${slug}`}
+                  href={`/countries/${slug}`}
                   className="lunar-card text-center p-3 hover:opacity-80 transition-opacity"
                   style={{ border: `1px solid ${colors[idx]}30` }}
                 >

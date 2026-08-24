@@ -172,15 +172,6 @@ export default function CockpitPage() {
           <Link href={`/${locale}/intro`} className="text-xs hover:opacity-70 transition-opacity font-medium" style={{ color: 'var(--lunar-cyan)' }}>
             About →
           </Link>
-          <a
-            href="https://tzijlstra-acn.github.io/CV/cv.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs hover:opacity-70 transition-opacity font-medium"
-            style={{ color: 'var(--lunar-cyan)' }}
-          >
-            CV →
-          </a>
         </div>
       </div>
 

@@ -205,6 +205,7 @@ export default function CountryPage() {
               <EuropeDecisionMap
                 layer="priority"
                 selectedCountry={iso2}
+                focusCountry={iso2}
                 height={340}
                 showControls={false}
                 compact={false}

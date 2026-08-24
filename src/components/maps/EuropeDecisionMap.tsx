@@ -81,9 +81,30 @@ const LAYER_LABELS: Record<string, string> = {
   regulation: 'Regulatory Complexity',
 };
 
+// Approximate centroid [lon, lat] and zoom for each country
+const COUNTRY_FOCUS: Record<string, { center: [number, number]; zoom: number }> = {
+  GB: { center: [-2, 54],   zoom: 3.5 },
+  DE: { center: [10, 51],   zoom: 4.0 },
+  NL: { center: [5.3, 52],  zoom: 7.0 },
+  FR: { center: [2.2, 46],  zoom: 3.5 },
+  CH: { center: [8.2, 47],  zoom: 9.0 },
+  SE: { center: [17, 62],   zoom: 2.2 },
+  DK: { center: [10, 56],   zoom: 5.5 },
+  FI: { center: [26, 64],   zoom: 2.0 },
+  NO: { center: [10, 62],   zoom: 2.0 },
+  ES: { center: [-3, 40],   zoom: 3.0 },
+  IT: { center: [12, 43],   zoom: 3.0 },
+  PL: { center: [20, 52],   zoom: 3.5 },
+  AT: { center: [14, 47],   zoom: 7.0 },
+  BE: { center: [4.5, 50],  zoom: 9.0 },
+  IE: { center: [-8, 53],   zoom: 5.0 },
+  PT: { center: [-8, 39.5], zoom: 4.5 },
+};
+
 interface EuropeDecisionMapProps {
   layer?: 'priority' | 'score' | 'wave' | 'regulation';
   selectedCountry?: string;
+  focusCountry?: string;
   onCountrySelect?: (iso2: string) => void;
   height?: number;
   showControls?: boolean;
@@ -93,6 +114,7 @@ interface EuropeDecisionMapProps {
 export function EuropeDecisionMap({
   layer = 'priority',
   selectedCountry,
+  focusCountry,
   onCountrySelect,
   height = 480,
   showControls = true,
@@ -100,6 +122,7 @@ export function EuropeDecisionMap({
 }: EuropeDecisionMapProps) {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [activeLayer, setActiveLayer] = useState(layer);
+  const focus = focusCountry ? COUNTRY_FOCUS[focusCountry] : null;
 
   const getCountryFill = useCallback((iso2: string) => {
     const data = COUNTRY_DATA[iso2];
@@ -164,7 +187,12 @@ export function EuropeDecisionMap({
         }}
         style={{ width: '100%', height: '100%' }}
       >
-        <ZoomableGroup zoom={1} minZoom={0.8} maxZoom={4}>
+        <ZoomableGroup
+          center={focus?.center ?? [0, 0]}
+          zoom={focus?.zoom ?? 1}
+          minZoom={0.8}
+          maxZoom={10}
+        >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {

@@ -3,7 +3,7 @@
 import { useAppStore } from "@/store";
 import type { ScenarioKey } from "@/data/market";
 import { cn } from "@/lib/utils";
-import { PanelLeft, Moon, Sun, Menu, ExternalLink } from "lucide-react";
+import { PanelLeft, Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -93,23 +93,6 @@ export function TopBar({ onCommandPalette, isMobile = false }: TopBarProps) {
       </div>
 
       <div className="flex-1" />
-
-      {/* CV link */}
-      <a
-        href="https://tzijlstra-acn.github.io/CV/cv.html"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:opacity-80 cv-pulse-btn"
-        style={{
-          background: 'rgba(0,212,255,0.1)',
-          border: '1px solid rgba(0,212,255,0.25)',
-          color: 'var(--lunar-cyan)',
-        }}
-        aria-label="Thomas Zijlstra — View CV"
-      >
-        <ExternalLink size={11} />
-        <span className="hidden sm:inline">CV</span>
-      </a>
 
       {/* Language switcher */}
       <LanguageSwitcher />
