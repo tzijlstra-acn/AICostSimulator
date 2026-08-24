@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
+import europeGeoJson from '../../../public/maps/europe.geojson';
 
 // Fallback ISO-2 lookup for countries whose Natural Earth ISO_A2 field is '-99'
 const NAME_TO_ISO2: Record<string, string> = {
@@ -172,7 +173,6 @@ export function EuropeDecisionMap({
     return 'rgba(100,140,200,0.15)';
   }, [selectedCountry, hoveredCountry]);
 
-  const geoUrl = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/maps/europe.geojson`;
   const EXCLUDED = new Set(['MA', 'DZ', 'TN']);
 
   return (
@@ -210,7 +210,7 @@ export function EuropeDecisionMap({
         <ZoomableGroup
           {...({ center: focus?.center ?? [0, 0], zoom: focus?.zoom ?? 1, minZoom: 0.8, maxZoom: 10 } as any)}
         >
-          <Geographies geography={geoUrl}>
+          <Geographies geography={europeGeoJson as Parameters<typeof Geographies>[0]['geography']}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 const iso2 = (geo.properties.ISO_A2 && geo.properties.ISO_A2 !== '-99')
