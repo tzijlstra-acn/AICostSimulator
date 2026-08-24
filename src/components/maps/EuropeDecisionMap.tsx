@@ -66,6 +66,20 @@ const COUNTRY_DATA: Record<string, {
   BY: { score: 0, role: 'Context', wave: 'context', color: '#1a2438', inScope: false },
 };
 
+// Regulatory complexity per country (source: COUNTRY_DETAIL in countries.ts)
+const COUNTRY_REG: Record<string, 'low' | 'medium' | 'high'> = {
+  GB: 'medium', DE: 'high', NL: 'medium', FR: 'high', CH: 'medium',
+  SE: 'medium', DK: 'medium', FI: 'medium', NO: 'medium',
+  ES: 'medium', IT: 'high', PL: 'medium',
+  AT: 'medium', BE: 'high', IE: 'low', PT: 'low', LU: 'low', IS: 'low',
+};
+
+const REG_COLORS: Record<'low' | 'medium' | 'high', string> = {
+  low: '#10b981',
+  medium: '#f59e0b',
+  high: '#ef4444',
+};
+
 const WAVE_COLORS: Record<string, string> = {
   '2027H1': '#00d4ff',
   '2027H2': '#a855f7',
@@ -141,6 +155,10 @@ export function EuropeDecisionMap({
         const g = Math.round(80 + intensity * 132);
         const b = Math.round(100 + intensity * 155);
         return `rgb(0,${g},${b})`;
+      }
+      case 'regulation': {
+        const complexity = COUNTRY_REG[iso2] ?? 'medium';
+        return REG_COLORS[complexity];
       }
       case 'priority':
       default:
@@ -252,6 +270,11 @@ export function EuropeDecisionMap({
           <div className="text-cyan-400">Score: {COUNTRY_DATA[hoveredCountry].score}/100</div>
           <div className="text-slate-400">{COUNTRY_DATA[hoveredCountry].role}</div>
           <div className="text-slate-500 mt-1">Wave: {COUNTRY_DATA[hoveredCountry].wave}</div>
+          {activeLayer === 'regulation' && COUNTRY_REG[hoveredCountry] && (
+            <div style={{ color: REG_COLORS[COUNTRY_REG[hoveredCountry]] }} className="mt-1">
+              Reg. complexity: {COUNTRY_REG[hoveredCountry]}
+            </div>
+          )}
           {onCountrySelect && (
             <div className="text-cyan-400/70 text-xs mt-1">Click to open</div>
           )}
@@ -275,11 +298,21 @@ export function EuropeDecisionMap({
               <span className="text-slate-400">{label}</span>
             </div>
           ))}
-          {(activeLayer === 'priority' || activeLayer === 'regulation') && Object.entries({
+          {activeLayer === 'priority' && Object.entries({
             '#00d4ff': 'Direct launch',
             '#7c3aed': 'Partner-led',
             '#f59e0b': 'Next wave',
             '#4a5a7a': 'Watchlist',
+          }).map(([color, label]) => (
+            <div key={color} className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm" style={{ background: color }} />
+              <span className="text-slate-400">{label}</span>
+            </div>
+          ))}
+          {activeLayer === 'regulation' && Object.entries({
+            '#10b981': 'Low complexity',
+            '#f59e0b': 'Medium complexity',
+            '#ef4444': 'High complexity',
           }).map(([color, label]) => (
             <div key={color} className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-sm" style={{ background: color }} />
