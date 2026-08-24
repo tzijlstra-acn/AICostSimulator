@@ -29,7 +29,6 @@ const DOMAIN_TO_LOGO: Record<string, string> = {
   'aws.amazon.com': 'aws',
   'snowflake.com': 'snowflake',
   'github.com': 'github',
-  'sap.com': 'sap',
   'capgemini.com': 'capgemini',
   'deloitte.com': 'deloitte',
   'infosys.com': 'infosys',

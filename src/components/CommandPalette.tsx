@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/lib/navigation";
 import { Command } from "cmdk";
 import { COUNTRIES, COUNTRY_ID_TO_ISO2 } from "@/data/countries";
 import { FlagIcon } from "@/components/ui/FlagIcon";

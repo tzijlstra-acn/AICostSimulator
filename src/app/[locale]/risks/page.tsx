@@ -89,10 +89,10 @@ export default function RisksPage() {
   };
 
   const severityLabels: Record<RiskSeverity, string> = {
-    low: t("low"),
-    medium: t("medium"),
-    high: t("high"),
-    critical: t("critical"),
+    low: t("severities.low"),
+    medium: t("severities.medium"),
+    high: t("severities.high"),
+    critical: t("severities.critical"),
   };
 
   return (
@@ -260,10 +260,10 @@ export default function RisksPage() {
                     }}
                     aria-label={`Severity for ${risk.title}`}
                   >
-                    <option value="low">{t("low")}</option>
-                    <option value="medium">{t("medium")}</option>
-                    <option value="high">{t("high")}</option>
-                    <option value="critical">{t("critical")}</option>
+                    <option value="low">{t("severities.low")}</option>
+                    <option value="medium">{t("severities.medium")}</option>
+                    <option value="high">{t("severities.high")}</option>
+                    <option value="critical">{t("severities.critical")}</option>
                   </select>
                   <span className="text-xs" style={{ color: "var(--lunar-text-muted)" }}>
                     {risk.owner}

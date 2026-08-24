@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale } from 'next-intl';
 import { ArrowRight, BarChart2, Globe, Calendar, Route, Shield, Swords, ChevronRight, CheckCircle2, XCircle, Lightbulb } from 'lucide-react';
 import { COMMERCIALIZATION_HYPOTHESES } from '@/data/strategy';
@@ -134,9 +135,11 @@ export default function IntroPage() {
                   boxShadow: '0 0 32px rgba(0,212,255,0.15)',
                 }}
               >
-                <img
+                <Image
                   src="/profile-bw.png"
                   alt="Thomas Zijlstra"
+                  width={160}
+                  height={160}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
                 />
               </div>

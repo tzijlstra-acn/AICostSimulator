@@ -153,7 +153,7 @@ export function EuropeDecisionMap({
     return 'rgba(100,140,200,0.15)';
   }, [selectedCountry, hoveredCountry]);
 
-  const geoUrl = '/maps/europe.geojson';
+  const geoUrl = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/maps/europe.geojson`;
   const EXCLUDED = new Set(['MA', 'DZ', 'TN']);
 
   return (
@@ -187,11 +187,9 @@ export function EuropeDecisionMap({
         }}
         style={{ width: '100%', height: '100%' }}
       >
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         <ZoomableGroup
-          center={focus?.center ?? [0, 0]}
-          zoom={focus?.zoom ?? 1}
-          minZoom={0.8}
-          maxZoom={10}
+          {...({ center: focus?.center ?? [0, 0], zoom: focus?.zoom ?? 1, minZoom: 0.8, maxZoom: 10 } as any)}
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -241,7 +239,7 @@ export function EuropeDecisionMap({
         >
           <div className="flex items-center gap-2 font-bold text-white mb-1">
             <img
-              src={`/flags/${hoveredCountry.toLowerCase()}.png`}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/flags/${hoveredCountry.toLowerCase()}.png`}
               width={24}
               height={16}
               className="rounded-sm inline"

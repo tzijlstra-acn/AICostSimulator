@@ -169,7 +169,7 @@ export default function CockpitPage() {
           </div>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <Link href={`/${locale}/intro`} className="text-xs hover:opacity-70 transition-opacity font-medium" style={{ color: 'var(--lunar-cyan)' }}>
+          <Link href="/intro" className="text-xs hover:opacity-70 transition-opacity font-medium" style={{ color: 'var(--lunar-cyan)' }}>
             About →
           </Link>
         </div>
