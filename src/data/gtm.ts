@@ -114,7 +114,7 @@ export const GTM_MOTIONS = [
 ];
 
 export const PILOT_DEFAULTS = {
-  duration: "6–8 weeks",
+  duration: "6–16 weeks",
   weeklyMethodology: [
     { week: 1, activity: "Baseline measurement & stakeholder alignment" },
     { week: 2, activity: "Environment setup & integration, initial prompting" },
@@ -123,7 +123,15 @@ export const PILOT_DEFAULTS = {
     { week: 5, activity: "Scale workload volume, secondary use cases" },
     { week: 6, activity: "Evaluation against success KPIs, cost analysis" },
     { week: 7, activity: "Stakeholder review, business case refinement" },
-    { week: 8, activity: "Production decision, contract negotiation" },
+    { week: 8, activity: "Production decision readiness check" },
+    { week: 9, activity: "Extended validation — edge cases and failure modes" },
+    { week: 10, activity: "Security & data governance review with customer CISO" },
+    { week: 11, activity: "Integration hardening & SLA definition" },
+    { week: 12, activity: "User acceptance testing with pilot team" },
+    { week: 13, activity: "Performance benchmarking vs. baseline (final)" },
+    { week: 14, activity: "Commercial negotiation — volume commitments" },
+    { week: 15, activity: "Legal & procurement review" },
+    { week: 16, activity: "Production go-live decision & contract signature" },
   ],
 };
 

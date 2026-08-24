@@ -18,6 +18,12 @@ export default function GTMPage() {
   const [activeTab, setActiveTab] = useState<"motions" | "pilot">("motions");
   const t = useTranslations("gtm");
 
+  const kimiModels = MODEL_PRICING.filter((m) => m.provider.includes("Kimi") || m.provider.includes("Moonshot"));
+  const selectedModel = kimiModels.find((m) => m.name === pilot.kimiModel) ?? kimiModels[0];
+  const budgetPerWeek = pilot.durationWeeks > 0 ? Math.round(pilot.budget / pilot.durationWeeks) : 0;
+  const inputTokenBudget = selectedModel ? Math.round((pilot.budget / selectedModel.inputPer1M) * 1_000_000) : 0;
+  const outputTokenBudget = selectedModel ? Math.round((pilot.budget * 0.3 / selectedModel.outputPer1M) * 1_000_000) : 0;
+
   return (
     <div className="space-y-6 max-w-[1200px] mx-auto">
       <div>
@@ -258,6 +264,33 @@ export default function GTMPage() {
                     {pilot.dataSensitivity}
                   </span>
                 </div>
+              </div>
+
+              {/* Cost estimate */}
+              <div
+                className="mt-4 pt-4 space-y-2 text-sm"
+                style={{ borderTop: "1px solid var(--lunar-border-subtle)" }}
+              >
+                <div className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "var(--lunar-cyan)" }}>
+                  Cost estimate
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span style={{ color: "var(--lunar-text-muted)" }}>Budget / week</span>
+                  <span style={{ color: "var(--lunar-text-primary)" }}>€{budgetPerWeek.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span style={{ color: "var(--lunar-text-muted)" }}>Input token budget (70%)</span>
+                  <span style={{ color: "var(--lunar-text-primary)" }}>{(inputTokenBudget / 1_000_000).toFixed(1)}M tokens</span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span style={{ color: "var(--lunar-text-muted)" }}>Output token budget (30%)</span>
+                  <span style={{ color: "var(--lunar-text-primary)" }}>{(outputTokenBudget / 1_000_000).toFixed(1)}M tokens</span>
+                </div>
+                {selectedModel && (
+                  <div className="text-xs pt-1" style={{ color: "var(--lunar-text-muted)" }}>
+                    Rate: ${selectedModel.inputPer1M}/1M in · ${selectedModel.outputPer1M}/1M out ({selectedModel.name})
+                  </div>
+                )}
               </div>
             </div>
 

@@ -23,6 +23,16 @@ const LOGO_CATEGORY_COLORS: Record<string, string> = {
   reseller: '#4a5a7a',
 };
 
+const CDN_LOGO_MAP: Record<string, string> = {
+  'aws.png': 'aws',
+  'microsoft.png': 'microsoft-azure',
+  'google.png': 'google-cloud',
+  'sap.png': 'sap',
+  'github.png': 'github',
+  'snowflake.png': 'snowflake',
+};
+const CDN_BASE = 'https://cdn.jsdelivr.net/gh/gilbarbara/logos@main/logos';
+
 function PartnerLogo({ name, category, logoFile }: { name: string; category: string; logoFile?: string }) {
   const [imgError, setImgError] = useState(false);
   const color = LOGO_CATEGORY_COLORS[category] ?? '#4a5a7a';
@@ -31,24 +41,22 @@ function PartnerLogo({ name, category, logoFile }: { name: string; category: str
     .slice(0, 2)
     .map((w) => w[0]?.toUpperCase() ?? '')
     .join('');
-  const slug = name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
-  const logoSrc = logoFile ? `/logos/${logoFile}` : `/logos/${slug}.png`;
 
-  if (!imgError) {
+  const cdnSlug = logoFile ? CDN_LOGO_MAP[logoFile] : undefined;
+  const logoSrc = cdnSlug ? `${CDN_BASE}/${cdnSlug}.svg` : undefined;
+
+  if (logoSrc && !imgError) {
     return (
       <div
         className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center shrink-0"
-        style={{
-          background: 'var(--lunar-elevated)',
-          border: '1px solid var(--lunar-border-subtle)',
-        }}
+        style={{ background: '#ffffff', border: '1px solid rgba(255,255,255,0.15)', padding: 4 }}
         aria-hidden="true"
       >
         <img
           src={logoSrc}
           alt={name}
-          width={32}
-          height={32}
+          width={28}
+          height={28}
           className="object-contain"
           onError={() => setImgError(true)}
         />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 // Fallback ISO-2 lookup for countries whose Natural Earth ISO_A2 field is '-99'
@@ -122,6 +122,7 @@ export function EuropeDecisionMap({
 }: EuropeDecisionMapProps) {
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [activeLayer, setActiveLayer] = useState(layer);
+  useEffect(() => { setActiveLayer(layer); }, [layer]);
   const focus = focusCountry ? COUNTRY_FOCUS[focusCountry] : null;
 
   const getCountryFill = useCallback((iso2: string) => {

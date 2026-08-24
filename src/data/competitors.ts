@@ -15,6 +15,19 @@ export const COMPETITOR_DIMENSIONS = [
 
 export type CompetitorDimension = (typeof COMPETITOR_DIMENSIONS)[number];
 
+export const DIMENSION_SOURCES: Record<CompetitorDimension, string> = {
+  frontier_quality: "Chatbot Arena + MMLU leaderboard, Aug 2026",
+  agentic_coding: "SWE-bench Verified + LiveCodeBench, Aug 2026",
+  long_context: "RULER / HELMET benchmarks, Aug 2026",
+  task_economics: "Public API pricing pages, verified Aug 2026",
+  open_deployment: "Model license terms; Hugging Face availability",
+  eu_hosting: "Provider datacenter location pages (public)",
+  enterprise_controls: "SOC 2 / ISO 27001 status; analyst assessment",
+  distribution: "Enterprise customer estimates; analyst judgment",
+  trust_compliance: "EU AI Act self-assessment; regulatory filings",
+  eu_partnerability: "Partner ecosystem signals; analyst judgment",
+};
+
 export const DIMENSION_LABELS: Record<CompetitorDimension, string> = {
   frontier_quality: "Frontier Quality",
   agentic_coding: "Agentic / Coding",

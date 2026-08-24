@@ -7,6 +7,7 @@ import {
   COMPETITORS,
   COMPETITOR_DIMENSIONS,
   DIMENSION_LABELS,
+  DIMENSION_SOURCES,
 } from "@/data/competitors";
 import type { CompetitorDimension } from "@/data/competitors";
 import { MODEL_PRICING } from "@/data/pricing";
@@ -262,8 +263,11 @@ export default function CompetitionPage() {
                   key={dim}
                   style={{ borderBottom: "1px solid var(--lunar-border-subtle)" }}
                 >
-                  <td className="py-2 pr-4" style={{ color: "var(--lunar-text-secondary)" }}>
-                    {getDimensionLabel(dim)}
+                  <td className="py-2 pr-4">
+                    <div style={{ color: "var(--lunar-text-secondary)" }}>{getDimensionLabel(dim)}</div>
+                    <div className="text-xs mt-0.5" style={{ color: "var(--lunar-text-muted)", fontSize: "0.65rem" }}>
+                      {DIMENSION_SOURCES[dim]}
+                    </div>
                   </td>
                   {COMPETITORS.map((c) => {
                     const v = c.scores[dim] ?? 0;
