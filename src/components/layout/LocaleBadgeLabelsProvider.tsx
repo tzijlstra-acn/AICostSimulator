@@ -1,13 +1,10 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { BadgeLabelsProvider } from "@/components/EvidenceBadge";
+import { BadgeLabelsProvider, DEFAULT_BADGE_LABELS } from "@/components/EvidenceBadge";
 
-/**
- * Reads badge-type labels from next-intl and makes them available to all
- * EvidenceBadge instances in the locale subtree via React context.
- * Must be rendered inside a NextIntlClientProvider.
- */
+type BadgeLabels = typeof DEFAULT_BADGE_LABELS;
+
 export function LocaleBadgeLabelsProvider({
   children,
 }: {
@@ -21,7 +18,7 @@ export function LocaleBadgeLabelsProvider({
     assumption: tCommon("assumption"),
     recommendation: tCommon("recommendation"),
     openQuestion: tCommon("openQuestion"),
-  } as const;
+  } as BadgeLabels;
 
   return <BadgeLabelsProvider labels={labels}>{children}</BadgeLabelsProvider>;
 }
