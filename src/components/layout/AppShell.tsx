@@ -5,7 +5,7 @@ import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 import { CommandPalette } from "@/components/CommandPalette";
 import { useAppStore } from "@/store";
-import { useRouter, usePathname } from "@/lib/navigation";
+import { useRouter } from "@/lib/navigation";
 
 const G_CHORD_MAP: Record<string, string> = {
   e: "/",
@@ -23,22 +23,23 @@ const AUTH_KEY = "kimi-os-gate";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [authed, setAuthed] = useState(false);
+  // "pending" = not yet checked (SSR/first render), "gate" = on gate page, "authed" = authenticated
+  const [authState, setAuthState] = useState<"pending" | "gate" | "authed">("pending");
   const { sidebarOpen, setSidebarOpen } = useAppStore();
   const router = useRouter();
-  const pathname = usePathname();
-  const isGate = pathname === "/gate";
 
-  // Gate check — redirect to /gate if not authenticated (skip if already on gate)
+  // Auth check runs after hydration only (so we have window + localStorage)
   useEffect(() => {
-    if (isGate) return;
-    if (typeof window === "undefined") return;
+    if (window.location.pathname.includes("/gate")) {
+      setAuthState("gate");
+      return;
+    }
     if (localStorage.getItem(AUTH_KEY) === "1") {
-      setAuthed(true);
+      setAuthState("authed");
     } else {
       router.replace("/gate");
     }
-  }, [router, isGate]);
+  }, [router]);
 
   // G-chord tracking
   const lastKeyRef = useRef<string | null>(null);
@@ -117,11 +118,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     if (isMobile && sidebarOpen) setSidebarOpen(false);
   };
 
-  // Gate page renders without the shell
-  if (isGate) return <>{children}</>;
+  // Before hydration (SSR + first render): always render children so pre-rendered HTML is non-empty.
+  // The auth redirect fires in useEffect after hydration.
+  if (authState === "pending") return <>{children}</>;
 
-  // Don't render dashboard until auth confirmed
-  if (!authed) return null;
+  // Gate page: render without sidebar/topbar
+  if (authState === "gate") return <>{children}</>;
+
+  // Not authenticated: redirect fires via useEffect, render nothing in the meantime
+  if (authState !== "authed") return null;
 
   return (
     <div className="min-h-screen" style={{ background: "var(--lunar-bg)" }}>
