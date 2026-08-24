@@ -168,11 +168,6 @@ export default function CockpitPage() {
             You asked how much revenue I could bring in and how I&apos;d navigate Europe. I took that seriously — this is my answer.
           </div>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <Link href="/intro" className="text-xs hover:opacity-70 transition-opacity font-medium" style={{ color: 'var(--lunar-cyan)' }}>
-            About →
-          </Link>
-        </div>
       </div>
 
       {/* View Mode Banner */}

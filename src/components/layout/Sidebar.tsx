@@ -14,7 +14,6 @@ import {
   Route,
   Users,
   Trophy,
-  Info,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -70,7 +69,6 @@ export function Sidebar({ open, isMobile = false, onNavClick }: SidebarProps) {
     {
       header: "PERSONAL",
       items: [
-        { href: "/intro" as const, label: 'About this Analysis', icon: Info },
         { href: "/90-days" as const, label: t("ninetyDays"), icon: Trophy },
       ],
     },
@@ -146,7 +144,6 @@ export function Sidebar({ open, isMobile = false, onNavClick }: SidebarProps) {
                 item.href === "/"
                   ? pathname === "/"
                   : pathname.startsWith(item.href);
-              const isPersonal = item.href === "/intro";
               return (
                 <Link
                   key={item.href}
@@ -156,7 +153,6 @@ export function Sidebar({ open, isMobile = false, onNavClick }: SidebarProps) {
                     "nav-item mb-0.5",
                     isActive && "active",
                     !open && "justify-center",
-                    isPersonal && !isActive && "nav-item-personal"
                   )}
                   aria-label={!open ? item.label : undefined}
                   aria-current={isActive ? "page" : undefined}
