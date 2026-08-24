@@ -93,6 +93,30 @@ function CountriesPageInner() {
         />
       </div>
 
+      {/* Strategic View Callout */}
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
+        <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--lunar-cyan)" }}>
+          My Strategic View
+        </div>
+        <p className="text-sm italic mb-4" style={{ color: "var(--lunar-text-secondary)" }}>
+          &ldquo;Market sequencing is the most consequential decision in any expansion — getting it wrong burns 12 months and credibility. I would start where regulatory friction is lowest and developer density is highest, then use that proof to enter the more complex, higher-value markets.&rdquo;
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>UK first, then Netherlands</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>GB scores 85/100 — Wave 1 entry (2027 H1). Netherlands is the EU compliance showcase: English-language business culture, strong fintech and pharma base, GDPR-native infrastructure.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>Germany is the prize, not the beachhead</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>At €45M revenue potential, Germany is the largest market — but the highest regulatory complexity. Enter third, backed by two reference customers from UK and NL.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>Nordics move in a cluster</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Sweden, Denmark, Finland and Norway share procurement culture and AI governance posture. One partnership with a Nordic SI unlocks all four simultaneously.</p>
+          </div>
+        </div>
+      </div>
+
       {/* 3-Panel Layout */}
       <div className="grid grid-cols-[220px_1fr_280px] gap-4 min-h-[500px]">
         {/* LEFT RAIL — controls */}

@@ -35,6 +35,30 @@ export default function GTMPage() {
         </p>
       </div>
 
+      {/* Strategic View Callout */}
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
+        <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--lunar-cyan)" }}>
+          My Strategic View
+        </div>
+        <p className="text-sm italic mb-4" style={{ color: "var(--lunar-text-secondary)" }}>
+          &ldquo;The mistake most AI companies make entering Europe is leading with enterprise sales. I would not. I would generate proof points first — paying pilot customers, signed LOIs, university reference cases — then use that evidence to make SI partnerships credible and enterprise sales cycles shorter.&rdquo;
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>PLG and paid pilots before direct sales</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Product-led growth creates the customer references that make every subsequent enterprise conversation faster. A single paid pilot at a recognisable company is worth ten cold outreach sequences.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>Academic licensing is underrated</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Universities at KTH, ETH Zurich, TU Delft and Imperial pay £5–50K/year for institutional API access and generate peer-reviewed citations — the highest-credibility reference in enterprise AI procurement.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>SI embedding is the scaling lever</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Once two reference customers exist, SI partners will embed Kimi in their delivery practices. That multiplies reach without multiplying headcount — the only way to win enterprise distribution before a large EU sales team exists.</p>
+          </div>
+        </div>
+      </div>
+
       {/* Tabs */}
       <div className="flex gap-2">
         {(["motions", "pilot"] as const).map((tab) => (

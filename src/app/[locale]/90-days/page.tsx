@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useAppStore } from "@/store";
 import { EvidenceBadge } from "@/components/EvidenceBadge";
 import {
   Trophy,
@@ -28,7 +27,6 @@ interface Phase {
   actions: ActionItem[];
   deliverable: string;
   risk: string;
-  logLabel: string;
 }
 
 const BADGE_COLORS: Record<ActionItem["badgeType"], string> = {
@@ -40,7 +38,6 @@ const BADGE_COLORS: Record<ActionItem["badgeType"], string> = {
 
 export default function NinetyDaysPage() {
   const t = useTranslations("ninetyDays");
-  const { addDecision } = useAppStore();
 
   const PHASES: Phase[] = [
     {
@@ -61,7 +58,6 @@ export default function NinetyDaysPage() {
       ],
       deliverable: t("phases.1.deliverable"),
       risk: t("phases.1.risk"),
-      logLabel: "Phase 1: Listen, Map, Trust — 90-Day Thesis",
     },
     {
       number: 2,
@@ -81,7 +77,6 @@ export default function NinetyDaysPage() {
       ],
       deliverable: t("phases.2.deliverable"),
       risk: t("phases.2.risk"),
-      logLabel: "Phase 2: Validate, Decide, Build — 90-Day Thesis",
     },
     {
       number: 3,
@@ -101,7 +96,6 @@ export default function NinetyDaysPage() {
       ],
       deliverable: t("phases.3.deliverable"),
       risk: t("phases.3.risk"),
-      logLabel: "Phase 3: Anchor, Declare — 90-Day Thesis",
     },
   ];
 
@@ -118,29 +112,6 @@ export default function NinetyDaysPage() {
       label: t("phases.3.hyp"),
       killCriteria: t("phases.3.killCriteria"),
     },
-  };
-
-  const handleAddToLog = (phase: Phase) => {
-    addDecision({
-      text: phase.logLabel,
-      status: "proposed",
-      owner: "Thomas Zijlstra",
-      date: new Date().toISOString().slice(0, 10),
-      rationale: `Phase ${phase.number} (${phase.days}): ${phase.mission} Key deliverable: ${phase.deliverable}`,
-      evidence: "90-Day Thesis",
-    });
-  };
-
-  const handleSaveNorthStar = () => {
-    addDecision({
-      text: "North Star: Committed European Expansion Plan by Day 90",
-      status: "proposed",
-      owner: "CEO / EU Strategy Lead",
-      date: new Date().toISOString().slice(0, 10),
-      rationale:
-        "By Day 90, Moonshot AI has a committed European expansion plan, signed design partners, a legal entity architecture, and a board-approved investment case. The first Kimi EU customer conversation has happened.",
-      evidence: "90-Day Thesis",
-    });
   };
 
   return (
@@ -196,6 +167,27 @@ export default function NinetyDaysPage() {
         >
           {t("rationale")}
         </p>
+      </div>
+
+      {/* Key Takeaways Callout */}
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
+        <div className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "var(--lunar-cyan)" }}>
+          Key Takeaways
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>The sequence is non-negotiable</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Phase 1 listening must happen before Phase 2 decisions. Any strategy that skips the listening tour is based on assumptions about a market we haven&apos;t tested — and those assumptions will be wrong in at least one critical dimension.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>LOIs before the board</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>The Phase 3 board presentation is only credible if Phase 2 produced real signed LOIs. Modelled revenue projections without customer commitments will not survive a serious board challenge.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>Kill criteria are the most important lines</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>If any phase&apos;s kill criterion is triggered, the right move is to stop and reorient — not to push through. The exit conditions are not pessimism; they are intellectual honesty built into the plan.</p>
+          </div>
+        </div>
       </div>
 
       {/* Phase progress arc */}
@@ -411,18 +403,6 @@ export default function NinetyDaysPage() {
               </div>
             )}
 
-            {/* Add to Decision Log */}
-            <button
-              onClick={() => handleAddToLog(phase)}
-              className="w-full py-2 rounded-lg text-xs font-medium transition-colors"
-              style={{
-                background: `${phase.accentColor}12`,
-                color: phase.accentColor,
-                border: `1px solid ${phase.accentColor}30`,
-              }}
-            >
-              {t("addToLog", { num: phase.number })}
-            </button>
           </div>
         ))}
       </div>
@@ -454,22 +434,11 @@ export default function NinetyDaysPage() {
               {t("northStar.title")}
             </h3>
             <p
-              className="text-sm leading-relaxed mb-4"
+              className="text-sm leading-relaxed"
               style={{ color: "var(--lunar-text-secondary)" }}
             >
               {t("northStar.body")}
             </p>
-            <button
-              onClick={handleSaveNorthStar}
-              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-              style={{
-                background: "rgba(16,185,129,0.15)",
-                color: "var(--lunar-green)",
-                border: "1px solid rgba(16,185,129,0.3)",
-              }}
-            >
-              {t("northStar.cta")}
-            </button>
           </div>
         </div>
       </div>

@@ -124,6 +124,30 @@ export default function PartnersPage() {
         </p>
       </div>
 
+      {/* Strategic View Callout */}
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
+        <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--lunar-cyan)" }}>
+          My Strategic View
+        </div>
+        <p className="text-sm italic mb-4" style={{ color: "var(--lunar-text-secondary)" }}>
+          &ldquo;No direct sales team can match what three SI partnerships do for distribution in Europe. Capgemini, Deloitte, and Atos manage over €40B of enterprise IT spend collectively. Getting Kimi embedded in one of their delivery practices is worth more than any marketing campaign I could run in year one.&rdquo;
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>Cloud marketplace first</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>AWS, Azure, and GCP marketplace listings remove the procurement barrier for 80% of EU enterprise buyers — legal, security, and billing are pre-approved. This is the lowest-friction commercial motion available.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>Telecom for sovereign deployment</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Deutsche Telekom and BT provide sovereign-hosted compute — critical for EU public sector and regulated industries that cannot use US-hosted endpoints regardless of contractual guarantees.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>SI programme in 60 days</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>SI partnerships must be initiated before competitors lock in the same partners. The window is narrow — every major US AI vendor is running the same playbook. First-mover advantage in SI relationships is real and durable.</p>
+          </div>
+        </div>
+      </div>
+
       {/* Disclaimer */}
       <div
         className="flex items-start gap-3 p-4 rounded-lg"

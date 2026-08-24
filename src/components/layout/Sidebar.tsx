@@ -46,28 +46,28 @@ export function Sidebar({ open, isMobile = false, onNavClick }: SidebarProps) {
       ],
     },
     {
-      header: "MARKET",
+      header: t("sectionMarket"),
       items: [
         { href: "/market" as const, label: t("market"), icon: BarChart2 },
         { href: "/countries" as const, label: t("countries"), icon: Globe },
       ],
     },
     {
-      header: "COMPETITIVE",
+      header: t("sectionCompetitive"),
       items: [
         { href: "/competition" as const, label: t("competition"), icon: Swords },
         { href: "/regulation" as const, label: t("regulation"), icon: Shield },
       ],
     },
     {
-      header: "GO-TO-MARKET",
+      header: t("sectionGtm"),
       items: [
         { href: "/gtm" as const, label: t("gtm"), icon: Route },
         { href: "/partners" as const, label: t("partners"), icon: Users },
       ],
     },
     {
-      header: "PERSONAL",
+      header: t("sectionPersonal"),
       items: [
         { href: "/90-days" as const, label: t("ninetyDays"), icon: Trophy },
       ],

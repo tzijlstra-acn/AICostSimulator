@@ -54,17 +54,18 @@ function StatCard({
   );
 }
 
-const VIEW_MODE_CONTEXT = {
-  board: { label: 'Board View', desc: 'Showing strategic KPIs and investment decisions for board-level review.', color: 'var(--lunar-cyan)' },
-  operator: { label: 'Operator View', desc: 'Showing execution metrics, team capacity, and milestone tracking.', color: 'var(--lunar-violet)' },
-  compliance: { label: 'Compliance View', desc: 'Highlighting regulatory workstreams, AI Act obligations, and trust architecture.', color: 'var(--lunar-amber)' },
-  sales: { label: 'Sales View', desc: 'Focusing on use-case pipeline, GTM motions, and revenue targets by market.', color: 'var(--lunar-green)' },
-};
+const VIEW_MODE_COLORS = {
+  board: 'var(--lunar-cyan)',
+  operator: 'var(--lunar-violet)',
+  compliance: 'var(--lunar-amber)',
+  sales: 'var(--lunar-green)',
+} as const;
 
 export default function CockpitPage() {
   const { activeScenario, marketAssumptions, complianceStatuses, viewMode } = useAppStore();
   const t = useTranslations("cockpit");
   const tReg = useTranslations("regulation");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
   const scenario = REVENUE_SCENARIOS[activeScenario];
   const sam = calcSAM(TAM_2030_BASE, {
@@ -224,6 +225,30 @@ export default function CockpitPage() {
             style={{ color: "var(--lunar-text-secondary)" }}
           >
             {STRATEGIC_THESIS.subheadline}
+          </div>
+        </div>
+      </div>
+
+      {/* Strategic View Callout */}
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
+        <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--lunar-cyan)" }}>
+          My Strategic View
+        </div>
+        <p className="text-sm italic mb-4" style={{ color: "var(--lunar-text-secondary)" }}>
+          &ldquo;This is not a slide deck — it is a live, testable strategy with explicit kill criteria. Three sequenced hypotheses, each with a proof metric and an exit condition. If I am wrong about any of them, the model self-corrects before we burn resources.&rdquo;
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>H1: UK Developer Beachhead</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Outside EU AI Act jurisdiction in 2026, highest developer density in Europe, English-language — fastest path to first commercial signal and a reference customer.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>H2: EU Compliance as Revenue Accelerator</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Every US hyperscaler is still adjusting to the AI Act. Being first with a published compliance architecture turns a regulatory burden into a commercial filter that competitors cannot match until 2028.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>H3: SI Ecosystem Lock-In</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>Three SI partnerships generate more pipeline than a 10-person direct sales team. SIs need a non-US AI option to offer clients — Kimi is the credible answer.</p>
           </div>
         </div>
       </div>

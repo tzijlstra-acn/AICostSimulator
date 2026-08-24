@@ -21,6 +21,30 @@ export default function StrategyPage() {
         </p>
       </div>
 
+      {/* Strategic View Callout */}
+      <div className="p-5 rounded-xl" style={{ background: "rgba(0,212,255,0.03)", border: "1px solid rgba(0,212,255,0.15)", borderLeft: "4px solid var(--lunar-cyan)" }}>
+        <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--lunar-cyan)" }}>
+          My Strategic View
+        </div>
+        <p className="text-sm italic mb-4" style={{ color: "var(--lunar-text-secondary)" }}>
+          &ldquo;A single message will not land across a board, an enterprise procurement team, and a developer community simultaneously. I have designed three distinct narratives — each true, each tailored, each pointing at the same underlying strategic reality.&rdquo;
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-cyan)" }}>Board: first-mover in a defined window</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>The EU enterprise AI API market is €2.8B by 2028. Kimi has a 12–18 month window to establish a compliance moat before US hyperscalers complete their EU Act adjustments. This is the investment case.</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "#a855f7" }}>Enterprise buyer: compliant by design</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>EU procurement teams are not buying AI — they are managing risk. The narrative is not &apos;best model&apos; but &apos;only model with a native EU data trust architecture that procurement can sign off without a 6-month legal review.&apos;</p>
+          </div>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold" style={{ color: "var(--lunar-amber)" }}>Developer: best context per dollar</div>
+            <p className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>1M-token context window at sub-GPT-4o pricing. For developers building document-intensive applications — legal, financial, pharma — this is not a marginal improvement; it is the only model that makes their use case technically feasible.</p>
+          </div>
+        </div>
+      </div>
+
       {/* Headline thesis */}
       <div
         className="rounded-xl p-6"

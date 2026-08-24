@@ -7,12 +7,7 @@ import { PanelLeft, Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-
-const SCENARIOS: { key: ScenarioKey; label: string; color: string }[] = [
-  { key: "conservative", label: "Conservative", color: "#7a90b0" },
-  { key: "base", label: "Base", color: "#00d4ff" },
-  { key: "upside", label: "Upside", color: "#10b981" },
-];
+import { useTranslations } from "next-intl";
 
 
 interface TopBarProps {
@@ -25,6 +20,13 @@ export function TopBar({ onCommandPalette, isMobile = false }: TopBarProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  const tCommon = useTranslations("common");
+
+  const SCENARIOS: { key: ScenarioKey; label: string; color: string }[] = [
+    { key: "conservative", label: tCommon("scenarios.conservative"), color: "#7a90b0" },
+    { key: "base", label: tCommon("scenarios.base"), color: "#00d4ff" },
+    { key: "upside", label: tCommon("scenarios.upside"), color: "#10b981" },
+  ];
 
   return (
     <header

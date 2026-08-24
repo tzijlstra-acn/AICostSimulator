@@ -16,7 +16,6 @@ const PAGES = [
   { href: "/market", label: "Market Sizing Lab", group: "Pages" },
   { href: "/countries", label: "Country Navigator", group: "Pages" },
   { href: "/portfolio", label: "Product & Revenue Stack", group: "Pages" },
-  { href: "/use-cases", label: "Use-Case Atlas", group: "Pages" },
   { href: "/competition", label: "Competition Arena", group: "Pages" },
   { href: "/regulation", label: "Regulatory & Trust Center", group: "Pages" },
   { href: "/gtm", label: "Go-to-Market Playbooks", group: "Pages" },
@@ -27,7 +26,6 @@ const PAGES = [
   { href: "/risks", label: "Risk Register", group: "Pages" },
   { href: "/sources", label: "Source Library", group: "Pages" },
   { href: "/memo", label: "Board Memo & Export", group: "Pages" },
-  { href: "/decisions", label: "Decision Log", group: "Pages" },
 ];
 
 interface CommandPaletteProps {

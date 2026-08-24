@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getSource } from "@/data/sources";
+import { useTranslations } from "next-intl";
 
 type EvidenceType =
   | "FACT"
@@ -26,6 +27,14 @@ const TYPE_CLASSES: Record<EvidenceType, string> = {
   "OPEN QUESTION": "badge-open-question",
 };
 
+const TYPE_TO_KEY: Record<EvidenceType, string> = {
+  FACT: "fact",
+  MODEL: "model",
+  ASSUMPTION: "assumption",
+  RECOMMENDATION: "recommendation",
+  "OPEN QUESTION": "openQuestion",
+};
+
 export function EvidenceBadge({
   type,
   sourceId,
@@ -35,6 +44,8 @@ export function EvidenceBadge({
 }: EvidenceBadgeProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const source = sourceId ? getSource(sourceId) : undefined;
+  const tCommon = useTranslations("common");
+  const label = tCommon(TYPE_TO_KEY[type] as Parameters<typeof tCommon>[0]);
 
   return (
     <span className="relative inline-block">
@@ -43,9 +54,9 @@ export function EvidenceBadge({
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         role="note"
-        aria-label={`${type}${sourceId ? ` — source ${sourceId}` : ""}${formula ? ` — ${formula}` : ""}`}
+        aria-label={`${label}${sourceId ? ` — source ${sourceId}` : ""}${formula ? ` — ${formula}` : ""}`}
       >
-        {type}
+        {label}
       </span>
       {showTooltip && (source || formula || reasoning) && (
         <div

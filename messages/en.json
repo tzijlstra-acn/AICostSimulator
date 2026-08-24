@@ -69,7 +69,11 @@
     "sources": "Source Library",
     "memo": "Board Memo",
     "decisions": "Decision Log",
-    "ninetyDays": "90-Day Thesis"
+    "ninetyDays": "90-Day Thesis",
+    "sectionMarket": "MARKET",
+    "sectionCompetitive": "COMPETITIVE",
+    "sectionGtm": "GO-TO-MARKET",
+    "sectionPersonal": "PERSONAL"
   },
   "cockpit": {
     "title": "Executive Decision Room",
@@ -102,7 +106,41 @@
       "title": "Decisions Required Now",
       "subtitle": "Items requiring board or leadership action before Phase 1 launch"
     },
-    "whyTitle": "Why This Recommendation?"
+    "whyTitle": "Why This Recommendation?",
+    "personalBanner": {
+      "label": "A personal strategy deep-dive",
+      "body": "You asked how much revenue I could bring in and how I'd navigate Europe. I took that seriously — this is my answer."
+    },
+    "myRecommendation": "My strategic recommendation:",
+    "kpis": {
+      "euTam2030": "2030 EU TAM",
+      "tam2030Sub": "Total addressable market — 5 spend pools",
+      "euSam2030": "2030 EU SAM",
+      "marketShare2030": "Market Share (base 2030)"
+    },
+    "priorityMarketsLink": "9 priority markets →",
+    "europeMapTitle": "European Market Strategy",
+    "europeMapDesc": "The UK should create developer demand, Germany should establish enterprise credibility, and the Netherlands should coordinate the European operating model.",
+    "openCountryNavigator": "Open Country Navigator",
+    "competitivePosition": "Competitive Position",
+    "notMoat": "What is NOT our moat:",
+    "openQuestionLabel": "Open question:",
+    "viewModeDesc": {
+      "board": "Showing strategic KPIs and investment decisions for board-level review.",
+      "operator": "Showing execution metrics, team capacity, and milestone tracking.",
+      "compliance": "Highlighting regulatory workstreams, AI Act obligations, and trust architecture.",
+      "sales": "Focusing on use-case pipeline, GTM motions, and revenue targets by market."
+    },
+    "strategicView": {
+      "title": "Strategic Analysis",
+      "note": "This is not a slide deck — it is a live, testable strategy with explicit kill criteria. Three sequenced hypotheses, each with a proof metric and an exit condition. If I am wrong about any of them, the model self-corrects before we burn resources.",
+      "h1Label": "H1: UK Developer Beachhead",
+      "h1Body": "Outside EU AI Act jurisdiction in 2026, highest developer density in Europe, English-language — fastest path to first commercial signal and a reference customer.",
+      "h2Label": "H2: EU Compliance as Revenue Accelerator",
+      "h2Body": "Every US hyperscaler is still adjusting to the AI Act. Being first with a published compliance architecture turns a regulatory burden into a commercial filter that competitors cannot match until 2028.",
+      "h3Label": "H3: SI Ecosystem Lock-In",
+      "h3Body": "Three SI partnerships generate more pipeline than a 10-person direct sales team. SIs need a non-US AI option to offer clients — Kimi is the credible answer."
+    }
   },
   "market": {
     "title": "Market Sizing Lab",
