@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { GTM_MOTIONS, PILOT_DEFAULTS, EMPTY_PILOT } from "@/data/gtm";
+import { TACTICAL_PLAYS, REGIONAL_MATRIX, NO_FIT_SEGMENTS } from "@/data/swot";
 import type { PilotSpec } from "@/data/gtm";
 import { MODEL_PRICING } from "@/data/pricing";
 import { EvidenceBadge } from "@/components/EvidenceBadge";
@@ -347,6 +348,103 @@ export default function GTMPage() {
           </div>
         </div>
       )}
+
+      {/* Tactical BD Plays */}
+      <div>
+        <h2 className="text-sm font-semibold mb-1 section-header">Tactical BD Plays</h2>
+        <p className="text-xs mb-4" style={{ color: "var(--lunar-text-muted)" }}>
+          Five execution-ready plays for the first 90 days in Europe.
+        </p>
+        <div className="space-y-3">
+          {TACTICAL_PLAYS.map((play) => (
+            <div
+              key={play.number}
+              className="lunar-card"
+              style={{ borderLeft: "3px solid var(--lunar-cyan)" }}
+            >
+              <div className="flex items-start gap-4">
+                <span
+                  className="w-7 h-7 rounded flex items-center justify-center text-xs font-mono font-bold flex-shrink-0"
+                  style={{ background: "rgba(0,212,255,0.1)", color: "var(--lunar-cyan)", border: "1px solid rgba(0,212,255,0.2)" }}
+                >
+                  {play.number}
+                </span>
+                <div>
+                  <div className="text-sm font-semibold mb-1" style={{ color: "var(--lunar-text-primary)" }}>
+                    {play.title}
+                  </div>
+                  <p className="text-xs italic leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>
+                    &ldquo;{play.quote}&rdquo;
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Regional Prioritisation Matrix */}
+      <div>
+        <h2 className="text-sm font-semibold mb-1 section-header">Regional Prioritisation Matrix</h2>
+        <p className="text-xs mb-4" style={{ color: "var(--lunar-text-muted)" }}>
+          City-level priorities for the first 12 months of European expansion.
+        </p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs" style={{ borderCollapse: "separate", borderSpacing: "0 4px" }}>
+            <thead>
+              <tr>
+                {["Region", "Priority", "Density", "Key Verticals", "Why"].map((h) => (
+                  <th
+                    key={h}
+                    className="text-left px-3 py-2"
+                    style={{ color: "var(--lunar-text-muted)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {REGIONAL_MATRIX.map((city) => {
+                const priorityColor = city.priority === "P0" ? "var(--lunar-red)" : city.priority === "P1" ? "var(--lunar-amber)" : "var(--lunar-text-muted)";
+                return (
+                  <tr key={city.region} className="rounded-lg" style={{ background: "var(--lunar-elevated)" }}>
+                    <td className="px-3 py-2 font-semibold rounded-l-lg" style={{ color: "var(--lunar-text-primary)" }}>{city.region}</td>
+                    <td className="px-3 py-2">
+                      <span className="px-1.5 py-0.5 rounded text-xs font-mono font-bold" style={{ background: `${priorityColor}15`, color: priorityColor }}>
+                        {city.priority}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2" style={{ color: "var(--lunar-text-secondary)" }}>{city.density}</td>
+                    <td className="px-3 py-2" style={{ color: "var(--lunar-text-secondary)" }}>{city.verticals}</td>
+                    <td className="px-3 py-2 rounded-r-lg" style={{ color: "var(--lunar-text-muted)" }}>{city.why}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* No-Fit Segments */}
+      <div>
+        <h2 className="text-sm font-semibold mb-1 section-header">Do Not Pursue: No-Fit Segments</h2>
+        <p className="text-xs mb-4" style={{ color: "var(--lunar-text-muted)" }}>
+          Segments where geopolitical, compliance, or competitive constraints make near-term wins unlikely.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {NO_FIT_SEGMENTS.map((seg) => (
+            <div
+              key={seg.name}
+              className="rounded-xl p-4"
+              style={{ background: "rgba(239,68,68,0.04)", border: "1px solid rgba(239,68,68,0.15)" }}
+            >
+              <div className="text-xs font-semibold mb-1" style={{ color: "var(--lunar-red)" }}>{seg.name}</div>
+              <div className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>{seg.reason}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

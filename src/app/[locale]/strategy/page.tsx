@@ -1,6 +1,7 @@
 "use client";
 
 import { STRATEGIC_THESIS, STRATEGIC_NARRATIVES } from "@/data/strategy";
+import { SWOT_ANALYSIS } from "@/data/swot";
 import { EvidenceBadge } from "@/components/EvidenceBadge";
 import { Link } from "@/lib/navigation";
 import { ArrowRight } from "lucide-react";
@@ -172,6 +173,49 @@ export default function StrategyPage() {
                 <div className="text-xs mt-1" style={{ color: "var(--lunar-red)" }}>
                   ⚠ {d.consequence}
                 </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SWOT Analysis */}
+      <div>
+        <h2 className="text-sm font-semibold mb-1 section-header">SWOT Analysis</h2>
+        <p className="text-xs mb-4" style={{ color: "var(--lunar-text-muted)" }}>
+          Source: Moonshot AI Europe Target Account Intelligence
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {(
+            [
+              { key: "strengths" as const, label: "Strengths", accent: "var(--lunar-green)", bg: "rgba(16,185,129,0.04)" },
+              { key: "weaknesses" as const, label: "Weaknesses", accent: "var(--lunar-red)", bg: "rgba(239,68,68,0.04)" },
+              { key: "opportunities" as const, label: "Opportunities", accent: "var(--lunar-cyan)", bg: "rgba(0,212,255,0.04)" },
+              { key: "threats" as const, label: "Threats", accent: "var(--lunar-amber)", bg: "rgba(245,158,11,0.04)" },
+            ] as const
+          ).map(({ key, label, accent, bg }) => (
+            <div
+              key={key}
+              className="rounded-xl p-4"
+              style={{ background: bg, border: `1px solid ${accent}30` }}
+            >
+              <div
+                className="text-xs font-bold uppercase tracking-widest mb-3"
+                style={{ color: accent }}
+              >
+                {label}
+              </div>
+              <div className="space-y-2">
+                {SWOT_ANALYSIS[key].map((item) => (
+                  <div key={item.title}>
+                    <div className="text-xs font-semibold" style={{ color: "var(--lunar-text-primary)" }}>
+                      {item.title}
+                    </div>
+                    <div className="text-xs leading-relaxed" style={{ color: "var(--lunar-text-secondary)" }}>
+                      {item.body}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
