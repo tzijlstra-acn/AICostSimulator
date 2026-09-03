@@ -6,6 +6,8 @@ import { useRouter } from "@/lib/navigation";
 const PASSWORD = "EU2026";
 const AUTH_KEY = "kimi-os-gate";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 function NeuralCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -176,7 +178,7 @@ function NeuralCanvas() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 1 }}
     />
   );
 }
@@ -189,7 +191,6 @@ export default function GatePage() {
   const [unlocking, setUnlocking] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // If already authenticated, skip to cockpit
   useEffect(() => {
     if (typeof window !== "undefined" && localStorage.getItem(AUTH_KEY) === "1") {
       router.replace("/");
@@ -216,10 +217,11 @@ export default function GatePage() {
   };
 
   return (
-    <div
-      className="fixed inset-0 flex flex-col items-center justify-center select-none"
-      style={{ background: "#05090f", zIndex: 1 }}
-    >
+    <>
+      {/* Base background */}
+      <div className="fixed inset-0" style={{ background: "#05090f", zIndex: 0 }} />
+
+      {/* Neural canvas animation */}
       <NeuralCanvas />
 
       {/* Top scanning line */}
@@ -232,140 +234,119 @@ export default function GatePage() {
         }}
       />
 
-      {/* Card */}
+      {/* Centered card */}
       <div
-        className="relative flex flex-col items-center text-center px-10 py-12 rounded-2xl"
-        style={{
-          zIndex: 10,
-          background: "rgba(8,14,28,0.82)",
-          border: "1px solid rgba(0,212,255,0.18)",
-          boxShadow: "0 0 80px rgba(0,212,255,0.07), 0 0 0 1px rgba(0,212,255,0.06)",
-          backdropFilter: "blur(20px)",
-          minWidth: 340,
-          maxWidth: 420,
-          transform: shake ? undefined : "none",
-          animation: shake ? "shake 0.5s cubic-bezier(.36,.07,.19,.97)" : undefined,
-        }}
+        className="fixed inset-0 flex flex-col items-center justify-center select-none"
+        style={{ zIndex: 3 }}
       >
-        {/* Kimi mark */}
-        <div className="mb-6">
-          <div
-            className="mx-auto mb-3"
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              background: "linear-gradient(135deg, rgba(0,212,255,0.15) 0%, rgba(168,85,247,0.15) 100%)",
-              border: "1px solid rgba(0,212,255,0.25)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 0 30px rgba(0,212,255,0.15)",
-            }}
-          >
-            <div
-              style={{
-                width: 28,
-                height: 28,
-                background: "linear-gradient(135deg, #00d4ff 0%, #a855f7 100%)",
-                borderRadius: 7,
-                opacity: 0.9,
-              }}
-            />
-          </div>
-          <div
-            className="text-xs font-bold tracking-[0.25em] uppercase"
-            style={{ color: "#00d4ff", letterSpacing: "0.3em" }}
-          >
-            MOONSHOT AI
-          </div>
-          <div
-            className="text-xs mt-0.5 tracking-widest"
-            style={{ color: "rgba(120,145,180,0.7)", letterSpacing: "0.15em" }}
-          >
-            KIMI EU STRATEGY OS
-          </div>
-        </div>
-
-        {/* Divider */}
         <div
-          className="w-full mb-7"
-          style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.25), transparent)" }}
-        />
-
-        {/* Title */}
-        <div
-          className="text-xl font-bold mb-1"
-          style={{ color: "#e8eef8", letterSpacing: "-0.01em" }}
-        >
-          Restricted Access
-        </div>
-        <div
-          className="text-xs mb-8 leading-relaxed"
-          style={{ color: "rgba(120,145,180,0.75)", maxWidth: 260 }}
-        >
-          Confidential strategy analysis prepared for Moonshot AI. Enter your access code to continue.
-        </div>
-
-        {/* Input */}
-        <div className="w-full mb-4">
-          <input
-            ref={inputRef}
-            type="password"
-            value={value}
-            onChange={(e) => { setValue(e.target.value); setError(false); }}
-            onKeyDown={onKey}
-            placeholder="Access code"
-            autoComplete="off"
-            autoFocus
-            className="w-full text-center text-sm font-mono rounded-xl px-4 py-3 outline-none transition-all"
-            style={{
-              background: error ? "rgba(239,68,68,0.07)" : "rgba(0,212,255,0.04)",
-              border: error
-                ? "1px solid rgba(239,68,68,0.45)"
-                : "1px solid rgba(0,212,255,0.2)",
-              color: error ? "#ef4444" : "#e8eef8",
-              boxShadow: error
-                ? "0 0 16px rgba(239,68,68,0.12)"
-                : "0 0 0 transparent",
-              letterSpacing: "0.2em",
-              caretColor: "#00d4ff",
-            }}
-          />
-          {error && (
-            <div
-              className="mt-2 text-xs text-center"
-              style={{ color: "rgba(239,68,68,0.8)" }}
-            >
-              Incorrect access code
-            </div>
-          )}
-        </div>
-
-        {/* Button */}
-        <button
-          onClick={attempt}
-          disabled={unlocking}
-          className="w-full py-3 rounded-xl text-sm font-semibold tracking-wide transition-all"
+          className="relative flex flex-col items-center text-center px-10 py-12 rounded-2xl"
           style={{
-            background: unlocking
-              ? "linear-gradient(135deg, rgba(0,212,255,0.3) 0%, rgba(168,85,247,0.3) 100%)"
-              : "linear-gradient(135deg, rgba(0,212,255,0.18) 0%, rgba(168,85,247,0.18) 100%)",
-            border: "1px solid rgba(0,212,255,0.3)",
-            color: "#00d4ff",
-            boxShadow: "0 0 20px rgba(0,212,255,0.08)",
-            letterSpacing: "0.08em",
+            background: "rgba(8,14,28,0.82)",
+            border: "1px solid rgba(0,212,255,0.18)",
+            boxShadow: "0 0 80px rgba(0,212,255,0.07), 0 0 0 1px rgba(0,212,255,0.06)",
+            backdropFilter: "blur(20px)",
+            minWidth: 340,
+            maxWidth: 420,
+            animation: shake ? "shake 0.5s cubic-bezier(.36,.07,.19,.97)" : undefined,
           }}
         >
-          {unlocking ? "UNLOCKING ···" : "ENTER"}
-        </button>
+          {/* Moonshot logo */}
+          <div className="mb-6">
+            <img
+              src={`${BASE}/logos/moonshot-wordmark.svg`}
+              alt="Moonshot AI"
+              className="mx-auto mb-3"
+              style={{ height: 28, opacity: 0.95 }}
+            />
+            <div
+              className="text-xs mt-0.5 tracking-widest"
+              style={{ color: "rgba(120,145,180,0.7)", letterSpacing: "0.15em" }}
+            >
+              EU STRATEGY OS
+            </div>
+          </div>
 
-        {/* Footer */}
-        <div
-          className="mt-8 text-xs"
-          style={{ color: "rgba(90,110,145,0.6)", letterSpacing: "0.05em" }}
-        >
-          Prepared by Thomas Zijlstra · August 2026
+          {/* Divider */}
+          <div
+            className="w-full mb-7"
+            style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(0,212,255,0.25), transparent)" }}
+          />
+
+          {/* Title */}
+          <div
+            className="text-xl font-bold mb-1"
+            style={{ color: "#e8eef8", letterSpacing: "-0.01em" }}
+          >
+            Restricted Access
+          </div>
+          <div
+            className="text-xs mb-8 leading-relaxed"
+            style={{ color: "rgba(120,145,180,0.75)", maxWidth: 260 }}
+          >
+            Confidential strategy analysis prepared for Moonshot AI. Enter your access code to continue.
+          </div>
+
+          {/* Input */}
+          <div className="w-full mb-4">
+            <input
+              ref={inputRef}
+              type="password"
+              value={value}
+              onChange={(e) => { setValue(e.target.value); setError(false); }}
+              onKeyDown={onKey}
+              placeholder="Access code"
+              autoComplete="off"
+              autoFocus
+              className="w-full text-center text-sm font-mono rounded-xl px-4 py-3 outline-none transition-all"
+              style={{
+                background: error ? "rgba(239,68,68,0.07)" : "rgba(0,212,255,0.04)",
+                border: error
+                  ? "1px solid rgba(239,68,68,0.45)"
+                  : "1px solid rgba(0,212,255,0.2)",
+                color: error ? "#ef4444" : "#e8eef8",
+                boxShadow: error
+                  ? "0 0 16px rgba(239,68,68,0.12)"
+                  : "0 0 0 transparent",
+                letterSpacing: "0.2em",
+                caretColor: "#00d4ff",
+              }}
+            />
+            {error && (
+              <div
+                className="mt-2 text-xs text-center"
+                style={{ color: "rgba(239,68,68,0.8)" }}
+              >
+                Incorrect access code
+              </div>
+            )}
+          </div>
+
+          {/* Button */}
+          <button
+            onClick={attempt}
+            disabled={unlocking}
+            className="w-full py-3 rounded-xl text-sm font-semibold tracking-wide transition-all"
+            style={{
+              background: unlocking
+                ? "linear-gradient(135deg, rgba(0,212,255,0.3) 0%, rgba(168,85,247,0.3) 100%)"
+                : "linear-gradient(135deg, rgba(0,212,255,0.18) 0%, rgba(168,85,247,0.18) 100%)",
+              border: "1px solid rgba(0,212,255,0.3)",
+              color: "#00d4ff",
+              boxShadow: "0 0 20px rgba(0,212,255,0.08)",
+              letterSpacing: "0.08em",
+            }}
+          >
+            {unlocking ? "UNLOCKING ···" : "ENTER"}
+          </button>
+
+          {/* Footer */}
+          <div
+            className="mt-8 text-xs"
+            style={{ color: "rgba(90,110,145,0.6)", letterSpacing: "0.05em" }}
+          >
+            Prepared by Thomas Zijlstra · August 2026
+          </div>
         </div>
       </div>
 
@@ -381,6 +362,6 @@ export default function GatePage() {
           40%, 60% { transform: translateX(6px); }
         }
       `}</style>
-    </div>
+    </>
   );
 }
